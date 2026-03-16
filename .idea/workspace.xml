@@ -5,16 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a588b42-1d87-44c3-84bd-d264ebff83f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/GameController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/dao/GameDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/models/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/models/Guide.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/models/GuideRating.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/models/GuideStep.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/game-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/AdminDashboardController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GameFormController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideFormController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideRatingController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideRatingFormController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideStepController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideStepFormController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GameBrowseController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideBrowseController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideDetailController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/dao/GuideDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/dao/GuideRatingDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/dao/GuideStepDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/admin-dashboard.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/game-form.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-form.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-rating-form.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-rating-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-step-form.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-step-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/user/game-browse.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/user/guide-browse.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/user/guide-detail.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/game-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/game-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,13 +45,18 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="package-info" />
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JavaAutoRunManager">
+    <enabled-run-configurations>
+      <run-configuration type="MavenRunConfiguration" name="e-sports [org.openjfx:javafx-maven-plugin:0.0.8:run]" />
+    </enabled-run-configurations>
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 0
@@ -48,6 +73,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
@@ -62,6 +88,48 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Mega-PC\Desktop\where i should be, again\exs\e-sports\src\main\resources\views\user" />
+      <recent name="C:\Users\Mega-PC\Desktop\where i should be, again\exs\e-sports\src\main\resources\views\admin" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="e-sports [javafx:run]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="cmdOptions" />
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="javafx:run" />
+              </list>
+            </option>
+            <option name="pomFileName" value="pom.xml" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="projectsCmdOptionValues">
+              <list />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Maven.e-sports [javafx:run]" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -70,7 +138,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1773675977925</updated>
-      <workItem from="1773675979018" duration="2278000" />
+      <workItem from="1773675979018" duration="13731000" />
     </task>
     <servers />
   </component>
