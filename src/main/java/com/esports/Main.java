@@ -9,10 +9,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/game-view.fxml   replace it with ur own fxml file to test your work else u can test mine"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/admin/admin-dashboard.fxml"));
         Scene scene = new Scene(loader.load());
-        stage.setTitle("Esports Platform");
+        stage.setTitle("Esports Admin Panel");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
