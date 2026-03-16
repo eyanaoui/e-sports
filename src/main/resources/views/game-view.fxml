@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" style="-fx-padding: 20;"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.esports.controllers.GameController">
+
+    <Label text="Game Management" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+
+    <!-- FORM -->
+    <HBox spacing="10">
+        <TextField fx:id="nameField" promptText="Name" prefWidth="150"/>
+        <TextField fx:id="slugField" promptText="Slug" prefWidth="150"/>
+        <TextField fx:id="descField" promptText="Description" prefWidth="200"/>
+        <CheckBox fx:id="rankingCheck" text="Has Ranking"/>
+        <Button text="Add" onAction="#handleAdd"/>
+        <Button text="Update" onAction="#handleUpdate"/>
+        <Button text="Delete" onAction="#handleDelete"/>
+        <Button text="Clear" onAction="#handleClear"/>
+    </HBox>
+
+    <!-- SEARCH -->
+    <HBox spacing="10">
+        <TextField fx:id="searchField" promptText="Search games..." prefWidth="300"
+                   onKeyReleased="#handleSearch"/>
+    </HBox>
+
+    <!-- TABLE -->
+    <TableView fx:id="gameTable" prefHeight="400">
+        <columns>
+            <TableColumn fx:id="colId"          text="ID"          prefWidth="50"/>
+            <TableColumn fx:id="colName"        text="Name"        prefWidth="150"/>
+            <TableColumn fx:id="colSlug"        text="Slug"        prefWidth="150"/>
+            <TableColumn fx:id="colDescription" text="Description" prefWidth="250"/>
+            <TableColumn fx:id="colRanking"     text="Has Ranking" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+</VBox>

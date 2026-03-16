@@ -5,13 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a588b42-1d87-44c3-84bd-d264ebff83f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/db/DatabaseConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/GameController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/dao/GameDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/models/Game.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/models/Guide.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/models/GuideRating.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/models/GuideStep.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/game-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +26,7 @@
       <list>
         <option value="package-info" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -33,7 +37,9 @@
   "associatedIndex": 0
 }]]></component>
   <component name="ProjectId" id="3B28o2apYCjg6c7iHzwV2vTM9oC" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -43,12 +49,16 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/Mega-PC/Desktop/where i should be, again/exs/e-sports/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -60,7 +70,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1773675977925</updated>
-      <workItem from="1773675979018" duration="549000" />
+      <workItem from="1773675979018" duration="2278000" />
     </task>
     <servers />
   </component>
