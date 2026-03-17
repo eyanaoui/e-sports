@@ -5,36 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a588b42-1d87-44c3-84bd-d264ebff83f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/AdminDashboardController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GameFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideRatingController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideRatingFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideStepController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideStepFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GameBrowseController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideBrowseController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideDetailController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/dao/GuideDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/dao/GuideRatingDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/dao/GuideStepDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/admin-dashboard.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/game-form.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-form.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-rating-form.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-rating-view.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-step-form.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-step-view.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-view.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/user/game-browse.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/user/guide-browse.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/user/guide-detail.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/StatsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/EGS_LeagueofLegends_RiotGames_S1_2560x1440-47eb328eac5ddd63ebd096ded7d0d5ab.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/ps-f2p-val-console-launch-16x9.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/stats-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/game-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/game-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/AdminDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/AdminDashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GameFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GameFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GameBrowseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GameBrowseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideBrowseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideBrowseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideDetailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideDetailController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/admin-dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/admin-dashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/user/game-browse.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/user/game-browse.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/user/guide-browse.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/user/guide-browse.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/user/guide-detail.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/user/guide-detail.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,22 +30,17 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="package-info" />
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="JavaAutoRunManager">
-    <enabled-run-configurations>
-      <run-configuration type="MavenRunConfiguration" name="e-sports [org.openjfx:javafx-maven-plugin:0.0.8:run]" />
-    </enabled-run-configurations>
-  </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="3B28o2apYCjg6c7iHzwV2vTM9oC" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -69,25 +49,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/Mega-PC/Desktop/where i should be, again/exs/e-sports/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/admin-crud&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Mega-PC/Desktop/where i should be, again/exs/e-sports/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Mega-PC\Desktop\where i should be, again\exs\e-sports\src\main\resources\views\user" />
@@ -138,7 +118,10 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1773675977925</updated>
-      <workItem from="1773675979018" duration="13731000" />
+      <workItem from="1773675979018" duration="16954000" />
+      <workItem from="1773770988394" duration="9000" />
+      <workItem from="1773771010474" duration="819000" />
+      <workItem from="1773778401905" duration="2198000" />
     </task>
     <servers />
   </component>

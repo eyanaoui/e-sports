@@ -20,6 +20,9 @@
                     maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14; -fx-alignment: CENTER-LEFT;"/>
             <Button text="⭐  Ratings"    onAction="#showRatings"
                     maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14; -fx-alignment: CENTER-LEFT;"/>
+            <Button text="📊  Stats" onAction="#showStats"
+                    maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14; -fx-alignment: CENTER-LEFT;"/>
+
             <Separator style="-fx-background-color: #ffffff33;"/>
             <Button text="👤  User View"  onAction="#showUserView"
                     maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #aaaaaa; -fx-font-size: 14; -fx-alignment: CENTER-LEFT;"/>

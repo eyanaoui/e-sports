@@ -1,4 +1,5 @@
 package com.esports.controllers.admin;
+
 import javafx.stage.FileChooser;
 import java.io.File;
 import com.esports.dao.GameDAO;
@@ -46,13 +47,30 @@ public class GameFormController {
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.webp")
         );
-        Stage stage = (Stage) nameField.getScene().getWindow();
-        File file = fileChooser.showOpenDialog(stage);
+        File file = fileChooser.showOpenDialog((Stage) nameField.getScene().getWindow());
         if (file != null) {
-            coverField.setText(file.getName());
+            try {
+                // copy to src/main/resources/images/
+                File srcDir = new File("src/main/resources/images/");
+                srcDir.mkdirs();
+                java.nio.file.Files.copy(file.toPath(),
+                        new File(srcDir, file.getName()).toPath(),
+                        java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+                // also copy to target/classes/images/ so it works immediately
+                File targetDir = new File("target/classes/images/");
+                targetDir.mkdirs();
+                java.nio.file.Files.copy(file.toPath(),
+                        new File(targetDir, file.getName()).toPath(),
+                        java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+                coverField.setText(file.getName());
+            } catch (Exception e) {
+                e.printStackTrace();
+                coverField.setText(file.getName());
+            }
         }
     }
-
 
     @FXML
     private void handleSave() {

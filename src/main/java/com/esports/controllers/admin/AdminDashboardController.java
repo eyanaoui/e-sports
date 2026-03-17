@@ -41,6 +41,11 @@ public class AdminDashboardController {
         loadView("/views/user/game-browse.fxml");
     }
 
+    @FXML
+    public void showStats() {
+        loadView("/views/admin/stats-view.fxml");
+    }
+
     private void loadView(String path) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));

@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="views.user.GuideBrowse"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox spacing="15" style="-fx-padding: 20;"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.esports.controllers.user.GuideBrowseController">
 
-</AnchorPane>
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label fx:id="gameTitleLabel" text="Guides"
+               style="-fx-font-size: 22; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <TextField fx:id="searchField" promptText="Search guides..."
+                   prefWidth="300" onKeyReleased="#handleSearch"/>
+        <ComboBox fx:id="difficultyFilter" promptText="All Difficulties" prefWidth="150"
+                  onAction="#handleFilter"/>
+    </HBox>
+
+    <ScrollPane fitToWidth="true" prefHeight="450">
+        <FlowPane fx:id="guidesContainer" hgap="15" vgap="15"
+                  style="-fx-padding: 10;"/>
+    </ScrollPane>
+
+</VBox>
