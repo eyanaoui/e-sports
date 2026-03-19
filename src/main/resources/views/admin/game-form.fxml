@@ -12,8 +12,11 @@
 
     <GridPane hgap="10" vgap="12">
         <Label text="Name:"        GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="nameField" promptText="Game name" prefWidth="300"
-                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <HBox spacing="8" GridPane.rowIndex="0" GridPane.columnIndex="1">
+            <TextField fx:id="nameField" promptText="Game name" prefWidth="220"/>
+            <Button text="Fetch from RAWG" onAction="#handleFetchRawg"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+        </HBox>
 
         <Label text="Slug:"        GridPane.rowIndex="1" GridPane.columnIndex="0"/>
         <TextField fx:id="slugField" promptText="game-slug" prefWidth="300"
@@ -23,15 +26,15 @@
         <TextArea fx:id="descField" promptText="Description" prefWidth="300" prefHeight="80"
                   GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-        <Label text="Cover Image:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <HBox spacing="8" GridPane.rowIndex="4" GridPane.columnIndex="1">
-            <TextField fx:id="coverField" promptText="image-filename.jpg" prefWidth="230"/>
-            <Button text="Browse..." onAction="#handleBrowse"/>
-        </HBox>
-
         <Label text="Has Ranking:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
         <CheckBox fx:id="rankingCheck"
                   GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Cover Image:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <HBox spacing="8" GridPane.rowIndex="4" GridPane.columnIndex="1">
+            <TextField fx:id="coverField" promptText="image-filename.jpg" prefWidth="150"/>
+            <Button text="Browse..." onAction="#handleBrowse"/>
+        </HBox>
     </GridPane>
 
     <HBox spacing="10">

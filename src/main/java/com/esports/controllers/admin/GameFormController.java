@@ -128,6 +128,84 @@ public class GameFormController {
         return true;
     }
 
+    @FXML
+    private void handleFetchRawg() {
+        String gameName = nameField.getText().trim();
+        if (gameName.isEmpty()) { showAlert("Enter a game name first!"); return; }
+
+        try {
+            String apiKey = "cb7ae6fdec6b4c12b91583f874c7c31b";
+            String encodedName = java.net.URLEncoder.encode(gameName, "UTF-8");
+            String url = "https://api.rawg.io/api/games?key=" + apiKey + "&search=" + encodedName + "&page_size=1";
+
+            okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
+            okhttp3.Request request = new okhttp3.Request.Builder().url(url).build();
+            okhttp3.Response response = client.newCall(request).execute();
+
+            String body = response.body().string();
+            org.json.JSONObject json = new org.json.JSONObject(body);
+            org.json.JSONArray results = json.getJSONArray("results");
+
+            if (results.length() == 0) { showAlert("No game found on RAWG!"); return; }
+
+            org.json.JSONObject game = results.getJSONObject(0);
+
+            String name             = game.getString("name");
+            String slug             = game.getString("slug");
+            String backgroundImage  = game.optString("background_image", "");
+
+            // fetch full details to get description
+            String detailUrl = "https://api.rawg.io/api/games/" + slug + "?key=" + apiKey;
+            okhttp3.Request detailRequest = new okhttp3.Request.Builder().url(detailUrl).build();
+            okhttp3.Response detailResponse = client.newCall(detailRequest).execute();
+            org.json.JSONObject detailJson = new org.json.JSONObject(detailResponse.body().string());
+            String description = detailJson.optString("description_raw", "");
+
+            // fill fields
+            nameField.setText(name);
+            slugField.setText(slug);
+            descField.setText(description);
+
+            // download cover image
+            if (!backgroundImage.isEmpty()) {
+                javafx.application.Platform.runLater(() -> {
+                    try {
+                        String fileName = slug + ".jpg";
+
+                        okhttp3.Request imgRequest = new okhttp3.Request.Builder()
+                                .url(backgroundImage).build();
+                        okhttp3.Response imgResponse = client.newCall(imgRequest).execute();
+
+                        byte[] imageBytes = imgResponse.body().bytes();
+                        new File("src/main/resources/images/").mkdirs();
+                        new File("target/classes/images/").mkdirs();
+                        java.nio.file.Files.write(
+                                java.nio.file.Paths.get("src/main/resources/images/" + fileName), imageBytes);
+                        java.nio.file.Files.write(
+                                java.nio.file.Paths.get("target/classes/images/" + fileName), imageBytes);
+
+                        coverField.setText(fileName);
+                        showInfo("✅ Game fetched from RAWG!");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Failed to fetch from RAWG: " + e.getMessage());
+        }
+    }
+
+    private void showInfo(String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
+
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Validation");

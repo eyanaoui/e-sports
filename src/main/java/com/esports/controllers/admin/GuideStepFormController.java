@@ -128,6 +128,76 @@ public class GuideStepFormController {
         return true;
     }
 
+    @FXML
+    private void handleFetchYoutube() {
+        String videoUrl = videoField.getText().trim();
+        if (videoUrl.isEmpty()) { showAlert("Enter a YouTube URL first!"); return; }
+
+        try {
+            // extract video ID
+            String videoId = "";
+            if (videoUrl.contains("v=")) {
+                videoId = videoUrl.split("v=")[1];
+                if (videoId.contains("&")) videoId = videoId.split("&")[0];
+            } else if (videoUrl.contains("youtu.be/")) {
+                videoId = videoUrl.split("youtu.be/")[1];
+            }
+
+            if (videoId.isEmpty()) { showAlert("Invalid YouTube URL!"); return; }
+
+            String apiKey = "AIzaSyCQlFNlxRG-eUWQOPPTpTX5y6HtGvim2IQ";
+            String url = "https://www.googleapis.com/youtube/v3/videos?id=" + videoId
+                    + "&key=" + apiKey + "&part=snippet";
+
+            okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
+            okhttp3.Request request = new okhttp3.Request.Builder().url(url).build();
+            okhttp3.Response response = client.newCall(request).execute();
+
+            org.json.JSONObject json = new org.json.JSONObject(response.body().string());
+            org.json.JSONArray items = json.getJSONArray("items");
+
+            if (items.length() == 0) { showAlert("Video not found!"); return; }
+
+            org.json.JSONObject snippet = items.getJSONObject(0).getJSONObject("snippet");
+            String title = snippet.getString("title");
+            String thumbnailUrl = snippet.getJSONObject("thumbnails")
+                    .getJSONObject("high").getString("url");
+
+            // fill title field if empty
+            if (titleField.getText().trim().isEmpty()) {
+                titleField.setText(title);
+            }
+
+            // download thumbnail
+            String fileName = videoId + ".jpg";
+            okhttp3.Request imgRequest = new okhttp3.Request.Builder()
+                    .url(thumbnailUrl).build();
+            okhttp3.Response imgResponse = client.newCall(imgRequest).execute();
+            byte[] imageBytes = imgResponse.body().bytes();
+            new java.io.File("src/main/resources/images/").mkdirs();
+            new java.io.File("target/classes/images/").mkdirs();
+            java.nio.file.Files.write(
+                    java.nio.file.Paths.get("src/main/resources/images/" + fileName), imageBytes);
+            java.nio.file.Files.write(
+                    java.nio.file.Paths.get("target/classes/images/" + fileName), imageBytes);
+
+            imageField.setText(fileName);
+
+            showInfo("✅ Video fetched from YouTube!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Failed to fetch from YouTube: " + e.getMessage());
+        }
+    }
+
+    private void showInfo(String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Validation");

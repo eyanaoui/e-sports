@@ -5,21 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a588b42-1d87-44c3-84bd-d264ebff83f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/StatsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/EGS_LeagueofLegends_RiotGames_S1_2560x1440-47eb328eac5ddd63ebd096ded7d0d5ab.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/ps-f2p-val-console-launch-16x9.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/stats-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/AdminDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/AdminDashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GameFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GameFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GameBrowseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GameBrowseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideBrowseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideBrowseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideStepFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideStepFormController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideDetailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideDetailController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/admin-dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/admin-dashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/user/game-browse.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/user/game-browse.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/user/guide-browse.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/user/guide-browse.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/user/guide-detail.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/user/guide-detail.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/game-form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/game-form.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/guide-step-form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-step-form.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +113,8 @@
       <workItem from="1773675979018" duration="16954000" />
       <workItem from="1773770988394" duration="9000" />
       <workItem from="1773771010474" duration="819000" />
-      <workItem from="1773778401905" duration="2198000" />
+      <workItem from="1773778401905" duration="3444000" />
+      <workItem from="1773953820012" duration="2959000" />
     </task>
     <servers />
   </component>

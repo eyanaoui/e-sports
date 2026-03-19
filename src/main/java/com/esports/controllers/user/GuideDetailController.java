@@ -8,8 +8,11 @@ import com.esports.models.GuideStep;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
+import java.io.FileInputStream;
 import java.util.List;
 
 public class GuideDetailController {
@@ -56,8 +59,9 @@ public class GuideDetailController {
     private void loadSteps() {
         stepsContainer.getChildren().clear();
         List<GuideStep> steps = stepDAO.getByGuideId(currentGuide.getId());
+
         for (GuideStep step : steps) {
-            VBox stepCard = new VBox(5);
+            VBox stepCard = new VBox(8);
             stepCard.setStyle(
                     "-fx-background-color: #f8f9fa;" +
                             "-fx-border-color: #e0e0e0;" +
@@ -75,9 +79,33 @@ public class GuideDetailController {
 
             stepCard.getChildren().addAll(stepNum, content);
 
+            // show thumbnail image
+            if (step.getImage() != null && !step.getImage().isEmpty()) {
+                try {
+                    String imagePath = "target/classes/images/" + step.getImage();
+                    Image img = new Image(new FileInputStream(imagePath));
+                    ImageView imageView = new ImageView(img);
+                    imageView.setFitWidth(300);
+                    imageView.setFitHeight(180);
+                    imageView.setPreserveRatio(true);
+                    stepCard.getChildren().add(imageView);
+                } catch (Exception e) {
+                    System.out.println("❌ Step image not found: " + e.getMessage());
+                }
+            }
+
+            // clickable video link
             if (step.getVideoUrl() != null && !step.getVideoUrl().isEmpty()) {
-                Label video = new Label("▶ " + step.getVideoUrl());
-                video.setStyle("-fx-text-fill: #3498db; -fx-font-size: 11; -fx-cursor: hand;");
+                Hyperlink video = new Hyperlink("▶ Watch Video");
+                video.setStyle("-fx-text-fill: #3498db; -fx-font-size: 12;");
+                video.setOnAction(e -> {
+                    try {
+                        java.awt.Desktop.getDesktop().browse(
+                                new java.net.URI(step.getVideoUrl()));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                });
                 stepCard.getChildren().add(video);
             }
 
