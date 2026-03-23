@@ -11,7 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-
+import com.esports.AppState;
 import java.io.FileInputStream;
 import java.util.List;
 
@@ -59,27 +59,30 @@ public class GuideDetailController {
     private void loadSteps() {
         stepsContainer.getChildren().clear();
         List<GuideStep> steps = stepDAO.getByGuideId(currentGuide.getId());
+        boolean dark = AppState.isDarkMode();
 
         for (GuideStep step : steps) {
             VBox stepCard = new VBox(8);
             stepCard.setStyle(
-                    "-fx-background-color: #f8f9fa;" +
-                            "-fx-border-color: #e0e0e0;" +
+                    "-fx-background-color: " + (dark ? "#1a1a2e" : "#f8f9fa") + ";" +
+                            "-fx-border-color: "     + (dark ? "#2a2a4a" : "#e0e0e0") + ";" +
                             "-fx-border-radius: 6;" +
                             "-fx-background-radius: 6;" +
                             "-fx-padding: 12;"
             );
 
+            String textColor = dark ? "#e0e0e0" : "#333";
+            String muteColor = dark ? "#a0a0b0" : "#444";
+
             Label stepNum = new Label("Step " + step.getStepOrder() + " — " + step.getTitle());
-            stepNum.setStyle("-fx-font-weight: bold; -fx-font-size: 13;");
+            stepNum.setStyle("-fx-font-weight: bold; -fx-font-size: 13; -fx-text-fill: " + textColor + ";");
 
             Label content = new Label(step.getContent());
             content.setWrapText(true);
-            content.setStyle("-fx-font-size: 12; -fx-text-fill: #444;");
+            content.setStyle("-fx-font-size: 12; -fx-text-fill: " + muteColor + ";");
 
             stepCard.getChildren().addAll(stepNum, content);
 
-            // show thumbnail image
             if (step.getImage() != null && !step.getImage().isEmpty()) {
                 try {
                     String imagePath = "target/classes/images/" + step.getImage();
@@ -94,14 +97,12 @@ public class GuideDetailController {
                 }
             }
 
-            // clickable video link
             if (step.getVideoUrl() != null && !step.getVideoUrl().isEmpty()) {
                 Hyperlink video = new Hyperlink("▶ Watch Video");
                 video.setStyle("-fx-text-fill: #3498db; -fx-font-size: 12;");
                 video.setOnAction(e -> {
                     try {
-                        java.awt.Desktop.getDesktop().browse(
-                                new java.net.URI(step.getVideoUrl()));
+                        java.awt.Desktop.getDesktop().browse(new java.net.URI(step.getVideoUrl()));
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -113,20 +114,20 @@ public class GuideDetailController {
         }
 
         if (steps.isEmpty()) {
-            stepsContainer.getChildren().add(
-                    new Label("No steps available for this guide.")
-            );
+            stepsContainer.getChildren().add(new Label("No steps available for this guide."));
         }
     }
 
     private void loadRatings() {
         ratingsContainer.getChildren().clear();
         List<GuideRating> ratings = ratingDAO.getByGuideId(currentGuide.getId());
+        boolean dark = AppState.isDarkMode();
+
         for (GuideRating rating : ratings) {
             HBox row = new HBox(10);
             row.setStyle(
-                    "-fx-background-color: #f8f9fa;" +
-                            "-fx-border-color: #e0e0e0;" +
+                    "-fx-background-color: " + (dark ? "#1a1a2e" : "#f8f9fa") + ";" +
+                            "-fx-border-color: "     + (dark ? "#2a2a4a" : "#e0e0e0") + ";" +
                             "-fx-border-radius: 6;" +
                             "-fx-background-radius: 6;" +
                             "-fx-padding: 10;"
@@ -139,19 +140,68 @@ public class GuideDetailController {
             Label comment = new Label(rating.getComment() != null ?
                     rating.getComment() : "No comment");
             comment.setWrapText(true);
-            comment.setStyle("-fx-font-size: 12; -fx-text-fill: #555;");
+            comment.setStyle("-fx-font-size: 12; -fx-text-fill: " + (dark ? "#a0a0b0" : "#555") + ";");
 
-            row.getChildren().addAll(starLabel, comment);
+            Label sentimentBadge = new Label("...");
+            sentimentBadge.setStyle(
+                    "-fx-background-color: #ccc;" +
+                            "-fx-text-fill: white;" +
+                            "-fx-padding: 2 8 2 8;" +
+                            "-fx-background-radius: 99;" +
+                            "-fx-font-size: 11;"
+            );
+
+            if (rating.getComment() != null && !rating.getComment().isEmpty()) {
+                new Thread(() -> {
+                    try {
+                        String json = "{\"comment\": \"" +
+                                rating.getComment().replace("\"", "'") + "\"}";
+                        okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
+                        okhttp3.RequestBody body = okhttp3.RequestBody.create(
+                                json, okhttp3.MediaType.parse("application/json"));
+                        okhttp3.Request request = new okhttp3.Request.Builder()
+                                .url("http://127.0.0.1:5000/predict/sentiment")
+                                .post(body).build();
+                        okhttp3.Response response = client.newCall(request).execute();
+                        org.json.JSONObject result = new org.json.JSONObject(response.body().string());
+                        String sentiment  = result.getString("sentiment");
+                        double confidence = result.getDouble("confidence");
+
+                        javafx.application.Platform.runLater(() -> {
+                            if (sentiment.equals("positive")) {
+                                sentimentBadge.setText("✅ Positive " + (int)(confidence*100) + "%");
+                                sentimentBadge.setStyle(
+                                        "-fx-background-color: #2ecc71;" +
+                                                "-fx-text-fill: white;" +
+                                                "-fx-padding: 2 8 2 8;" +
+                                                "-fx-background-radius: 99;" +
+                                                "-fx-font-size: 11;"
+                                );
+                            } else {
+                                sentimentBadge.setText("❌ Negative " + (int)(confidence*100) + "%");
+                                sentimentBadge.setStyle(
+                                        "-fx-background-color: #e74c3c;" +
+                                                "-fx-text-fill: white;" +
+                                                "-fx-padding: 2 8 2 8;" +
+                                                "-fx-background-radius: 99;" +
+                                                "-fx-font-size: 11;"
+                                );
+                            }
+                        });
+                    } catch (Exception e) {
+                        javafx.application.Platform.runLater(() -> sentimentBadge.setText("N/A"));
+                    }
+                }).start();
+            }
+
+            row.getChildren().addAll(starLabel, comment, sentimentBadge);
             ratingsContainer.getChildren().add(row);
         }
 
         if (ratings.isEmpty()) {
-            ratingsContainer.getChildren().add(
-                    new Label("No ratings yet. Be the first to rate!")
-            );
+            ratingsContainer.getChildren().add(new Label("No ratings yet. Be the first to rate!"));
         }
     }
-
     @FXML
     private void handleSubmitRating() {
         if (ratingBox.getValue() == null) {

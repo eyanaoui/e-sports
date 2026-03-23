@@ -1,5 +1,6 @@
 package com.esports.controllers.user;
 
+import com.esports.AppState;
 import com.esports.dao.GameDAO;
 import com.esports.models.Game;
 import javafx.fxml.FXML;
@@ -7,10 +8,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,10 +35,7 @@ public class GameBrowseController {
     @FXML
     private void handleSearch() {
         String query = searchField.getText().toLowerCase().trim();
-        if (query.isEmpty()) {
-            loadGames(gameDAO.getAll());
-            return;
-        }
+        if (query.isEmpty()) { loadGames(gameDAO.getAll()); return; }
         List<Game> filtered = gameDAO.getAll().stream()
                 .filter(g -> g.getName().toLowerCase().contains(query)
                         || (g.getDescription() != null &&
@@ -51,9 +53,10 @@ public class GameBrowseController {
 
     private VBox createGameCard(Game game) {
         VBox card = new VBox(8);
+        boolean dark = !AppState.isDarkMode();
         card.setStyle(
-                "-fx-background-color: white;" +
-                        "-fx-border-color: #e0e0e0;" +
+                "-fx-background-color: " + (dark ? "#1a1a2e" : "white") + ";" +
+                        "-fx-border-color: "     + (dark ? "#2a2a4a" : "#e0e0e0") + ";" +
                         "-fx-border-radius: 8;" +
                         "-fx-background-radius: 8;" +
                         "-fx-padding: 15;" +
@@ -61,35 +64,36 @@ public class GameBrowseController {
         );
         card.setPrefWidth(200);
 
-        // show image if available
         if (game.getCoverImage() != null && !game.getCoverImage().isEmpty()) {
             try {
                 String imagePath = "target/classes/images/" + game.getCoverImage();
                 System.out.println("🔍 Looking for image at: " + new File(imagePath).getAbsolutePath());
-                javafx.scene.image.Image img = new javafx.scene.image.Image(
-                        new java.io.FileInputStream(imagePath));
-                javafx.scene.image.ImageView imageView = new javafx.scene.image.ImageView(img);
+                Image img = new Image(new FileInputStream(imagePath));
+                ImageView imageView = new ImageView(img);
                 imageView.setFitWidth(170);
                 imageView.setFitHeight(100);
                 imageView.setPreserveRatio(true);
                 card.getChildren().add(imageView);
             } catch (Exception e) {
                 System.out.println("❌ Image not found: " + e.getMessage());
-            }            }
+            }
+        }
 
+        String textColor = dark ? "#e0e0e0" : "#333";
+        String muteColor = dark ? "#a0a0b0" : "#666";
 
         Label name = new Label(game.getName());
-        name.setStyle("-fx-font-size: 14; -fx-font-weight: bold;");
+        name.setStyle("-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: " + textColor + ";");
         name.setWrapText(true);
 
         Label desc = new Label(game.getDescription() != null ?
                 game.getDescription() : "No description");
-        desc.setStyle("-fx-font-size: 12; -fx-text-fill: #666;");
+        desc.setStyle("-fx-font-size: 12; -fx-text-fill: " + muteColor + ";");
         desc.setWrapText(true);
         desc.setMaxHeight(60);
 
         Label ranking = new Label(game.isHasRanking() ? "🏆 Ranked" : "🎮 Casual");
-        ranking.setStyle("-fx-font-size: 11; -fx-text-fill: #999;");
+        ranking.setStyle("-fx-font-size: 11; -fx-text-fill: " + muteColor + ";");
 
         card.getChildren().addAll(name, desc, ranking);
         card.setOnMouseClicked(e -> openGuidesBrowse(game));
@@ -102,7 +106,16 @@ public class GameBrowseController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/user/guide-browse.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Guides — " + game.getName());
-            stage.setScene(new Scene(loader.load(), 800, 600));
+            Scene scene = new Scene(loader.load(), 800, 600);
+
+            // apply current theme safely
+            String cssPath = AppState.isDarkMode() ? "/styles-dark.css" : "/styles.css";
+            java.net.URL cssUrl = getClass().getResource(cssPath);
+            if (cssUrl != null) {
+                scene.getStylesheets().add(cssUrl.toExternalForm());
+            }
+
+            stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             GuideBrowseController controller = loader.getController();
             controller.setGame(game);

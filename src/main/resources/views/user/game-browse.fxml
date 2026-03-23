@@ -16,6 +16,7 @@
 
     <ScrollPane fitToWidth="true" prefHeight="500">
         <FlowPane fx:id="gamesContainer" hgap="15" vgap="15"
+                  prefWrapLength="800"
                   style="-fx-padding: 10;"/>
     </ScrollPane>
 
