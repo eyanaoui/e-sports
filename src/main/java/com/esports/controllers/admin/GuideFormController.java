@@ -92,6 +92,30 @@ public class GuideFormController {
     }
 
     @FXML
+    private void handlePredictDifficulty() {
+        String description = descField.getText().trim();
+        if (description.isEmpty()) { showAlert("Enter a description first!"); return; }
+
+        try {
+            String json = "{\"description\": \"" + description.replace("\"", "'") + "\"}";
+            okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
+            okhttp3.RequestBody body = okhttp3.RequestBody.create(
+                    json, okhttp3.MediaType.parse("application/json"));
+            okhttp3.Request request = new okhttp3.Request.Builder()
+                    .url("http://127.0.0.1:5000/predict/difficulty")
+                    .post(body)
+                    .build();
+            okhttp3.Response response = client.newCall(request).execute();
+            org.json.JSONObject result = new org.json.JSONObject(response.body().string());
+            String difficulty  = result.getString("difficulty");
+            double confidence  = result.getDouble("confidence");
+            difficultyBox.setValue(difficulty);
+            showInfo("🤖 Predicted: " + difficulty + " (" + (int)(confidence * 100) + "% confidence)");
+        } catch (Exception e) {
+            showAlert("Flask API not running! Start it with: python app.py");
+        }
+    }
+    @FXML
     private void handleDelete() {
         if (currentGuide == null) return;
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
@@ -127,6 +151,14 @@ public class GuideFormController {
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Validation");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
+
+    private void showInfo(String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();

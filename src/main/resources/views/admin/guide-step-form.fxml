@@ -28,14 +28,17 @@
                    GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
         <Label text="Image:"       GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <HBox spacing="8"          GridPane.rowIndex="4" GridPane.columnIndex="1">
+        <HBox spacing="8" GridPane.rowIndex="4" GridPane.columnIndex="1">
             <TextField fx:id="imageField" promptText="image.jpg" prefWidth="230"/>
             <Button text="Browse..." onAction="#handleBrowse"/>
         </HBox>
 
         <Label text="Video URL:"   GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-        <TextField fx:id="videoField" promptText="https://youtube.com/..." prefWidth="300"
-                   GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        <HBox spacing="8" GridPane.rowIndex="5" GridPane.columnIndex="1">
+            <TextField fx:id="videoField" promptText="https://youtube.com/..." prefWidth="220"/>
+            <Button text="Fetch from YouTube" onAction="#handleFetchYoutube"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+        </HBox>
     </GridPane>
 
     <HBox spacing="10">

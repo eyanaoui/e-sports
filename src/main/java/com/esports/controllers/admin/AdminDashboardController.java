@@ -1,8 +1,11 @@
 package com.esports.controllers.admin;
 
+import com.esports.AppState;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -10,6 +13,9 @@ import java.io.IOException;
 public class AdminDashboardController {
 
     @FXML private AnchorPane contentArea;
+    @FXML private Button darkModeBtn;
+    private boolean isDarkMode = false;
+    private String currentView = "/views/admin/game-view.fxml";
 
     @FXML
     public void initialize() {
@@ -18,27 +24,58 @@ public class AdminDashboardController {
 
     @FXML
     public void showGames() {
-        loadView("/views/admin/game-view.fxml");
+        currentView = "/views/admin/game-view.fxml";
+        loadView(currentView);
     }
 
     @FXML
     public void showGuides() {
-        loadView("/views/admin/guide-view.fxml");
+        currentView = "/views/admin/guide-view.fxml";
+        loadView(currentView);
     }
 
     @FXML
     public void showSteps() {
-        loadView("/views/admin/guide-step-view.fxml");
+        currentView = "/views/admin/guide-step-view.fxml";
+        loadView(currentView);
     }
 
     @FXML
     public void showRatings() {
-        loadView("/views/admin/guide-rating-view.fxml");
+        currentView = "/views/admin/guide-rating-view.fxml";
+        loadView(currentView);
+    }
+
+    @FXML
+    public void showStats() {
+        currentView = "/views/admin/stats-view.fxml";
+        loadView(currentView);
     }
 
     @FXML
     public void showUserView() {
-        loadView("/views/user/game-browse.fxml");
+        currentView = "/views/user/game-browse.fxml";
+        loadView(currentView);
+    }
+
+    @FXML
+    private void toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        AppState.setDarkMode(isDarkMode);
+        Scene scene = contentArea.getScene();
+        scene.getStylesheets().clear();
+        try {
+            if (isDarkMode) {
+                scene.getStylesheets().add(getClass().getResource("/styles-dark.css").toExternalForm());
+                darkModeBtn.setText("☀️  Light Mode");
+            } else {
+                scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+                darkModeBtn.setText("🌙  Dark Mode");
+            }
+        } catch (Exception e) {
+            System.out.println("❌ CSS file not found: " + e.getMessage());
+        }
+        loadView(currentView);
     }
 
     private void loadView(String path) {
