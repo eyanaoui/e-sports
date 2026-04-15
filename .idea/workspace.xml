@@ -5,24 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a588b42-1d87-44c3-84bd-d264ebff83f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ml/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ml/difficulty_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ml/recommender_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ml/sentiment_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/AppState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/styles-dark.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TeamController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TeamFormController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/dao/TeamDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/models/Team.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/team-form.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/team-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/AdminDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/AdminDashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GameBrowseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GameBrowseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideBrowseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideBrowseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideDetailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideDetailController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/admin-dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/admin-dashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/guide-form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-form.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/user/game-browse.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/user/game-browse.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/user/guide-browse.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/user/guide-browse.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,15 +25,27 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="package-info" />
-        <option value="FxmlFile" />
-        <option value="Class" />
         <option value="CSS File" />
+        <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Oussama-Bhy"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/eyanaoui/e-sports",
+    "accountId": "1ed99792-033f-4214-add3-adcddd464de0"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -55,11 +59,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Maven.e-sports [javafx:run].executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feature/admin-crud",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -97,6 +103,7 @@
                 <option value="javafx:run" />
               </list>
             </option>
+            <option name="multimoduleDir" />
             <option name="pomFileName" value="pom.xml" />
             <option name="profilesMap">
               <map />

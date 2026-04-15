@@ -23,6 +23,12 @@ public class AdminDashboardController {
     }
 
     @FXML
+    public void showTeams() {
+        currentView = "/views/admin/team-view.fxml";
+        loadView(currentView);
+    }
+
+    @FXML
     public void showGames() {
         currentView = "/views/admin/game-view.fxml";
         loadView(currentView);
