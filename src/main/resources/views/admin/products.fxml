@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" style="-fx-padding: 25;"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.esports.controllers.admin.ProductsController">
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Product Management"
+               style="-fx-font-size: 22; -fx-font-weight: bold;"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <TextField fx:id="searchField" promptText="Search products..." prefWidth="250"/>
+        <Button text="Search" onAction="#handleSearch"/>
+        <Button text="+ Add Product" onAction="#handleAddProduct"
+                style="-fx-background-color: #9b59b6; -fx-text-fill: white;"/>
+    </HBox>
+
+    <TableView fx:id="productTable" prefHeight="330">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="60"/>
+            <TableColumn fx:id="nameColumn" text="Name" prefWidth="150"/>
+            <TableColumn fx:id="categoryColumn" text="Category" prefWidth="130"/>
+            <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="220"/>
+            <TableColumn fx:id="priceColumn" text="Price" prefWidth="100"/>
+            <TableColumn fx:id="stockColumn" text="Stock" prefWidth="90"/>
+            <TableColumn fx:id="ordersCountColumn" text="Orders" prefWidth="90"/>
+            <TableColumn fx:id="activeColumn" text="Active" prefWidth="90"/>
+            <TableColumn fx:id="imageColumn" text="Image" prefWidth="140"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Refresh" onAction="#handleRefresh"/>
+        <Button text="Modify Selected" onAction="#handleEditSelected"
+                style="-fx-background-color: #f39c12; -fx-text-fill: white;"/>
+        <Button text="Deactivate Selected" onAction="#handleDeleteSelected"
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+    </HBox>
+
+    <Separator/>
+
+    <Label text="Sort &amp; Statistics"
+           style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10">
+        <Button text="Name A-Z" onAction="#handleSortByName"/>
+        <Button text="Price ↑" onAction="#handleSortByPriceAsc"/>
+        <Button text="Price ↓" onAction="#handleSortByPriceDesc"/>
+        <Button text="Stock ↑" onAction="#handleSortByStockAsc"/>
+        <Button text="Stock ↓" onAction="#handleSortByStockDesc"/>
+        <Button text="Most Ordered" onAction="#handleSortByOrders"/>
+    </HBox>
+
+    <GridPane hgap="15" vgap="15">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="25"/>
+            <ColumnConstraints percentWidth="25"/>
+            <ColumnConstraints percentWidth="25"/>
+            <ColumnConstraints percentWidth="25"/>
+        </columnConstraints>
+
+        <VBox spacing="6" GridPane.columnIndex="0"
+              style="-fx-background-color: #3498db; -fx-background-radius: 12; -fx-padding: 15;">
+            <Label text="Total Products" style="-fx-text-fill: white; -fx-font-size: 13;"/>
+            <Label fx:id="totalProductsLabel" text="0"
+                   style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;"/>
+        </VBox>
+
+        <VBox spacing="6" GridPane.columnIndex="1"
+              style="-fx-background-color: #2ecc71; -fx-background-radius: 12; -fx-padding: 15;">
+            <Label text="Total Stock" style="-fx-text-fill: white; -fx-font-size: 13;"/>
+            <Label fx:id="totalStockLabel" text="0"
+                   style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;"/>
+        </VBox>
+
+        <VBox spacing="6" GridPane.columnIndex="2"
+              style="-fx-background-color: #e74c3c; -fx-background-radius: 12; -fx-padding: 15;">
+            <Label text="Total Orders" style="-fx-text-fill: white; -fx-font-size: 13;"/>
+            <Label fx:id="totalOrdersLabel" text="0"
+                   style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;"/>
+        </VBox>
+
+        <VBox spacing="6" GridPane.columnIndex="3"
+              style="-fx-background-color: #f39c12; -fx-background-radius: 12; -fx-padding: 15;">
+            <Label text="Average Price" style="-fx-text-fill: white; -fx-font-size: 13;"/>
+            <Label fx:id="averagePriceLabel" text="0"
+                   style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;"/>
+        </VBox>
+    </GridPane>
+
+    <HBox spacing="20">
+        <BarChart fx:id="ordersBarChart" prefWidth="700" prefHeight="320" title="Orders by Product">
+            <xAxis>
+                <CategoryAxis label="Product"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="Orders"/>
+            </yAxis>
+        </BarChart>
+
+        <PieChart fx:id="categoryPieChart" prefWidth="420" prefHeight="320" title="Category Distribution"/>
+    </HBox>
+
+</VBox>

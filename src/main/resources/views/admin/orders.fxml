@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" style="-fx-padding: 25;"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.esports.controllers.admin.OrdersController">
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Order Management"
+               style="-fx-font-size: 22; -fx-font-weight: bold;"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <TextField fx:id="searchField" promptText="Search orders..." prefWidth="250"/>
+        <Button text="Search" onAction="#handleSearch"/>
+        <Button text="Refresh" onAction="#handleRefresh"/>
+    </HBox>
+
+    <TableView fx:id="orderTable" prefHeight="520">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="60"/>
+            <TableColumn fx:id="referenceColumn" text="Reference" prefWidth="140"/>
+            <TableColumn fx:id="firstNameColumn" text="First Name" prefWidth="120"/>
+            <TableColumn fx:id="lastNameColumn" text="Last Name" prefWidth="120"/>
+            <TableColumn fx:id="emailColumn" text="Email" prefWidth="180"/>
+            <TableColumn fx:id="phoneColumn" text="Phone" prefWidth="120"/>
+            <TableColumn fx:id="paymentMethodColumn" text="Payment Method" prefWidth="120"/>
+            <TableColumn fx:id="paymentStatusColumn" text="Payment Status" prefWidth="120"/>
+            <TableColumn fx:id="statusColumn" text="Status" prefWidth="100"/>
+            <TableColumn fx:id="totalColumn" text="Total" prefWidth="100"/>
+            <TableColumn fx:id="createdAtColumn" text="Created At" prefWidth="180"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Delete Selected" onAction="#handleDeleteSelected"
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+    </HBox>
+
+</VBox>
