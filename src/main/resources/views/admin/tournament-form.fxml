@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" style="-fx-background-color: #1e1e2e; -fx-padding: 25;" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.esports.controllers.admin.TournamentFormController" prefWidth="500">
+
+    <Label fx:id="formTitle" text="Add Tournament" style="-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold;"/>
+
+    <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+        <GridPane hgap="15" vgap="15">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
+
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="5">
+                <Label text="Tournament Name" style="-fx-text-fill: #a6adc8;"/>
+                <TextField fx:id="nameField" promptText="e.g. Winter Clash"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="5">
+                <Label text="Game" style="-fx-text-fill: #a6adc8;"/>
+                <TextField fx:id="gameField" promptText="e.g. Valorant"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="5">
+                <Label text="Format" style="-fx-text-fill: #a6adc8;"/>
+                <ComboBox fx:id="formatCombo" promptText="Select Format" maxWidth="Infinity"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="5">
+                <Label text="Max Teams" style="-fx-text-fill: #a6adc8;"/>
+                <TextField fx:id="maxTeamsField" promptText="e.g. 16"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="2" spacing="5">
+                <Label text="Start Date" style="-fx-text-fill: #a6adc8;"/>
+                <DatePicker fx:id="startDatePicker" maxWidth="Infinity"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="2" spacing="5">
+                <Label text="Registration Deadline" style="-fx-text-fill: #a6adc8;"/>
+                <DatePicker fx:id="deadlinePicker" maxWidth="Infinity"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="3" spacing="5">
+                <Label text="Prize Pool" style="-fx-text-fill: #a6adc8;"/>
+                <TextField fx:id="prizeField" promptText="e.g. 1000 TND"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="3" spacing="5">
+                <Label text="Status" style="-fx-text-fill: #a6adc8;"/>
+                <ComboBox fx:id="statusCombo" promptText="Status" maxWidth="Infinity"/>
+            </VBox>
+
+            <VBox GridPane.columnSpan="2" GridPane.rowIndex="4" spacing="5">
+                <Label text="Description" style="-fx-text-fill: #a6adc8;"/>
+                <TextArea fx:id="descArea" prefHeight="80" wrapText="true"/>
+            </VBox>
+        </GridPane>
+    </ScrollPane>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#handleCancel" style="-fx-background-color: #313244; -fx-text-fill: white;"/>
+        <Button fx:id="deleteBtn" text="Delete" onAction="#handleDelete" style="-fx-background-color: #f38ba8; -fx-text-fill: white;"/>
+        <Button text="Save Tournament" onAction="#handleSave" style="-fx-background-color: #89b4fa; -fx-text-fill: white;"/>
+    </HBox>
+</VBox>

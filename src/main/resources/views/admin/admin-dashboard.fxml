@@ -12,6 +12,7 @@
         <VBox styleClass="sidebar" prefWidth="220">
             <Label text="⚡ Esports Admin" styleClass="sidebar-title"/>
             <Button text="👥  Teams" onAction="#showTeams" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="🏆 Tournaments" onAction="#showTournaments" maxWidth="Infinity" styleClass="sidebar-btn"/>
             <Button text="🎮  Games"    onAction="#showGames"   maxWidth="Infinity" styleClass="sidebar-btn"/>
             <Button text="📖  Guides"   onAction="#showGuides"  maxWidth="Infinity" styleClass="sidebar-btn"/>
             <Button text="🪜  Steps"    onAction="#showSteps"   maxWidth="Infinity" styleClass="sidebar-btn"/>

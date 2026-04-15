@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" style="-fx-padding: 20;"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.esports.controllers.admin.TournamentController">
+
+    <Label text="Tournament Management" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10">
+        <TextField fx:id="searchField" promptText="Search tournaments..." prefWidth="350" onKeyReleased="#handleSearch"/>
+        <Button text="+ Add Tournament" onAction="#handleAdd" styleClass="sidebar-btn"/>
+    </HBox>
+
+    <TableView fx:id="tournamentTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId"      text="ID"      prefWidth="50"/>
+            <TableColumn fx:id="colName"    text="Name"    prefWidth="150"/>
+            <TableColumn fx:id="colGame"    text="Game"    prefWidth="120"/>
+            <TableColumn fx:id="colFormat"  text="Format"  prefWidth="100"/>
+            <TableColumn fx:id="colDate"    text="Start Date" prefWidth="150"/>
+            <TableColumn fx:id="colStatus"  text="Status"  prefWidth="100"/>
+        </columns>
+    </TableView>
+</VBox>
