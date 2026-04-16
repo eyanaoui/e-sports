@@ -5,15 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a588b42-1d87-44c3-84bd-d264ebff83f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/dao/TournamentDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/models/Tournament.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/tournament-form.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/admin/tournament-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/AdminDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/AdminDashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/admin-dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/admin-dashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/tournament-form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/tournament-form.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,12 +33,12 @@
     &quot;assignee&quot;: &quot;Oussama-Bhy&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/eyanaoui/e-sports/",
-    "accountId": "1ed99792-033f-4214-add3-adcddd464de0"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/eyanaoui/e-sports/&quot;,
+    &quot;accountId&quot;: &quot;1ed99792-033f-4214-add3-adcddd464de0&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
