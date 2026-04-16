@@ -250,3 +250,24 @@
 .split-pane { -fx-background-color: #0f0f1a; }
 
 .separator .line { -fx-border-color: #2a2a4a; }
+
+/* Champs invalides : ligne rouge en bas */
+.text-field.input-error,
+.text-area.input-error {
+    -fx-border-color: transparent transparent #e74c3c transparent;
+    -fx-border-width: 0 0 2px 0;
+}
+.text-field.input-error:focused,
+.text-area.input-error:focused {
+    -fx-border-color: transparent transparent #c0392b transparent;
+}
+
+.shop-page {
+    -fx-background-color: #0f0f1a;
+}
+
+.form-error-label {
+    -fx-text-fill: #ff5a5f;
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+}

@@ -154,3 +154,23 @@
     -fx-font-size: 32;
     -fx-font-weight: bold;
 }
+
+.text-field.input-error,
+.text-area.input-error {
+    -fx-border-color: transparent transparent #e74c3c transparent;
+    -fx-border-width: 0 0 2px 0;
+}
+.text-field.input-error:focused,
+.text-area.input-error:focused {
+    -fx-border-color: transparent transparent #ff6b6b transparent;
+}
+
+.shop-page {
+    -fx-background-color: #0f0f1a;
+}
+
+.form-error-label {
+    -fx-text-fill: #ff6b6b;
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+}

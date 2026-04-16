@@ -2,23 +2,19 @@ package com.esports;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/admin/admin-dashboard.fxml"));
-        Scene scene = new Scene(loader.load());
-        stage.setTitle("Esports Admin Panel");
+        // Loads the main dashboard with the sidebar and charts
+        Parent root = FXMLLoader.load(getClass().getResource("/views/admin/admin-dashboard.fxml"));
+        Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setMaximized(true);
+        stage.setTitle("Esports Management System");
         stage.show();
-        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
+    public static void main(String[] args) { launch(args); }
 }

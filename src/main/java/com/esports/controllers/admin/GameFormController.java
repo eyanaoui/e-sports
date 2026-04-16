@@ -4,6 +4,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import com.esports.dao.GameDAO;
 import com.esports.models.Game;
+import com.esports.utils.ValidationHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -22,6 +23,7 @@ public class GameFormController {
 
     public void setGame(Game game) {
         this.currentGame = game;
+        ValidationHelper.clearFieldErrors(nameField, slugField);
         if (game == null) {
             formTitle.setText("Add Game");
             deleteBtn.setVisible(false);
@@ -34,6 +36,12 @@ public class GameFormController {
             coverField.setText(game.getCoverImage() != null ? game.getCoverImage() : "");
             rankingCheck.setSelected(game.isHasRanking());
         }
+    }
+
+    @FXML
+    public void initialize() {
+        nameField.textProperty().addListener((o, a, b) -> ValidationHelper.clearFieldError(nameField));
+        slugField.textProperty().addListener((o, a, b) -> ValidationHelper.clearFieldError(slugField));
     }
 
     public void setOnSuccess(Runnable onSuccess) {
@@ -122,16 +130,33 @@ public class GameFormController {
     }
 
     private boolean validateInputs() {
-        if (nameField.getText().trim().isEmpty())    { showAlert("Name is required!"); return false; }
-        if (nameField.getText().trim().length() < 2) { showAlert("Name must be at least 2 characters!"); return false; }
-        if (slugField.getText().trim().isEmpty())     { showAlert("Slug is required!"); return false; }
+        ValidationHelper.clearFieldErrors(nameField, slugField);
+        if (nameField.getText().trim().isEmpty()) {
+            ValidationHelper.setFieldError(nameField, true);
+            showAlert("Name is required!");
+            return false;
+        }
+        if (nameField.getText().trim().length() < 2) {
+            ValidationHelper.setFieldError(nameField, true);
+            showAlert("Name must be at least 2 characters!");
+            return false;
+        }
+        if (slugField.getText().trim().isEmpty()) {
+            ValidationHelper.setFieldError(slugField, true);
+            showAlert("Slug is required!");
+            return false;
+        }
         return true;
     }
 
     @FXML
     private void handleFetchRawg() {
         String gameName = nameField.getText().trim();
-        if (gameName.isEmpty()) { showAlert("Enter a game name first!"); return; }
+        if (gameName.isEmpty()) {
+            ValidationHelper.setFieldError(nameField, true);
+            showAlert("Enter a game name first!");
+            return;
+        }
 
         try {
             String apiKey = "cb7ae6fdec6b4c12b91583f874c7c31b";

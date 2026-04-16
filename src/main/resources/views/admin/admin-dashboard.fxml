@@ -10,17 +10,19 @@
     <!-- SIDEBAR -->
     <left>
         <VBox styleClass="sidebar" prefWidth="220">
-            <Label text="⚡ Esports Admin" styleClass="sidebar-title"/>
-            <Button text="🎮  Games"    onAction="#showGames"   maxWidth="Infinity" styleClass="sidebar-btn"/>
-            <Button text="📖  Guides"   onAction="#showGuides"  maxWidth="Infinity" styleClass="sidebar-btn"/>
-            <Button text="🪜  Steps"    onAction="#showSteps"   maxWidth="Infinity" styleClass="sidebar-btn"/>
-            <Button text="⭐  Ratings"  onAction="#showRatings" maxWidth="Infinity" styleClass="sidebar-btn"/>
-            <Button text="📊  Stats"    onAction="#showStats"   maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Label text="Esports Admin" styleClass="sidebar-title"/>
+            <Button fx:id="darkModeBtn" text="Dark Mode" onAction="#toggleDarkMode"
+                    maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="Games" onAction="#showGames" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="Guides" onAction="#showGuides" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="Steps" onAction="#showSteps" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="Ratings" onAction="#showRatings" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="Stats" onAction="#showStats" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="Forum Admin" onAction="#showForumAdmin" maxWidth="Infinity" styleClass="sidebar-btn"/>
 
             <Separator/>
-            <Button fx:id="darkModeBtn" text="🌙  Dark Mode" onAction="#toggleDarkMode"
-                    maxWidth="Infinity" styleClass="sidebar-btn"/>
-            <Button text="👤  User View" onAction="#showUserView"
+            <Button text="Forum" onAction="#showForum" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="User View" onAction="#showUserView"
                     maxWidth="Infinity" styleClass="sidebar-btn"/>
         </VBox>
     </left>

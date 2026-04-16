@@ -53,6 +53,18 @@ public class AdminDashboardController {
     }
 
     @FXML
+    public void showForum() {
+        currentView = "/views/user/ForumView.fxml";
+        loadView(currentView);
+    }
+
+    @FXML
+    public void showForumAdmin() {
+        currentView = "/views/admin/admin-forum.fxml";
+        loadView(currentView);
+    }
+
+    @FXML
     public void showUserView() {
         currentView = "/views/user/game-browse.fxml";
         loadView(currentView);

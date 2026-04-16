@@ -5,24 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a588b42-1d87-44c3-84bd-d264ebff83f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ml/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ml/difficulty_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ml/recommender_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ml/sentiment_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/AppState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/styles-dark.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/ForumController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/MessageController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/dao/MessageDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/dao/SujetDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/models/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/models/Sujet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/user/ForumView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/AdminDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/AdminDashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GuideFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GameBrowseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GameBrowseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideBrowseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideBrowseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideDetailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideDetailController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GameFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/GameFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/styles-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/styles-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/admin-dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/admin-dashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/guide-form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/guide-form.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/user/game-browse.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/user/game-browse.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/user/guide-browse.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/user/guide-browse.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,8 +31,8 @@
       <list>
         <option value="package-info" />
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="CSS File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -46,7 +43,7 @@
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="3B28o2apYCjg6c7iHzwV2vTM9oC" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -55,11 +52,18 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Run",
+    "Maven.e-sports [clean].executor": "Run",
+    "Maven.e-sports [install].executor": "Run",
+    "Maven.e-sports [javafx:run].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feature/admin-crud",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -70,6 +74,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -81,7 +86,21 @@
       <recent name="C:\Users\Mega-PC\Desktop\where i should be, again\exs\e-sports\src\main\resources\views\admin" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.esports.Main" />
+      <module name="e-sports" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;$MAVEN_REPOSITORY$/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-win.jar;$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-win.jar;$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-win.jar;$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2-win.jar&quot; --add-modules javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.esports.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="e-sports [javafx:run]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -97,6 +116,7 @@
                 <option value="javafx:run" />
               </list>
             </option>
+            <option name="multimoduleDir" />
             <option name="pomFileName" value="pom.xml" />
             <option name="profilesMap">
               <map />
@@ -111,8 +131,13 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Maven.e-sports [javafx:run]" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Maven.e-sports [javafx:run]" />
       </list>
     </recent_temporary>
@@ -131,6 +156,7 @@
       <workItem from="1773778401905" duration="3444000" />
       <workItem from="1773953820012" duration="10716000" />
       <workItem from="1774214301211" duration="3611000" />
+      <workItem from="1776291627939" duration="11416000" />
     </task>
     <servers />
   </component>

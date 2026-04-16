@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.esports.controllers.admin.AdminForumController"
+      spacing="12" styleClass="shop-page" style="-fx-padding: 20;">
+
+    <Label text="admin_forum" styleClass="page-title"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="filterField" promptText="Filter by subject/message..." prefWidth="320" styleClass="search-field"/>
+        <ComboBox fx:id="sortCombo" prefWidth="180"/>
+        <Button text="Refresh" onAction="#handleRefresh" styleClass="btn-primary"/>
+        <Button text="Delete Selected" onAction="#handleDeleteSelected" styleClass="btn-danger"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Messages:"/>
+        <Label fx:id="totalMessagesLabel" text="0" style="-fx-font-weight: bold;"/>
+    </HBox>
+
+    <SplitPane dividerPositions="0.72" VBox.vgrow="ALWAYS">
+        <items>
+            <TableView fx:id="messageTable">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="55"/>
+                    <TableColumn fx:id="colSujetId" text="Sujet ID" prefWidth="80"/>
+                    <TableColumn fx:id="colSujetTitre" text="Subject" prefWidth="170"/>
+                    <TableColumn fx:id="colContenu" text="Message" prefWidth="430"/>
+                    <TableColumn fx:id="colLength" text="Length" prefWidth="80"/>
+                </columns>
+            </TableView>
+            <VBox spacing="8" style="-fx-padding: 8;">
+                <Label text="Messages by Subject" style="-fx-font-weight: bold;"/>
+                <PieChart fx:id="sujetPieChart" labelsVisible="true" legendVisible="true" VBox.vgrow="ALWAYS"/>
+            </VBox>
+        </items>
+    </SplitPane>
+</VBox>

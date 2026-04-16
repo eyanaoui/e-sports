@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.esports.controllers.user.MessageController"
+           prefWidth="640" prefHeight="560"
+           styleClass="forum-msg-root"
+           stylesheets="@../../forum-messages.css">
+
+    <VBox spacing="0" styleClass="forum-msg-bg" VBox.vgrow="ALWAYS">
+        <padding>
+            <Insets top="20" right="22" bottom="20" left="22"/>
+        </padding>
+
+        <VBox styleClass="forum-msg-header" spacing="4">
+            <Label fx:id="sujetTitreLabel" styleClass="forum-msg-header-title" wrapText="true"/>
+            <Label text="Discussion — replies appear below" styleClass="forum-msg-header-sub"/>
+        </VBox>
+
+        <Region prefHeight="14"/>
+
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                    styleClass="forum-msg-scroll" VBox.vgrow="ALWAYS">
+            <VBox fx:id="messagesContainer" styleClass="forum-msg-list"/>
+        </ScrollPane>
+
+        <Region prefHeight="14"/>
+
+        <VBox styleClass="forum-msg-composer" spacing="10">
+            <Label fx:id="composerHintLabel" text="Your reply" styleClass="forum-msg-composer-hint"/>
+            <VBox fx:id="editingPreviewBox" spacing="6" visible="false" managed="false" styleClass="forum-msg-edit-preview">
+                <Label text="Original message (reference while you edit):" styleClass="forum-msg-edit-preview-title"/>
+                <Label fx:id="editingOriginalLabel" wrapText="true" styleClass="forum-msg-edit-original"/>
+            </VBox>
+            <TextArea fx:id="messageField" wrapText="true" promptText="Write something thoughtful…"
+                      prefRowCount="4" minHeight="88" prefHeight="110" styleClass="forum-msg-input"/>
+            <Label fx:id="messageErrorLabel" styleClass="forum-msg-error-label" visible="false" managed="false"/>
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button fx:id="cancelEditButton" text="Cancel edit" onAction="#handleCancelEdit"
+                        styleClass="forum-msg-cancel" visible="false" managed="false"/>
+                <Button fx:id="sendButton" text="Post reply" onAction="#handleSend" styleClass="forum-msg-send"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</StackPane>
