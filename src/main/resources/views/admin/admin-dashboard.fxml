@@ -16,10 +16,11 @@
             <Button text="🪜  Steps"    onAction="#showSteps"    maxWidth="Infinity" styleClass="sidebar-btn"/>
             <Button text="⭐  Ratings"  onAction="#showRatings"  maxWidth="Infinity" styleClass="sidebar-btn"/>
             <Button text="📊  Stats"    onAction="#showStats"    maxWidth="Infinity" styleClass="sidebar-btn"/>
-            <Button text="🛒  Shop" onAction="#showShop" maxWidth="Infinity" styleClass="sidebar-btn"/>
-
             <Button text="🛍️  Products" onAction="#showProducts" maxWidth="Infinity" styleClass="sidebar-btn"/>
             <Button text="📦  Orders" onAction="#showOrders"     maxWidth="Infinity" styleClass="sidebar-btn"/>
+
+            <Separator/>
+            <Button text="🛒  Shop" onAction="#showShop" maxWidth="Infinity" styleClass="sidebar-btn"/>
 
             <Separator/>
 
