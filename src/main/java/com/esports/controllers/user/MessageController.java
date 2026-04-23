@@ -3,6 +3,7 @@ package com.esports.controllers.user;
 import com.esports.dao.MessageDao;
 import com.esports.models.Message;
 import com.esports.models.Sujet;
+import com.esports.utils.ForumInputRules;
 import com.esports.utils.ValidationHelper;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -14,7 +15,7 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 
 public class MessageController {
-    private static final int MESSAGE_MIN = 1;
+    private static final int MESSAGE_MIN = 3;
     private static final int MESSAGE_MAX = 2000;
 
     @FXML private Label sujetTitreLabel;
@@ -196,16 +197,9 @@ public class MessageController {
     private boolean validateMessageInput() {
         clearMessageError();
         String text = messageField.getText() != null ? messageField.getText().trim() : "";
-        if (text.isEmpty()) {
-            showMessageError("Message cannot be empty.");
-            return false;
-        }
-        if (text.length() < MESSAGE_MIN) {
-            showMessageError("Message must be at least " + MESSAGE_MIN + " character(s).");
-            return false;
-        }
-        if (text.length() > MESSAGE_MAX) {
-            showMessageError("Message must be at most " + MESSAGE_MAX + " characters.");
+        String err = ForumInputRules.validateReply(text, MESSAGE_MIN, MESSAGE_MAX);
+        if (err != null) {
+            showMessageError(err);
             return false;
         }
         return true;

@@ -90,7 +90,8 @@ public class AdminForumController {
                 .filter(r -> query.isEmpty()
                         || r.getContenu().toLowerCase(Locale.ROOT).contains(query)
                         || r.getSujetTitre().toLowerCase(Locale.ROOT).contains(query)
-                        || String.valueOf(r.getSujetId()).contains(query))
+                        || String.valueOf(r.getSujetId()).contains(query)
+                        || String.valueOf(r.getId()).contains(query))
                 .collect(Collectors.toList());
 
         String sort = sortCombo.getValue();

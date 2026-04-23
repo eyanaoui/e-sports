@@ -2,6 +2,7 @@ package com.esports.controllers.user;
 
 import com.esports.dao.SujetDao;
 import com.esports.models.Sujet;
+import com.esports.utils.ForumInputRules;
 import com.esports.utils.ValidationHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -157,28 +158,17 @@ public class ForumController {
         clearAllErrors();
         String titre = titreField.getText() != null ? titreField.getText().trim() : "";
         String contenu = contenuArea.getText() != null ? contenuArea.getText().trim() : "";
-        int titreNoSpaceLen = titre.replaceAll("\\s+", "").length();
         boolean valid = true;
 
-        if (titre.isEmpty()) {
-            showTitreError("Title is required.");
-            valid = false;
-        } else if (titreNoSpaceLen < TITRE_MIN) {
-            showTitreError("Title must be at least " + TITRE_MIN + " characters.");
-            valid = false;
-        } else if (titre.length() > TITRE_MAX) {
-            showTitreError("Title must be at most " + TITRE_MAX + " characters.");
+        String titreErr = ForumInputRules.validateTopicTitle(titre, TITRE_MIN, TITRE_MAX);
+        if (titreErr != null) {
+            showTitreError(titreErr);
             valid = false;
         }
 
-        if (contenu.isEmpty()) {
-            showContenuError("Content is required.");
-            valid = false;
-        } else if (contenu.length() < CONTENU_MIN) {
-            showContenuError("Content must be at least " + CONTENU_MIN + " characters.");
-            valid = false;
-        } else if (contenu.length() > CONTENU_MAX) {
-            showContenuError("Content must be at most " + CONTENU_MAX + " characters.");
+        String contenuErr = ForumInputRules.validateTopicContent(contenu, CONTENU_MIN, CONTENU_MAX);
+        if (contenuErr != null) {
+            showContenuError(contenuErr);
             valid = false;
         }
         return valid;

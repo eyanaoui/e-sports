@@ -19,9 +19,9 @@
                 <TextField fx:id="searchField" onKeyReleased="#handleSearch" promptText="Search topics..." style="-fx-background-radius: 15;" />
                 <VBox spacing="10.0" style="-fx-background-color: rgba(255,255,255,0.05); -fx-padding: 15; -fx-background-radius: 10;">
                     <children>
-                        <TextField fx:id="titreField" promptText="Subject title (3–200 characters)" />
+                        <TextField fx:id="titreField" promptText="Titre (3–200 car., lettre requise, pas de chiffre en tête)" />
                         <Label fx:id="titreErrorLabel" styleClass="form-error-label" visible="false" managed="false"/>
-                        <TextArea fx:id="contenuArea" prefHeight="80.0" promptText="Content (5–5000 characters)..." wrapText="true" />
+                        <TextArea fx:id="contenuArea" prefHeight="80.0" promptText="Contenu (5–5000 car., au moins une lettre, pas de chiffre en tête)" wrapText="true" />
                         <Label fx:id="contenuErrorLabel" styleClass="form-error-label" visible="false" managed="false"/>
                         <HBox spacing="10.0">
                             <Button fx:id="saveTopicButton" onAction="#handleSaveTopic" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Save topic" />

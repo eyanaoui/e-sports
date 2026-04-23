@@ -23,7 +23,7 @@
         <items>
             <TableView fx:id="messageTable">
                 <columns>
-                    <TableColumn fx:id="colId" text="ID" prefWidth="55"/>
+                    <TableColumn fx:id="colId" text="Référence" prefWidth="90"/>
                     <TableColumn fx:id="colSujetId" text="Sujet ID" prefWidth="80"/>
                     <TableColumn fx:id="colSujetTitre" text="Subject" prefWidth="170"/>
                     <TableColumn fx:id="colContenu" text="Message" prefWidth="430"/>

@@ -34,7 +34,7 @@
                 <Label text="Original message (reference while you edit):" styleClass="forum-msg-edit-preview-title"/>
                 <Label fx:id="editingOriginalLabel" wrapText="true" styleClass="forum-msg-edit-original"/>
             </VBox>
-            <TextArea fx:id="messageField" wrapText="true" promptText="Write something thoughtful…"
+            <TextArea fx:id="messageField" wrapText="true" promptText="Réponse (3–2000 car., au moins une lettre, pas de chiffre en tête)"
                       prefRowCount="4" minHeight="88" prefHeight="110" styleClass="forum-msg-input"/>
             <Label fx:id="messageErrorLabel" styleClass="forum-msg-error-label" visible="false" managed="false"/>
             <HBox spacing="10" alignment="CENTER_RIGHT">
