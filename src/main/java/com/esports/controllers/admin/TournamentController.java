@@ -23,7 +23,6 @@ import java.util.List;
 
 public class TournamentController {
     @FXML private TableView<Tournament> tournamentTable;
-    @FXML private TableColumn<Tournament, Integer> colId;
     @FXML private TableColumn<Tournament, String> colName, colGame, colStatus, colStartDate;
     @FXML private TableColumn<Tournament, Void> colActions;
     @FXML private TextField searchField;
@@ -34,7 +33,6 @@ public class TournamentController {
 
     @FXML
     public void initialize() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colGame.setCellValueFactory(new PropertyValueFactory<>("game"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -196,5 +194,45 @@ public class TournamentController {
         eloLbl.setStyle("-fx-text-fill: #a6adc8; -fx-font-size: 11;");
         box.getChildren().addAll(nameLbl, eloLbl);
         return box;
+    }
+
+    @FXML
+    private void handleExportReport() {
+        try {
+            // This will save in your project's root folder
+            java.io.PrintWriter writer = new java.io.PrintWriter("tournament_report.txt");
+
+            writer.println("==================================================");
+            writer.println("       ESPORTS TOURNAMENT MASTER REPORT          ");
+            writer.println("       Generated on: " + java.time.LocalDateTime.now());
+            writer.println("==================================================");
+            writer.println("");
+
+            for (Tournament t : tournamentTable.getItems()) {
+                writer.println("TOURNAMENT: " + t.getName().toUpperCase());
+                writer.println("--------------------------------------------------");
+                writer.println(" > GAME:      " + t.getGame());
+                writer.println(" > STATUS:    " + t.getStatus());
+                writer.println(" > START:     " + t.getStartDate());
+                writer.println(" > PRIZE:     " + (t.getPrize() != null ? t.getPrize() : "0.0"));
+                writer.println(" > CAPACITY:  " + t.getMaxTeams() + " Teams Max");
+                writer.println("");
+            }
+
+            writer.println("==================================================");
+            writer.println("             END OF OFFICIAL REPORT               ");
+            writer.println("==================================================");
+            writer.close();
+
+            // Professional feedback for the demo
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("Rich Data Export Complete");
+            alert.setContentText("Full report saved to: tournament_report.txt");
+            alert.show();
+
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Export failed: " + e.getMessage()).show();
+        }
     }
 }

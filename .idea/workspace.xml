@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a588b42-1d87-44c3-84bd-d264ebff83f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/services/DiscordWebhookService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TeamController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentFormController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/team-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/team-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/tournament-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/tournament-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,30 +55,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JUnit.TeamTest.executor": "Debug",
-    "JUnit.TournamentTest.executor": "Run",
-    "Maven.e-sports [javafx:run].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/Mega-PC/Desktop/where i should be, again/exs/e-sports/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.TeamTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.TournamentTest.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.e-sports [javafx:run].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Mega-PC/Desktop/where i should be, again/exs/e-sports/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Mega-PC\Desktop\where i should be, again\exs\e-sports\src\main\resources" />

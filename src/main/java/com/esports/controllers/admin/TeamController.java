@@ -20,26 +20,25 @@ import java.util.stream.Collectors;
 public class TeamController {
     @FXML private TextField searchField;
     @FXML private TableView<Team> teamTable;
-    @FXML private TableColumn<Team, Integer> colId;
-    @FXML private TableColumn<Team, String> colName, colLogo, colDescription;
+
+    // Removed colId and colUpdatedAt to match FXML
+    @FXML private TableColumn<Team, String> colName;
+    @FXML private TableColumn<Team, String> colLogo;
+    @FXML private TableColumn<Team, String> colDescription;
     @FXML private TableColumn<Team, Integer> colCaptain;
-    // Added these two to match your FXML and display the dates
-    @FXML private TableColumn<Team, LocalDateTime> colCreatedAt, colUpdatedAt;
+    @FXML private TableColumn<Team, LocalDateTime> colCreatedAt;
 
     private TeamDAO teamDAO = new TeamDAO();
     private ObservableList<Team> teamList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colLogo.setCellValueFactory(new PropertyValueFactory<>("logo"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colCaptain.setCellValueFactory(new PropertyValueFactory<>("captain_id"));
-
-        // Wiring the date columns
         colCreatedAt.setCellValueFactory(new PropertyValueFactory<>("created_at"));
-        colUpdatedAt.setCellValueFactory(new PropertyValueFactory<>("updated_at"));
+        colLogo.setCellValueFactory(new PropertyValueFactory<>("logo"));
+        colLogo.setCellFactory(this::createLogoCell);
 
         loadTeams();
 
@@ -61,7 +60,10 @@ public class TeamController {
     @FXML
     private void handleSearch() {
         String query = searchField.getText().toLowerCase().trim();
-        if (query.isEmpty()) { loadTeams(); return; }
+        if (query.isEmpty()) {
+            loadTeams();
+            return;
+        }
         List<Team> filtered = teamDAO.getAll().stream()
                 .filter(t -> (t.getName() != null && t.getName().toLowerCase().contains(query)) ||
                         (t.getDescription() != null && t.getDescription().toLowerCase().contains(query)))
@@ -83,7 +85,29 @@ public class TeamController {
             stage.showAndWait();
         } catch (IOException e) {
             System.err.println("Error opening form: " + e.getMessage());
-            e.printStackTrace();
         }
+    }
+
+    private TableCell<Team, String> createLogoCell(TableColumn<Team, String> column) {
+        return new TableCell<>() {
+            private final javafx.scene.image.ImageView imageView = new javafx.scene.image.ImageView();
+
+            @Override
+            protected void updateItem(String url, boolean empty) {
+                super.updateItem(url, empty);
+                if (empty || url == null || url.isEmpty()) {
+                    setGraphic(null);
+                } else {
+                    try {
+                        // This creates a 40x40 thumbnail with aspect ratio preserved
+                        javafx.scene.image.Image img = new javafx.scene.image.Image(url, 40, 40, true, true, true);
+                        imageView.setImage(img);
+                        setGraphic(imageView);
+                    } catch (Exception e) {
+                        setGraphic(new Label("No Preview"));
+                    }
+                }
+            }
+        };
     }
 }

@@ -13,6 +13,8 @@
             <Label text="Monitor competitions and AI insights" style="-fx-font-size: 13; -fx-text-fill: #6b7280;"/>
         </VBox>
         <Region HBox.hgrow="ALWAYS" />
+        <Button text="📥 EXPORT" onAction="#handleExportReport"
+                style="-fx-background-color: #4ade80; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
 
         <Button text="⚖ AI FAIR MATCHMAKING" onAction="#handleFairMatchmaking"
                 style="-fx-background-color: #94e2d5; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
@@ -33,7 +35,6 @@
     <TableView fx:id="tournamentTable" VBox.vgrow="ALWAYS"
                style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-table-header-border-color: transparent;">
         <columns>
-            <TableColumn fx:id="colId" text="ID" prefWidth="60" style="-fx-alignment: CENTER; -fx-text-fill: #6b7280;"/>
             <TableColumn fx:id="colName" text="TOURNAMENT NAME" prefWidth="200" style="-fx-font-weight: bold; -fx-text-fill: white;"/>
             <TableColumn fx:id="colGame" text="GAME" prefWidth="120" style="-fx-text-fill: #3b82f6;"/>
             <TableColumn fx:id="colStartDate" text="START DATE" prefWidth="150" style="-fx-text-fill: #9ca3af;"/>

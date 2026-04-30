@@ -2,29 +2,50 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="10" style="-fx-padding: 20;"
-      xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
+<VBox spacing="20" style="-fx-background-color: #0f111a; -fx-padding: 30;"
+      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.esports.controllers.admin.TeamController">
 
-    <Label text="Team Management" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
-
-    <HBox spacing="10">
-        <TextField fx:id="searchField" promptText="Search teams by name or description..." prefWidth="350"
-                   onKeyReleased="#handleSearch"/>
-        <Button text="+ Add Team" onAction="#handleAdd" styleClass="sidebar-btn"/>
+    <!-- Header Section -->
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <VBox>
+            <Label text="TEAM MANAGEMENT" style="-fx-font-size: 26; -fx-font-weight: bold; -fx-text-fill: white; -fx-letter-spacing: 1.5;"/>
+            <Label text="Roster and competitive entity control" style="-fx-font-size: 13; -fx-text-fill: #6b7280;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="+ ADD TEAM" onAction="#handleAdd"
+                style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
     </HBox>
 
-    <TableView fx:id="teamTable" prefHeight="450">
+    <!-- Search Section -->
+    <StackPane style="-fx-background-color: #1a1d29; -fx-background-radius: 12; -fx-padding: 12; -fx-border-color: #2d3142; -fx-border-radius: 12;">
+        <TextField fx:id="searchField" promptText="Filter teams by name or description..."
+                   style="-fx-background-color: #0f111a; -fx-text-fill: white; -fx-prompt-text-fill: #4b5563; -fx-background-radius: 8; -fx-padding: 10; -fx-border-color: transparent;"
+                   onKeyReleased="#handleSearch"/>
+    </StackPane>
+
+    <!-- Table Section -->
+    <TableView fx:id="teamTable" VBox.vgrow="ALWAYS"
+               style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-table-header-border-color: transparent;">
         <columns>
-            <TableColumn fx:id="colId"          text="ID"          prefWidth="50"/>
-            <TableColumn fx:id="colName"         text="Name"        prefWidth="150"/>
-            <TableColumn fx:id="colLogo"        text="Logo"        prefWidth="100"/>
-            <TableColumn fx:id="colDescription" text="Description" prefWidth="250"/>
-            <TableColumn fx:id="colCaptain"     text="Captain ID"  prefWidth="100"/>
-            <TableColumn fx:id="colCreatedAt"   text="Created At"  prefWidth="150"/>
-            <TableColumn fx:id="colUpdatedAt"   text="Updated At"  prefWidth="150"/>
+            <TableColumn fx:id="colName" text="TEAM NAME" prefWidth="200"
+                         style="-fx-font-weight: bold; -fx-text-fill: white;"/>
+
+            <TableColumn fx:id="colDescription" text="DESCRIPTION" prefWidth="300"
+                         style="-fx-text-fill: #9ca3af;"/>
+
+            <TableColumn fx:id="colCaptain" text="CAPTAIN" prefWidth="120"
+                         style="-fx-text-fill: #3b82f6; -fx-alignment: CENTER;"/>
+
+            <TableColumn fx:id="colLogo" text="LOGO" prefWidth="120"
+                         style="-fx-text-fill: #6b7280;"/>
+
+            <TableColumn fx:id="colCreatedAt" text="REGISTRATION DATE" prefWidth="180"
+                         style="-fx-text-fill: #6b7280;"/>
         </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+        </columnResizePolicy>
     </TableView>
 
 </VBox>
