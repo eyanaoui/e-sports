@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.esports.controllers.admin.AdminDashboardController"
+            prefWidth="1100" prefHeight="650">
+
+    <!-- SIDEBAR -->
+    <left>
+        <VBox styleClass="sidebar" prefWidth="220">
+            <Label text="⚡ Esports Admin" styleClass="sidebar-title"/>
+            <Button text="🎮  Games"    onAction="#showGames"   maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="📖  Guides"   onAction="#showGuides"  maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="🪜  Steps"    onAction="#showSteps"   maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="⭐  Ratings"  onAction="#showRatings" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="👥  Users"    onAction="#showUsers"   maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="📊  Stats"    onAction="#showStats"   maxWidth="Infinity" styleClass="sidebar-btn"/>
+
+            <Separator/>
+            <Button fx:id="darkModeBtn" text="🌙  Dark Mode" onAction="#toggleDarkMode"
+                    maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="👤  User View" onAction="#showUserView"
+                    maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="🚪  Logout" onAction="#handleLogout"
+                    maxWidth="Infinity" styleClass="sidebar-btn logout-btn"/>
+        </VBox>
+    </left>
+
+    <!-- MAIN CONTENT AREA -->
+    <center>
+        <AnchorPane fx:id="contentArea"/>
+    </center>
+
+</BorderPane>

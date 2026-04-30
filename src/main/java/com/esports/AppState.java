@@ -1,0 +1,18 @@
+package com.esports;
+
+import com.esports.models.User;
+
+public class AppState {
+    private static boolean darkMode = false;
+    private static User currentUser = null;
+
+    public static boolean isDarkMode() { return darkMode; }
+    public static void setDarkMode(boolean dark) { darkMode = dark; }
+
+    public static User getCurrentUser() { return currentUser; }
+    public static void setCurrentUser(User user) { currentUser = user; }
+    
+    public static boolean isAuthenticated() { return currentUser != null; }
+    
+    public static void clearSession() { currentUser = null; }
+}

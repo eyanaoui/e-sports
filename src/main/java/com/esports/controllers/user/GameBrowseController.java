@@ -1,0 +1,182 @@
+package com.esports.controllers.user;
+
+import com.esports.AppState;
+import com.esports.dao.GameDAO;
+import com.esports.models.Game;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class GameBrowseController {
+
+    @FXML private TextField searchField;
+    @FXML private FlowPane gamesContainer;
+
+    private GameDAO gameDAO = new GameDAO();
+
+    @FXML
+    public void initialize() {
+        loadGames(gameDAO.getAll());
+    }
+
+    @FXML
+    private void handleSearch() {
+        String query = searchField.getText().toLowerCase().trim();
+        if (query.isEmpty()) { loadGames(gameDAO.getAll()); return; }
+        List<Game> filtered = gameDAO.getAll().stream()
+                .filter(g -> g.getName().toLowerCase().contains(query)
+                        || (g.getDescription() != null &&
+                        g.getDescription().toLowerCase().contains(query)))
+                .collect(Collectors.toList());
+        loadGames(filtered);
+    }
+
+    @FXML
+    private void handleLogout() {
+        try {
+            // Clear the session
+            AppState.clearSession();
+            
+            // Load the login screen
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
+            javafx.scene.Parent loginView = loader.load();
+            Scene loginScene = new Scene(loginView);
+            
+            // Apply the current theme to login screen
+            if (AppState.isDarkMode()) {
+                loginScene.getStylesheets().add(getClass().getResource("/styles-dark.css").toExternalForm());
+            } else {
+                loginScene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+            }
+            
+            // Get the current stage and set the login scene
+            Stage stage = (Stage) searchField.getScene().getWindow();
+            stage.setTitle("Esports Login");
+            stage.setScene(loginScene);
+            stage.setWidth(600);
+            stage.setHeight(500);
+            stage.centerOnScreen();
+            
+            System.out.println("[INFO] User logged out successfully");
+        } catch (IOException e) {
+            System.out.println("[ERROR] Failed to load login screen: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleSettings() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/user/user-settings.fxml"));
+            Scene scene = new Scene(loader.load());
+            
+            // Apply the current theme
+            if (AppState.isDarkMode()) {
+                scene.getStylesheets().add(getClass().getResource("/styles-dark.css").toExternalForm());
+            } else {
+                scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+            }
+            
+            Stage stage = (Stage) searchField.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Account Settings");
+        } catch (IOException e) {
+            System.out.println("[ERROR] Failed to load settings screen: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void loadGames(List<Game> games) {
+        gamesContainer.getChildren().clear();
+        for (Game game : games) {
+            gamesContainer.getChildren().add(createGameCard(game));
+        }
+    }
+
+    private VBox createGameCard(Game game) {
+        VBox card = new VBox(8);
+        boolean dark = !AppState.isDarkMode();
+        card.setStyle(
+                "-fx-background-color: " + (dark ? "#1a1a2e" : "white") + ";" +
+                        "-fx-border-color: "     + (dark ? "#2a2a4a" : "#e0e0e0") + ";" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 15;" +
+                        "-fx-cursor: hand;"
+        );
+        card.setPrefWidth(200);
+
+        if (game.getCoverImage() != null && !game.getCoverImage().isEmpty()) {
+            try {
+                String imagePath = "target/classes/images/" + game.getCoverImage();
+                System.out.println("[INFO] Looking for image at: " + new File(imagePath).getAbsolutePath());
+                Image img = new Image(new FileInputStream(imagePath));
+                ImageView imageView = new ImageView(img);
+                imageView.setFitWidth(170);
+                imageView.setFitHeight(100);
+                imageView.setPreserveRatio(true);
+                card.getChildren().add(imageView);
+            } catch (Exception e) {
+                System.out.println("[ERROR] Image not found: " + e.getMessage());
+            }
+        }
+
+        String textColor = dark ? "#e0e0e0" : "#333";
+        String muteColor = dark ? "#a0a0b0" : "#666";
+
+        Label name = new Label(game.getName());
+        name.setStyle("-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: " + textColor + ";");
+        name.setWrapText(true);
+
+        Label desc = new Label(game.getDescription() != null ?
+                game.getDescription() : "No description");
+        desc.setStyle("-fx-font-size: 12; -fx-text-fill: " + muteColor + ";");
+        desc.setWrapText(true);
+        desc.setMaxHeight(60);
+
+        Label ranking = new Label(game.isHasRanking() ? "[RANKED]" : "[CASUAL]");
+        ranking.setStyle("-fx-font-size: 11; -fx-text-fill: " + muteColor + ";");
+
+        card.getChildren().addAll(name, desc, ranking);
+        card.setOnMouseClicked(e -> openGuidesBrowse(game));
+
+        return card;
+    }
+
+    private void openGuidesBrowse(Game game) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/user/guide-browse.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Guides — " + game.getName());
+            Scene scene = new Scene(loader.load(), 800, 600);
+
+            // apply current theme safely
+            String cssPath = AppState.isDarkMode() ? "/styles-dark.css" : "/styles.css";
+            java.net.URL cssUrl = getClass().getResource(cssPath);
+            if (cssUrl != null) {
+                scene.getStylesheets().add(cssUrl.toExternalForm());
+            }
+
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            GuideBrowseController controller = loader.getController();
+            controller.setGame(game);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
