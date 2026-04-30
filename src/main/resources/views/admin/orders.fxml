@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -13,12 +14,19 @@
 
         <Region HBox.hgrow="ALWAYS"/>
 
-        <TextField fx:id="searchField" promptText="Search orders..." prefWidth="250"/>
+        <TextField fx:id="searchField" promptText="Search orders..." prefWidth="230"/>
         <Button text="Search" onAction="#handleSearch"/>
         <Button text="Refresh" onAction="#handleRefresh"/>
     </HBox>
 
-    <TableView fx:id="orderTable" prefHeight="520">
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Search by reference:"/>
+        <TextField fx:id="referenceSearchField" promptText="Example: ORD-ABC12345" prefWidth="260"/>
+        <Button text="Find Reference" onAction="#handleSearchByReference"
+                style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+    </HBox>
+
+    <TableView fx:id="orderTable" prefHeight="500">
         <columns>
             <TableColumn fx:id="idColumn" text="ID" prefWidth="60"/>
             <TableColumn fx:id="referenceColumn" text="Reference" prefWidth="140"/>
@@ -35,8 +43,16 @@
     </TableView>
 
     <HBox spacing="10">
+        <Button text="Generate Invoice PDF" onAction="#handleGenerateInvoice"
+                style="-fx-background-color: #2ecc71; -fx-text-fill: white;"/>
+
+        <Button text="Send Invoice Email" onAction="#handleSendInvoice"
+                style="-fx-background-color: #9b59b6; -fx-text-fill: white;"/>
+
         <Button text="Delete Selected" onAction="#handleDeleteSelected"
                 style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
     </HBox>
+
+    <Label fx:id="messageLabel" style="-fx-font-size: 12;"/>
 
 </VBox>

@@ -16,7 +16,12 @@ public class OrderDAO {
     }
 
     public int addOrder(Order order) {
-        String sql = "INSERT INTO `order` (created_at, customer_email, customer_first_name, customer_last_name, customer_phone, payment_method, payment_status, reference, status, total_amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = """
+                INSERT INTO `order`
+                (created_at, customer_email, customer_first_name, customer_last_name, customer_phone,
+                 payment_method, payment_status, reference, status, total_amount)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """;
 
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setTimestamp(1, Timestamp.valueOf(order.getCreatedAt()));
@@ -54,25 +59,7 @@ public class OrderDAO {
              ResultSet rs = st.executeQuery(sql)) {
 
             while (rs.next()) {
-                Order order = new Order();
-                order.setId(rs.getInt("id"));
-
-                Timestamp createdAtTimestamp = rs.getTimestamp("created_at");
-                if (createdAtTimestamp != null) {
-                    order.setCreatedAt(createdAtTimestamp.toLocalDateTime());
-                }
-
-                order.setCustomerEmail(rs.getString("customer_email"));
-                order.setCustomerFirstName(rs.getString("customer_first_name"));
-                order.setCustomerLastName(rs.getString("customer_last_name"));
-                order.setCustomerPhone(rs.getString("customer_phone"));
-                order.setPaymentMethod(rs.getString("payment_method"));
-                order.setPaymentStatus(rs.getString("payment_status"));
-                order.setReference(rs.getString("reference"));
-                order.setStatus(rs.getString("status"));
-                order.setTotalAmount(rs.getDouble("total_amount"));
-
-                orders.add(order);
+                orders.add(mapResultSetToOrder(rs));
             }
 
         } catch (SQLException e) {
@@ -82,17 +69,77 @@ public class OrderDAO {
         return orders;
     }
 
+    public Order getOrderById(int id) {
+        String sql = "SELECT * FROM `order` WHERE id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return mapResultSetToOrder(rs);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("❌ Error while searching order by id: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    public Order getOrderByReference(String reference) {
+        String sql = "SELECT * FROM `order` WHERE reference = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, reference);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return mapResultSetToOrder(rs);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("❌ Error while searching order by reference: " + e.getMessage());
+        }
+
+        return null;
+    }
+
     public boolean deleteOrder(int id) {
         String sql = "DELETE FROM `order` WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
+            return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
             System.out.println("❌ Error while deleting order: " + e.getMessage());
             return false;
         }
+    }
+
+    private Order mapResultSetToOrder(ResultSet rs) throws SQLException {
+        Order order = new Order();
+
+        order.setId(rs.getInt("id"));
+
+        Timestamp createdAtTimestamp = rs.getTimestamp("created_at");
+        if (createdAtTimestamp != null) {
+            order.setCreatedAt(createdAtTimestamp.toLocalDateTime());
+        }
+
+        order.setCustomerEmail(rs.getString("customer_email"));
+        order.setCustomerFirstName(rs.getString("customer_first_name"));
+        order.setCustomerLastName(rs.getString("customer_last_name"));
+        order.setCustomerPhone(rs.getString("customer_phone"));
+        order.setPaymentMethod(rs.getString("payment_method"));
+        order.setPaymentStatus(rs.getString("payment_status"));
+        order.setReference(rs.getString("reference"));
+        order.setStatus(rs.getString("status"));
+        order.setTotalAmount(rs.getDouble("total_amount"));
+
+        return order;
     }
 }

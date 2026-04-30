@@ -7,6 +7,12 @@ import com.esports.models.CartItem;
 import com.esports.models.Order;
 import com.esports.models.OrderItem;
 import com.esports.models.Product;
+import com.esports.services.EmailService;
+import com.esports.services.InvoiceService;
+import com.esports.services.OrderCreationResult;
+import com.esports.services.OrderService;
+import com.esports.services.PaymentResult;
+import com.esports.services.StripePaymentService;
 import com.esports.utils.OrderValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,10 +23,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ShopController {
@@ -70,21 +78,40 @@ public class ShopController {
     @FXML
     private Label orderMessageLabel;
 
+    @FXML
+    private Button payOnlineButton;
+
+    @FXML
+    private Button confirmOnlinePaymentButton;
+
     private final ProductDAO productDAO = new ProductDAO();
     private final OrderDAO orderDAO = new OrderDAO();
     private final OrderItemDAO orderItemDAO = new OrderItemDAO();
+    private final OrderService orderService = new OrderService();
+    private final InvoiceService invoiceService = new InvoiceService();
+    private final EmailService emailService = new EmailService();
+    private final StripePaymentService paymentService = new StripePaymentService();
 
     private List<Product> allProducts = new ArrayList<>();
     private final ObservableList<CartItem> cartItems = FXCollections.observableArrayList();
+
+    private String currentPaymentSessionId = null;
+    private String currentOnlinePaymentMethod = null;
 
     @FXML
     public void initialize() {
         paymentMethodBox.getItems().addAll("Cash", "Card", "PayPal");
         cartListView.setItems(cartItems);
+
         loadProducts();
         refreshCartView();
         clearErrors();
+
         orderMessageLabel.setText("");
+
+        if (confirmOnlinePaymentButton != null) {
+            confirmOnlinePaymentButton.setDisable(true);
+        }
     }
 
     private void loadProducts() {
@@ -112,10 +139,17 @@ public class ShopController {
             imageView.setPreserveRatio(false);
 
             try {
-                Image image = new Image(product.getImage(), true);
-                imageView.setImage(image);
+                String imagePath = product.getImage();
+
+                if (imagePath != null && !imagePath.trim().isEmpty()) {
+                    if (imagePath.startsWith("http") || imagePath.startsWith("file:")) {
+                        imageView.setImage(new Image(imagePath, true));
+                    } else {
+                        imageView.setImage(new Image(getClass().getResourceAsStream("/images/" + imagePath)));
+                    }
+                }
             } catch (Exception e) {
-                // ignore
+                System.out.println("⚠ Image not found for product: " + product.getName());
             }
 
             Label nameLabel = new Label(product.getName());
@@ -124,7 +158,7 @@ public class ShopController {
             Label categoryLabel = new Label(product.getCategory());
             categoryLabel.setStyle("-fx-text-fill: #b8b8d1;");
 
-            Label priceLabel = new Label("Price: " + product.getPrice());
+            Label priceLabel = new Label("Price: " + String.format("%.2f TND", product.getPrice()));
             priceLabel.setStyle("-fx-text-fill: white;");
 
             Label stockLabel = new Label("Stock: " + product.getStock());
@@ -134,12 +168,19 @@ public class ShopController {
             descLabel.setWrapText(true);
             descLabel.setStyle("-fx-text-fill: #d8d8e8;");
 
-            Spinner<Integer> qtySpinner = new Spinner<>(1, Math.max(1, product.getStock()), 1);
+            int maxStock = Math.max(1, product.getStock());
+            Spinner<Integer> qtySpinner = new Spinner<>(1, maxStock, 1);
             qtySpinner.setEditable(true);
             qtySpinner.setPrefWidth(90);
 
             Button addToCartBtn = new Button("Add to Cart");
             addToCartBtn.setStyle("-fx-background-color: #9b59b6; -fx-text-fill: white;");
+
+            if (product.getStock() <= 0) {
+                addToCartBtn.setDisable(true);
+                addToCartBtn.setText("Out of Stock");
+            }
+
             addToCartBtn.setOnAction(e -> handleAddToCart(product, qtySpinner.getValue()));
 
             HBox bottomRow = new HBox(10, qtySpinner, addToCartBtn);
@@ -169,9 +210,9 @@ public class ShopController {
 
         List<Product> filtered = allProducts.stream()
                 .filter(p ->
-                        p.getName().toLowerCase().contains(keyword)
-                                || p.getCategory().toLowerCase().contains(keyword)
-                                || p.getDescription().toLowerCase().contains(keyword))
+                        safeLower(p.getName()).contains(keyword)
+                                || safeLower(p.getCategory()).contains(keyword)
+                                || safeLower(p.getDescription()).contains(keyword))
                 .collect(Collectors.toList());
 
         renderProducts(filtered);
@@ -189,6 +230,7 @@ public class ShopController {
         }
 
         CartItem existing = null;
+
         for (CartItem item : cartItems) {
             if (item.getProduct().getId() == product.getId()) {
                 existing = item;
@@ -197,6 +239,7 @@ public class ShopController {
         }
 
         int cartQuantity = quantity;
+
         if (existing != null) {
             cartQuantity += existing.getQuantity();
         }
@@ -214,6 +257,7 @@ public class ShopController {
         }
 
         refreshCartView();
+
         orderMessageLabel.setStyle("-fx-text-fill: green;");
         orderMessageLabel.setText(product.getName() + " added to cart.");
     }
@@ -221,6 +265,7 @@ public class ShopController {
     @FXML
     public void handleRemoveSelected() {
         CartItem selected = cartListView.getSelectionModel().getSelectedItem();
+
         if (selected != null) {
             cartItems.remove(selected);
             refreshCartView();
@@ -230,17 +275,118 @@ public class ShopController {
     @FXML
     public void handleClearCart() {
         cartItems.clear();
+        currentPaymentSessionId = null;
+        currentOnlinePaymentMethod = null;
+
+        if (confirmOnlinePaymentButton != null) {
+            confirmOnlinePaymentButton.setDisable(true);
+        }
+
         refreshCartView();
     }
 
     private void refreshCartView() {
         cartListView.refresh();
-        double total = cartItems.stream().mapToDouble(CartItem::getSubtotal).sum();
-        cartTotalLabel.setText("Cart Total: " + total);
+
+        double total = cartItems.stream()
+                .mapToDouble(CartItem::getSubtotal)
+                .sum();
+
+        cartTotalLabel.setText("Cart Total: " + String.format("%.2f TND", total));
+    }
+
+    @FXML
+    public void handlePayOnline() {
+        clearErrors();
+        orderMessageLabel.setText("");
+
+        if (cartItems.isEmpty()) {
+            orderMessageLabel.setStyle("-fx-text-fill: red;");
+            orderMessageLabel.setText("Your cart is empty.");
+            return;
+        }
+
+        String paymentMethod = paymentMethodBox.getValue();
+
+        if (!isOnlinePayment(paymentMethod)) {
+            paymentError.setText("Choose Card or PayPal.");
+            return;
+        }
+
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+        String email = emailField.getText();
+        String phone = phoneField.getText();
+
+        boolean isValid = validateOrderForm(firstName, lastName, email, phone, paymentMethod);
+
+        if (!isValid) {
+            return;
+        }
+
+        PaymentResult result = paymentService.createCheckoutSession(new ArrayList<>(cartItems), email, paymentMethod);
+
+        if (!result.isSuccess()) {
+            orderMessageLabel.setStyle("-fx-text-fill: red;");
+            orderMessageLabel.setText(result.getMessage());
+            return;
+        }
+
+        currentPaymentSessionId = result.getSessionId();
+        currentOnlinePaymentMethod = paymentMethod;
+
+        openBrowser(result.getCheckoutUrl());
+
+        if (confirmOnlinePaymentButton != null) {
+            confirmOnlinePaymentButton.setDisable(false);
+        }
+
+        orderMessageLabel.setStyle("-fx-text-fill: green;");
+        orderMessageLabel.setText("Secure payment opened. Pay in browser, then click 'Confirm Payment'.");
+    }
+
+    @FXML
+    public void handleConfirmOnlinePayment() {
+        clearErrors();
+        orderMessageLabel.setText("");
+
+        if (currentPaymentSessionId == null || currentPaymentSessionId.trim().isEmpty()) {
+            orderMessageLabel.setStyle("-fx-text-fill: red;");
+            orderMessageLabel.setText("No payment session found. Click 'Pay Online' first.");
+            return;
+        }
+
+        boolean paid = paymentService.isPaymentPaid(currentPaymentSessionId);
+
+        if (!paid) {
+            orderMessageLabel.setStyle("-fx-text-fill: orange;");
+            orderMessageLabel.setText("Payment is not completed yet. Finish payment in browser, then try again.");
+            return;
+        }
+
+        if (currentOnlinePaymentMethod != null) {
+            paymentMethodBox.setValue(currentOnlinePaymentMethod);
+        }
+
+        placeOrderAfterSuccessfulPayment("PAID", "CONFIRMED");
     }
 
     @FXML
     public void handlePlaceOrder() {
+        clearErrors();
+        orderMessageLabel.setText("");
+
+        String paymentMethod = paymentMethodBox.getValue();
+
+        if (isOnlinePayment(paymentMethod)) {
+            handlePayOnline();
+            return;
+        }
+
+        placeOrderAfterSuccessfulPayment("PENDING", "NEW");
+    }
+
+    private void placeOrderAfterSuccessfulPayment(String paymentStatus, String orderStatus) {
         clearErrors();
         orderMessageLabel.setText("");
 
@@ -256,6 +402,67 @@ public class ShopController {
         String phone = phoneField.getText();
         String paymentMethod = paymentMethodBox.getValue();
 
+        boolean isValid = validateOrderForm(firstName, lastName, email, phone, paymentMethod);
+
+        if (!isValid) {
+            return;
+        }
+
+        Order order = new Order(
+                LocalDateTime.now(),
+                email,
+                firstName,
+                lastName,
+                phone,
+                paymentMethod,
+                paymentStatus,
+                null,
+                orderStatus,
+                0.0
+        );
+
+        OrderCreationResult result = orderService.placeOrder(order, new ArrayList<>(cartItems));
+
+        if (!result.isSuccess()) {
+            orderMessageLabel.setStyle("-fx-text-fill: red;");
+            orderMessageLabel.setText(result.getMessage());
+            return;
+        }
+
+        try {
+            Order savedOrder = orderDAO.getOrderById(result.getOrderId());
+            List<OrderItem> savedItems = orderItemDAO.getItemsByOrderId(result.getOrderId());
+
+            File invoice = invoiceService.generateInvoice(savedOrder, savedItems);
+            boolean emailSent = emailService.sendInvoice(savedOrder, invoice);
+
+            orderMessageLabel.setStyle("-fx-text-fill: green;");
+
+            if (emailSent) {
+                orderMessageLabel.setText("Order placed successfully. Ref: " + result.getReference() + ". Invoice sent by email.");
+            } else {
+                orderMessageLabel.setText("Order placed successfully. Ref: " + result.getReference() + ". Invoice generated, but email not sent.");
+            }
+
+        } catch (Exception e) {
+            orderMessageLabel.setStyle("-fx-text-fill: orange;");
+            orderMessageLabel.setText("Order created. Ref: " + result.getReference() + ". Invoice error: " + e.getMessage());
+        }
+
+        cartItems.clear();
+        currentPaymentSessionId = null;
+        currentOnlinePaymentMethod = null;
+
+        if (confirmOnlinePaymentButton != null) {
+            confirmOnlinePaymentButton.setDisable(true);
+        }
+
+        refreshCartView();
+        clearForm();
+        loadProducts();
+    }
+
+    private boolean validateOrderForm(String firstName, String lastName, String email, String phone, String paymentMethod) {
         String firstNameMsg = OrderValidator.validateFirstName(firstName);
         String lastNameMsg = OrderValidator.validateLastName(lastName);
         String emailMsg = OrderValidator.validateEmail(email);
@@ -268,86 +475,54 @@ public class ShopController {
             firstNameError.setText(firstNameMsg);
             isValid = false;
         }
+
         if (!lastNameMsg.isEmpty()) {
             lastNameError.setText(lastNameMsg);
             isValid = false;
         }
+
         if (!emailMsg.isEmpty()) {
             emailError.setText(emailMsg);
             isValid = false;
         }
+
         if (!phoneMsg.isEmpty()) {
             phoneError.setText(phoneMsg);
             isValid = false;
         }
+
         if (!paymentMsg.isEmpty()) {
             paymentError.setText(paymentMsg);
             isValid = false;
         }
 
-        for (CartItem item : cartItems) {
-            Product latest = productDAO.getProductById(item.getProduct().getId());
-            if (latest == null || latest.getStock() < item.getQuantity()) {
+        return isValid;
+    }
+
+    private boolean isOnlinePayment(String paymentMethod) {
+        return "Card".equalsIgnoreCase(paymentMethod)
+                || "PayPal".equalsIgnoreCase(paymentMethod);
+    }
+
+    private void openBrowser(String url) {
+        try {
+            if (url == null || url.trim().isEmpty()) {
                 orderMessageLabel.setStyle("-fx-text-fill: red;");
-                orderMessageLabel.setText("Not enough stock for: " + item.getProduct().getName());
-                isValid = false;
-                break;
-            }
-        }
-
-        if (!isValid) {
-            return;
-        }
-
-        double total = cartItems.stream().mapToDouble(CartItem::getSubtotal).sum();
-        String reference = "ORD-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
-
-        Order order = new Order(
-                LocalDateTime.now(),
-                email,
-                firstName,
-                lastName,
-                phone,
-                paymentMethod,
-                "PENDING",
-                reference,
-                "NEW",
-                total
-        );
-
-        int orderId = orderDAO.addOrder(order);
-
-        if (orderId == -1) {
-            orderMessageLabel.setStyle("-fx-text-fill: red;");
-            orderMessageLabel.setText("Order creation failed.");
-            return;
-        }
-
-        for (CartItem item : cartItems) {
-            OrderItem orderItem = new OrderItem(
-                    orderId,
-                    item.getProduct().getId(),
-                    item.getQuantity(),
-                    item.getProduct().getPrice()
-            );
-
-            boolean itemSaved = orderItemDAO.addOrderItem(orderItem);
-            boolean stockUpdated = productDAO.decreaseStock(item.getProduct().getId(), item.getQuantity());
-
-            if (!itemSaved || !stockUpdated) {
-                orderMessageLabel.setStyle("-fx-text-fill: red;");
-                orderMessageLabel.setText("Order item save failed for " + item.getProduct().getName());
+                orderMessageLabel.setText("Payment URL is empty.");
                 return;
             }
+
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().browse(new URI(url));
+            } else {
+                orderMessageLabel.setStyle("-fx-text-fill: orange;");
+                orderMessageLabel.setText("Open this payment URL manually: " + url);
+            }
+
+        } catch (Exception e) {
+            orderMessageLabel.setStyle("-fx-text-fill: red;");
+            orderMessageLabel.setText("Cannot open browser: " + e.getMessage());
         }
-
-        orderMessageLabel.setStyle("-fx-text-fill: green;");
-        orderMessageLabel.setText("Order placed successfully. Ref: " + reference);
-
-        cartItems.clear();
-        refreshCartView();
-        clearForm();
-        loadProducts();
     }
 
     private void clearForm() {
@@ -365,5 +540,9 @@ public class ShopController {
         emailError.setText("");
         phoneError.setText("");
         paymentError.setText("");
+    }
+
+    private String safeLower(String value) {
+        return value == null ? "" : value.toLowerCase();
     }
 }

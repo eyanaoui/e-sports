@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -30,10 +31,10 @@
     </center>
 
     <right>
-        <VBox spacing="12" prefWidth="360" style="-fx-padding: 0 0 0 20;">
+        <VBox spacing="12" prefWidth="380" style="-fx-padding: 0 0 0 20;">
 
             <Label text="My Cart" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
-            <ListView fx:id="cartListView" prefHeight="180"/>
+            <ListView fx:id="cartListView" prefHeight="170"/>
 
             <HBox spacing="10">
                 <Button text="Remove Selected" onAction="#handleRemoveSelected"
@@ -41,7 +42,7 @@
                 <Button text="Clear Cart" onAction="#handleClearCart"/>
             </HBox>
 
-            <Label fx:id="cartTotalLabel" text="Cart Total: 0.0"
+            <Label fx:id="cartTotalLabel" text="Cart Total: 0.00 TND"
                    style="-fx-font-size: 16; -fx-font-weight: bold;"/>
 
             <Separator/>
@@ -69,14 +70,29 @@
             </VBox>
 
             <VBox spacing="3">
-                <ComboBox fx:id="paymentMethodBox" promptText="Payment method"/>
+                <ComboBox fx:id="paymentMethodBox" promptText="Payment method" prefWidth="220"/>
                 <Label fx:id="paymentError" style="-fx-text-fill: red; -fx-font-size: 11;"/>
             </VBox>
 
-            <Label fx:id="orderMessageLabel" style="-fx-font-size: 12;"/>
+            <Label fx:id="orderMessageLabel" wrapText="true" style="-fx-font-size: 12;"/>
 
             <Button text="Place Order" onAction="#handlePlaceOrder"
                     style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 14;"/>
+
+            <Separator/>
+
+            <Label text="Online Payment" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+            <Button fx:id="payOnlineButton"
+                    text="Pay Online"
+                    onAction="#handlePayOnline"
+                    style="-fx-background-color: #635bff; -fx-text-fill: white; -fx-font-size: 14;"/>
+
+            <Button fx:id="confirmOnlinePaymentButton"
+                    text="Confirm Payment"
+                    onAction="#handleConfirmOnlinePayment"
+                    style="-fx-background-color: #111827; -fx-text-fill: white; -fx-font-size: 14;"/>
+
         </VBox>
     </right>
 
