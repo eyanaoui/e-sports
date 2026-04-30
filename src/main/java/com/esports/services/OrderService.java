@@ -19,6 +19,10 @@ public class OrderService {
     }
 
     public OrderCreationResult placeOrder(Order order, List<CartItem> cartItems) {
+        if (order == null) {
+            return OrderCreationResult.error("Order is null.");
+        }
+
         if (cartItems == null || cartItems.isEmpty()) {
             return OrderCreationResult.error("Cart is empty.");
         }
@@ -47,6 +51,11 @@ public class OrderService {
 
             for (CartItem item : cartItems) {
                 Product product = item.getProduct();
+
+                if (product == null) {
+                    connection.rollback();
+                    return OrderCreationResult.error("Invalid cart item: product is null.");
+                }
 
                 insertOrderItem(
                         orderId,
@@ -91,6 +100,10 @@ public class OrderService {
 
         for (CartItem item : cartItems) {
             Product cartProduct = item.getProduct();
+
+            if (cartProduct == null) {
+                throw new SQLException("Invalid cart item: product is null.");
+            }
 
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setInt(1, cartProduct.getId());
@@ -142,6 +155,7 @@ public class OrderService {
 
             if (rows > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
+
                 if (rs.next()) {
                     return rs.getInt(1);
                 }

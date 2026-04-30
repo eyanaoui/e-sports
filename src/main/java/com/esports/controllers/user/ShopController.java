@@ -100,7 +100,9 @@ public class ShopController {
 
     @FXML
     public void initialize() {
+        paymentMethodBox.getItems().clear();
         paymentMethodBox.getItems().addAll("Cash", "Card", "PayPal");
+
         cartListView.setItems(cartItems);
 
         loadProducts();
@@ -122,81 +124,94 @@ public class ShopController {
     private void renderProducts(List<Product> products) {
         productsContainer.getChildren().clear();
 
+        if (products == null || products.isEmpty()) {
+            Label emptyLabel = new Label("No products found.");
+            emptyLabel.setStyle("-fx-text-fill: #c7d2fe; -fx-font-size: 14; -fx-font-weight: bold;");
+            productsContainer.getChildren().add(emptyLabel);
+            return;
+        }
+
         for (Product product : products) {
-            VBox card = new VBox(10);
-            card.setPrefWidth(220);
-            card.setPadding(new Insets(12));
-            card.setStyle(
-                    "-fx-background-color: #161a30;" +
-                            "-fx-background-radius: 12;" +
-                            "-fx-border-color: #2b2f55;" +
-                            "-fx-border-radius: 12;"
-            );
-
-            ImageView imageView = new ImageView();
-            imageView.setFitWidth(190);
-            imageView.setFitHeight(120);
-            imageView.setPreserveRatio(false);
-
-            try {
-                String imagePath = product.getImage();
-
-                if (imagePath != null && !imagePath.trim().isEmpty()) {
-                    if (imagePath.startsWith("http") || imagePath.startsWith("file:")) {
-                        imageView.setImage(new Image(imagePath, true));
-                    } else {
-                        imageView.setImage(new Image(getClass().getResourceAsStream("/images/" + imagePath)));
-                    }
-                }
-            } catch (Exception e) {
-                System.out.println("⚠ Image not found for product: " + product.getName());
-            }
-
-            Label nameLabel = new Label(product.getName());
-            nameLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;");
-
-            Label categoryLabel = new Label(product.getCategory());
-            categoryLabel.setStyle("-fx-text-fill: #b8b8d1;");
-
-            Label priceLabel = new Label("Price: " + String.format("%.2f TND", product.getPrice()));
-            priceLabel.setStyle("-fx-text-fill: white;");
-
-            Label stockLabel = new Label("Stock: " + product.getStock());
-            stockLabel.setStyle("-fx-text-fill: white;");
-
-            Label descLabel = new Label(product.getDescription());
-            descLabel.setWrapText(true);
-            descLabel.setStyle("-fx-text-fill: #d8d8e8;");
-
-            int maxStock = Math.max(1, product.getStock());
-            Spinner<Integer> qtySpinner = new Spinner<>(1, maxStock, 1);
-            qtySpinner.setEditable(true);
-            qtySpinner.setPrefWidth(90);
-
-            Button addToCartBtn = new Button("Add to Cart");
-            addToCartBtn.setStyle("-fx-background-color: #9b59b6; -fx-text-fill: white;");
-
-            if (product.getStock() <= 0) {
-                addToCartBtn.setDisable(true);
-                addToCartBtn.setText("Out of Stock");
-            }
-
-            addToCartBtn.setOnAction(e -> handleAddToCart(product, qtySpinner.getValue()));
-
-            HBox bottomRow = new HBox(10, qtySpinner, addToCartBtn);
-
-            card.getChildren().addAll(
-                    imageView,
-                    nameLabel,
-                    categoryLabel,
-                    priceLabel,
-                    stockLabel,
-                    descLabel,
-                    bottomRow
-            );
-
+            VBox card = createProductCard(product);
             productsContainer.getChildren().add(card);
         }
+    }
+
+    private VBox createProductCard(Product product) {
+        VBox card = new VBox(10);
+        card.setPrefWidth(220);
+        card.setPadding(new Insets(12));
+        card.setStyle(
+                "-fx-background-color: #161a30;" +
+                        "-fx-background-radius: 12;" +
+                        "-fx-border-color: #2b2f55;" +
+                        "-fx-border-radius: 12;"
+        );
+
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(190);
+        imageView.setFitHeight(120);
+        imageView.setPreserveRatio(false);
+
+        try {
+            String imagePath = product.getImage();
+
+            if (imagePath != null && !imagePath.trim().isEmpty()) {
+                if (imagePath.startsWith("http") || imagePath.startsWith("file:")) {
+                    imageView.setImage(new Image(imagePath, true));
+                } else {
+                    imageView.setImage(new Image(getClass().getResourceAsStream("/images/" + imagePath)));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("⚠ Image not found for product: " + product.getName());
+        }
+
+        Label nameLabel = new Label(product.getName());
+        nameLabel.setWrapText(true);
+        nameLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;");
+
+        Label categoryLabel = new Label(product.getCategory());
+        categoryLabel.setStyle("-fx-text-fill: #b8b8d1;");
+
+        Label priceLabel = new Label("Price: " + String.format("%.2f TND", product.getPrice()));
+        priceLabel.setStyle("-fx-text-fill: white;");
+
+        Label stockLabel = new Label("Stock: " + product.getStock());
+        stockLabel.setStyle("-fx-text-fill: white;");
+
+        Label mlLabel = new Label("ML sales: " + String.format("%.2f", product.getPredictedQty()));
+        mlLabel.setStyle("-fx-text-fill: #c4b5fd; -fx-font-size: 11; -fx-font-weight: bold;");
+
+        Label descLabel = new Label(product.getDescription());
+        descLabel.setWrapText(true);
+        descLabel.setStyle("-fx-text-fill: #d8d8e8;");
+
+        int maxStock = Math.max(1, product.getStock());
+        Spinner<Integer> qtySpinner = new Spinner<>(1, maxStock, 1);
+        qtySpinner.setEditable(true);
+        qtySpinner.setPrefWidth(90);
+
+        Button addToCartBtn = new Button(product.getStock() > 0 ? "Add to Cart" : "Out of Stock");
+        addToCartBtn.setDisable(product.getStock() <= 0);
+        addToCartBtn.setStyle("-fx-background-color: #9b59b6; -fx-text-fill: white;");
+
+        addToCartBtn.setOnAction(e -> handleAddToCart(product, qtySpinner.getValue()));
+
+        HBox bottomRow = new HBox(10, qtySpinner, addToCartBtn);
+
+        card.getChildren().addAll(
+                imageView,
+                nameLabel,
+                categoryLabel,
+                priceLabel,
+                stockLabel,
+                mlLabel,
+                descLabel,
+                bottomRow
+        );
+
+        return card;
     }
 
     @FXML
@@ -209,10 +224,10 @@ public class ShopController {
         }
 
         List<Product> filtered = allProducts.stream()
-                .filter(p ->
-                        safeLower(p.getName()).contains(keyword)
-                                || safeLower(p.getCategory()).contains(keyword)
-                                || safeLower(p.getDescription()).contains(keyword))
+                .filter(product ->
+                        safeLower(product.getName()).contains(keyword)
+                                || safeLower(product.getCategory()).contains(keyword)
+                                || safeLower(product.getDescription()).contains(keyword))
                 .collect(Collectors.toList());
 
         renderProducts(filtered);
@@ -225,7 +240,7 @@ public class ShopController {
     }
 
     private void handleAddToCart(Product product, int quantity) {
-        if (quantity <= 0) {
+        if (product == null || quantity <= 0) {
             return;
         }
 

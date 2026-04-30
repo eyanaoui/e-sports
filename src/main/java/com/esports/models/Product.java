@@ -12,6 +12,12 @@ public class Product {
     private int stock;
     private int ordersCount;
 
+    private double predictedQty;
+    private int forecastDays;
+    private int recommendedReorderQty;
+
+    private double recommendationScore;
+
     public Product() {
     }
 
@@ -111,11 +117,61 @@ public class Product {
         this.stock = stock;
     }
 
+
     public int getOrdersCount() {
         return ordersCount;
     }
 
     public void setOrdersCount(int ordersCount) {
         this.ordersCount = ordersCount;
+    }
+
+
+    public double getPredictedQty() {
+        return predictedQty;
+    }
+
+    public void setPredictedQty(double predictedQty) {
+        this.predictedQty = predictedQty;
+    }
+
+
+    public int getForecastDays() {
+        return forecastDays;
+    }
+
+    public void setForecastDays(int forecastDays) {
+        this.forecastDays = forecastDays;
+    }
+
+
+    public int getRecommendedReorderQty() {
+        return recommendedReorderQty;
+    }
+
+    public void setRecommendedReorderQty(int recommendedReorderQty) {
+        this.recommendedReorderQty = recommendedReorderQty;
+    }
+
+
+    public double getRecommendationScore() {
+        return recommendationScore;
+    }
+
+    public void setRecommendationScore(double recommendationScore) {
+        this.recommendationScore = recommendationScore;
+    }
+
+
+    public String getMlRiskLevel() {
+        if (recommendedReorderQty > 0) {
+            return "RESTOCK";
+        }
+
+        if (predictedQty > 0 && predictedQty >= stock * 0.8) {
+            return "WATCH";
+        }
+
+        return "SAFE";
     }
 }

@@ -70,19 +70,33 @@ public class ProductFormController {
     @FXML
     public void initialize() {
         clearErrors();
-        successMessage.setText("");
 
+        if (successMessage != null) {
+            successMessage.setText("");
+        }
+
+        categoryBox.getItems().clear();
         categoryBox.getItems().addAll(
                 "Accessories",
                 "Games",
                 "Consoles",
                 "Headsets",
-                "Controllers"
+                "Controllers",
+                "PC Items",
+                "Gaming Chairs",
+                "Keyboards",
+                "Mouses"
         );
+
+        activeCheckBox.setSelected(true);
     }
 
     public void setProduct(Product product) {
         this.currentProduct = product;
+
+        if (product == null) {
+            return;
+        }
 
         formTitle.setText("Update Product");
         saveButton.setText("Update");
@@ -99,7 +113,10 @@ public class ProductFormController {
     @FXML
     public void handleSaveProduct() {
         clearErrors();
-        successMessage.setText("");
+
+        if (successMessage != null) {
+            successMessage.setText("");
+        }
 
         String name = nameField.getText();
         String category = categoryBox.getValue();
@@ -121,22 +138,27 @@ public class ProductFormController {
             nameError.setText(nameMsg);
             isValid = false;
         }
+
         if (!categoryMsg.isEmpty()) {
             categoryError.setText(categoryMsg);
             isValid = false;
         }
+
         if (!descriptionMsg.isEmpty()) {
             descriptionError.setText(descriptionMsg);
             isValid = false;
         }
+
         if (!imageMsg.isEmpty()) {
             imageError.setText(imageMsg);
             isValid = false;
         }
+
         if (!priceMsg.isEmpty()) {
             priceError.setText(priceMsg);
             isValid = false;
         }
+
         if (!stockMsg.isEmpty()) {
             stockError.setText(stockMsg);
             isValid = false;
@@ -146,15 +168,26 @@ public class ProductFormController {
             return;
         }
 
-        double price = Double.parseDouble(priceText);
-        int stock = Integer.parseInt(stockText);
+        double price = Double.parseDouble(priceText.trim());
+        int stock = Integer.parseInt(stockText.trim());
         boolean isActive = activeCheckBox.isSelected();
 
         if (currentProduct == null) {
-            Product product = new Product(category, description, image, isActive, name, price, stock);
+            Product product = new Product(
+                    category,
+                    description,
+                    image,
+                    isActive,
+                    name,
+                    price,
+                    stock
+            );
+
             productDAO.addProduct(product);
+
             successMessage.setText("Product added successfully.");
             clearFields();
+
         } else {
             currentProduct.setName(name);
             currentProduct.setCategory(category);
@@ -165,6 +198,7 @@ public class ProductFormController {
             currentProduct.setActive(isActive);
 
             productDAO.updateProduct(currentProduct);
+
             successMessage.setText("Product updated successfully.");
         }
     }
@@ -173,7 +207,10 @@ public class ProductFormController {
     public void handleClear() {
         clearFields();
         clearErrors();
-        successMessage.setText("");
+
+        if (successMessage != null) {
+            successMessage.setText("");
+        }
     }
 
     @FXML
@@ -183,6 +220,7 @@ public class ProductFormController {
             Parent productsView = loader.load();
 
             AnchorPane contentArea = (AnchorPane) nameField.getScene().lookup("#contentArea");
+
             if (contentArea != null) {
                 AnchorPane.setTopAnchor(productsView, 0.0);
                 AnchorPane.setBottomAnchor(productsView, 0.0);
@@ -192,7 +230,7 @@ public class ProductFormController {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("❌ Error loading products view: " + e.getMessage());
         }
     }
 
@@ -200,8 +238,9 @@ public class ProductFormController {
     public void handleBrowse() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose Product Image");
+
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp")
         );
 
         Stage stage = (Stage) imageField.getScene().getWindow();
@@ -220,7 +259,7 @@ public class ProductFormController {
         imageField.clear();
         priceField.clear();
         stockField.clear();
-        activeCheckBox.setSelected(false);
+        activeCheckBox.setSelected(true);
     }
 
     private void clearErrors() {

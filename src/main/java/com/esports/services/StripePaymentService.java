@@ -13,16 +13,18 @@ public class StripePaymentService {
 
     /*
      * DEMO CONFIG
-     * Replace this with your Stripe TEST secret key.
-     * It starts with sk_test_...
+     * Best practice:
+     * Put your Stripe TEST secret key in IntelliJ environment variables:
      *
-     * Do NOT push this secret key to GitHub.
+     * STRIPE_SECRET_KEY=sk_test_your_key_here
+     *
+     * Do NOT push your real Stripe key to GitHub.
      */
-    private static final String LOCAL_STRIPE_SECRET_KEY = "";
+
 
     /*
-     * Stripe may reject TND depending on account/payment method.
-     * So we display prices in TND in the app, but charge online payment in EUR.
+     * Stripe may reject TND depending on your Stripe account/payment method.
+     * So the app displays prices in TND, but online payment is charged in EUR.
      */
     private static final String STRIPE_CURRENCY = "eur";
 
@@ -50,7 +52,7 @@ public class StripePaymentService {
 
     public PaymentResult createCheckoutSession(List<CartItem> cartItems, String customerEmail, String paymentMethod) {
         if (!isConfigured()) {
-            return PaymentResult.error("Online payment is not configured. Add your secret key.");
+            return PaymentResult.error("Online payment is not configured. Add your Stripe secret key.");
         }
 
         if (cartItems == null || cartItems.isEmpty()) {
@@ -112,8 +114,11 @@ public class StripePaymentService {
         SessionCreateParams.Builder builder = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.PAYMENT)
                 .setSuccessUrl("https://example.com/success?session_id={CHECKOUT_SESSION_ID}")
-                .setCancelUrl("https://example.com/cancel")
-                .setCustomerEmail(customerEmail);
+                .setCancelUrl("https://example.com/cancel");
+
+        if (customerEmail != null && !customerEmail.trim().isEmpty()) {
+            builder.setCustomerEmail(customerEmail.trim());
+        }
 
         builder.addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD);
 
@@ -122,6 +127,10 @@ public class StripePaymentService {
         }
 
         for (CartItem item : cartItems) {
+            if (item == null || item.getProduct() == null || item.getQuantity() <= 0) {
+                continue;
+            }
+
             Product product = item.getProduct();
 
             double priceInTnd = product.getPrice();
@@ -129,7 +138,11 @@ public class StripePaymentService {
 
             long unitAmount = toStripeAmount(priceInEur);
 
-            String description = product.getCategory()
+            if (unitAmount <= 0) {
+                unitAmount = 1;
+            }
+
+            String description = safe(product.getCategory())
                     + " | Original price: "
                     + String.format("%.2f TND", priceInTnd)
                     + " | Charged approx: "
@@ -137,7 +150,7 @@ public class StripePaymentService {
 
             SessionCreateParams.LineItem.PriceData.ProductData productData =
                     SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                            .setName(product.getName())
+                            .setName(safe(product.getName()))
                             .setDescription(description)
                             .build();
 
@@ -172,5 +185,9 @@ public class StripePaymentService {
         }
 
         return value;
+    }
+
+    private String safe(String value) {
+        return value == null || value.trim().isEmpty() ? "Product" : value.trim();
     }
 }

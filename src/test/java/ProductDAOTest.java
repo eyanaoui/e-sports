@@ -1,7 +1,6 @@
 package com.esports.tests;
 
 import com.esports.dao.ProductDAO;
-import com.esports.models.Product;
 import org.junit.jupiter.api.*;
 
 import java.util.List;

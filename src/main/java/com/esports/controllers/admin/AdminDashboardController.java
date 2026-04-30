@@ -63,14 +63,20 @@ public class AdminDashboardController {
     }
 
     @FXML
-    public void showShop() {
-        currentView = "/views/user/shop.fxml";
+    public void showOrders() {
+        currentView = "/views/admin/orders.fxml";
         loadView(currentView);
     }
 
     @FXML
-    public void showOrders() {
-        currentView = "/views/admin/orders.fxml";
+    public void showReviewModeration() {
+        currentView = "/views/admin/product-reviews-admin.fxml";
+        loadView(currentView);
+    }
+
+    @FXML
+    public void showShop() {
+        currentView = "/views/user/shop-browse.fxml";
         loadView(currentView);
     }
 
@@ -86,8 +92,10 @@ public class AdminDashboardController {
         AppState.setDarkMode(isDarkMode);
 
         Scene scene = contentArea.getScene();
+
         if (scene != null) {
             scene.getStylesheets().clear();
+
             try {
                 if (isDarkMode) {
                     scene.getStylesheets().add(getClass().getResource("/styles-dark.css").toExternalForm());
