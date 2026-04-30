@@ -14,6 +14,9 @@
         </VBox>
         <Region HBox.hgrow="ALWAYS" />
 
+        <Button text="⚖ AI FAIR MATCHMAKING" onAction="#handleFairMatchmaking"
+                style="-fx-background-color: #94e2d5; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
+
         <Button text="🤖 AI PREDICT" onAction="#handleAIPrediction"
                 style="-fx-background-color: #8b5cf6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
 

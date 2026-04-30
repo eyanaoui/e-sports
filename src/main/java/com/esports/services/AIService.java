@@ -22,4 +22,13 @@ public class AIService {
                 "WIN PROBABILITY: " + String.format("%.1f%%", Math.min(99.4, winProb)) + "\n" +
                 "═══════════════════════════";
     }
+
+    public List<Map<String, Object>> generateFairMatchmaking(int tournamentId) {
+        List<Map<String, Object>> teams = dao.getTournamentTeamStats(tournamentId);
+
+        // The "AI" Logic: Sort by Elo
+        teams.sort(Comparator.comparingDouble(m -> (double) m.get("elo")));
+
+        return teams;
+    }
 }

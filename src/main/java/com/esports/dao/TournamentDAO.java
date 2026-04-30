@@ -24,7 +24,7 @@ public class TournamentDAO {
             ps.setInt(11, 3);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
         }
     }
 
@@ -41,7 +41,7 @@ public class TournamentDAO {
             ps.setString(8, t.getPrize());
             ps.setInt(9, t.getId());
             ps.executeUpdate();
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { System.err.println("Error: " + e.getMessage()); }
     }
 
     public void delete(int id) {
@@ -49,7 +49,7 @@ public class TournamentDAO {
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { System.err.println("Error: " + e.getMessage()); }
     }
 
     public List<Tournament> getAll() {
@@ -70,7 +70,7 @@ public class TournamentDAO {
                 t.setPrize(rs.getString("prize"));
                 list.add(t);
             }
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { System.err.println("Error: " + e.getMessage()); }
         return list;
     }
 
@@ -90,7 +90,7 @@ public class TournamentDAO {
                     analysisData.add(stats);
                 }
             }
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { System.err.println("Error: " + e.getMessage()); }
         return analysisData;
     }
 }
