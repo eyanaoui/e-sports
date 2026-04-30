@@ -1,0 +1,332 @@
+Index: src/main/resources/views/user/minigame-window.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.scene.layout.BorderPane?>\r\n<?import javafx.scene.web.WebView?>\r\n\r\n<BorderPane xmlns:fx=\"http://javafx.com/fxml\"\r\n            fx:controller=\"com.esports.controllers.user.MiniGameWindowController\"\r\n            prefWidth=\"500\"\r\n            prefHeight=\"420\">\r\n\r\n    <center>\r\n        <WebView fx:id=\"webView\"/>\r\n    </center>\r\n\r\n</BorderPane>
+===================================================================
+diff --git a/src/main/resources/views/user/minigame-window.fxml b/src/main/resources/views/user/minigame-window.fxml
+--- a/src/main/resources/views/user/minigame-window.fxml	
++++ b/src/main/resources/views/user/minigame-window.fxml	
+@@ -1,15 +1,88 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ 
+-<?import javafx.scene.layout.BorderPane?>
+-<?import javafx.scene.web.WebView?>
++<?import javafx.scene.control.*?>
++<?import javafx.scene.layout.*?>
++
++<VBox spacing="15"
++      style="-fx-padding: 20;"
++      xmlns="http://javafx.com/javafx"
++      xmlns:fx="http://javafx.com/fxml"
++      fx:controller="com.esports.controllers.user.GuideDetailController">
++
++    <!-- GUIDE HEADER -->
++
++    <Label fx:id="guideTitleLabel"
++           style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+ 
+-<BorderPane xmlns:fx="http://javafx.com/fxml"
+-            fx:controller="com.esports.controllers.user.MiniGameWindowController"
+-            prefWidth="500"
+-            prefHeight="420">
++    <Label fx:id="guideDescLabel"
++           wrapText="true"
++           style="-fx-font-size: 13; -fx-text-fill: #666;"/>
+ 
+-    <center>
+-        <WebView fx:id="webView"/>
+-    </center>
++    <HBox spacing="10">
++        <Label fx:id="difficultyLabel"
++               style="-fx-font-size: 12;
++                      -fx-padding: 2 8 2 8;
++                      -fx-background-radius: 99;"/>
++    </HBox>
++
++    <Separator/>
++
++    <!-- STEPS SECTION -->
++
++    <Label text="Steps"
++           style="-fx-font-size: 16; -fx-font-weight: bold;"/>
++
++    <ScrollPane fitToWidth="true"
++                prefHeight="250">
++
++        <VBox fx:id="stepsContainer"
++              spacing="10"
++              style="-fx-padding: 5;"/>
++
++    </ScrollPane>
++
++    <Separator/>
++
++    <!-- RATINGS SECTION -->
++
++    <Label text="Ratings"
++           style="-fx-font-size: 16; -fx-font-weight: bold;"/>
++
++    <ScrollPane fitToWidth="true"
++                prefHeight="150">
++
++        <VBox fx:id="ratingsContainer"
++              spacing="8"
++              style="-fx-padding: 5;"/>
++
++    </ScrollPane>
++
++    <Separator/>
++
++    <!-- ADD RATING -->
++
++    <Label text="Leave a Rating"
++           style="-fx-font-size: 14; -fx-font-weight: bold;"/>
++
++    <HBox spacing="10"
++          alignment="CENTER_LEFT">
++
++        <Label text="Rating:"/>
++
++        <ComboBox fx:id="ratingBox"
++                  prefWidth="100"/>
++
++        <Label text="Comment:"/>
++
++        <TextField fx:id="commentField"
++                   promptText="Write a comment..."
++                   prefWidth="250"/>
++
++        <Button text="Submit"
++                onAction="#handleSubmitRating"
++                style="-fx-background-color: #2ecc71;
++                       -fx-text-fill: white;"/>
++
++    </HBox>
+ 
+-</BorderPane>
+\ No newline at end of file
++</VBox>
+\ No newline at end of file
+Index: src/main/java/com/esports/utils/MiniGameService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.esports.utils;public class MiniGameService {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/com/esports/utils/MiniGameService.java b/src/main/java/com/esports/utils/MiniGameService.java
+--- a/src/main/java/com/esports/utils/MiniGameService.java	
++++ b/src/main/java/com/esports/utils/MiniGameService.java	
+@@ -1,2 +1,144 @@
+-package com.esports.utils;public class MiniGameService {
+-}
++package com.esports.utils;
++
++import java.io.BufferedReader;
++import java.io.InputStreamReader;
++import java.net.HttpURLConnection;
++import java.net.URL;
++import java.net.URLEncoder;
++import java.nio.charset.StandardCharsets;
++
++public class MiniGameService {
++
++    public String generateMiniGameFromStep(String stepTitle, String stepContent) throws Exception {
++
++        String prompt = buildPrompt(stepTitle, stepContent);
++
++        String encodedPrompt = URLEncoder.encode(prompt, StandardCharsets.UTF_8);
++
++        String urlString = "https://text.pollinations.ai/" + encodedPrompt;
++
++        URL url = new URL(urlString);
++        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
++
++        connection.setRequestMethod("GET");
++        connection.setConnectTimeout(20000);
++        connection.setReadTimeout(20000);
++
++        int responseCode = connection.getResponseCode();
++
++        if (responseCode != 200) {
++            throw new RuntimeException("LLM request failed with HTTP code: " + responseCode);
++        }
++
++        StringBuilder response = new StringBuilder();
++
++        try (BufferedReader reader = new BufferedReader(
++                new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
++
++            String line;
++
++            while ((line = reader.readLine()) != null) {
++                response.append(line).append("\n");
++            }
++        }
++
++        String rawResponse = response.toString().trim();
++
++        System.out.println("=== RAW LLM RESPONSE START ===");
++        System.out.println(rawResponse);
++        System.out.println("=== RAW LLM RESPONSE END ===");
++
++        String cleanHtml = extractHtml(rawResponse);
++
++        if (!isValidHtml(cleanHtml)) {
++            throw new RuntimeException("Generated content is not valid playable HTML.");
++        }
++
++        return cleanHtml;
++    }
++
++    private String buildPrompt(String stepTitle, String stepContent) {
++        return """
++Create a VERY SIMPLE playable HTML5 canvas mini-game inspired by this guide step.
++
++STEP TITLE:
++%s
++
++STEP CONTENT:
++%s
++
++STRICT RULES:
++1. Return a complete HTML document.
++2. The game must be self-contained in one file.
++3. Use only HTML, CSS and vanilla JavaScript.
++4. Use a canvas of exactly 400x300 pixels.
++5. No external libraries, no images, no fonts, no API calls.
++6. Use only primitive graphics: circles, rectangles, text, simple colors.
++7. The game must start automatically on load.
++8. The game must display a score.
++9. The game must end after a short timer.
++10. Keep it very simple and lightweight.
++11. Match the game idea to the step text in a simple way.
++12. Good game types: clicking targets, reaction test, collecting objects, avoiding obstacles, timing challenge.
++13. Include <!DOCTYPE html>, <html>, <body>, <canvas>, and JavaScript.
++14. Do not make anything complex.
++"""
++                .formatted(
++                        safe(stepTitle),
++                        safe(stepContent)
++                );
++    }
++
++    private String safe(String text) {
++        if (text == null) {
++            return "";
++        }
++        return text.replace("\r", " ").replace("\n", " ").trim();
++    }
++
++    private String extractHtml(String raw) {
++        if (raw == null || raw.isBlank()) {
++            return "";
++        }
++
++        String cleaned = raw
++                .replace("```html", "")
++                .replace("```HTML", "")
++                .replace("```", "")
++                .trim();
++
++        int doctypeStart = cleaned.toLowerCase().indexOf("<!doctype html>");
++        int htmlStart = cleaned.toLowerCase().indexOf("<html");
++        int htmlEnd = cleaned.toLowerCase().lastIndexOf("</html>");
++
++        if (doctypeStart != -1 && htmlEnd != -1 && htmlEnd > doctypeStart) {
++            return cleaned.substring(doctypeStart, htmlEnd + "</html>".length()).trim();
++        }
++
++        if (htmlStart != -1 && htmlEnd != -1 && htmlEnd > htmlStart) {
++            String htmlBlock = cleaned.substring(htmlStart, htmlEnd + "</html>".length()).trim();
++
++            if (!htmlBlock.toLowerCase().startsWith("<!doctype html>")) {
++                htmlBlock = "<!DOCTYPE html>\n" + htmlBlock;
++            }
++
++            return htmlBlock;
++        }
++
++        return cleaned;
++    }
++
++    private boolean isValidHtml(String html) {
++        if (html == null || html.isBlank()) {
++            return false;
++        }
++
++        String lower = html.toLowerCase();
++
++        return lower.contains("<!doctype html>")
++                && lower.contains("<html")
++                && lower.contains("<body")
++                && lower.contains("<canvas")
++                && lower.contains("</html>");
++    }
++}
+\ No newline at end of file
+Index: src/main/java/com/esports/utils/MiniGameLauncher.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.esports.utils;public class MiniGameLauncher {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/com/esports/utils/MiniGameLauncher.java b/src/main/java/com/esports/utils/MiniGameLauncher.java
+--- a/src/main/java/com/esports/utils/MiniGameLauncher.java	
++++ b/src/main/java/com/esports/utils/MiniGameLauncher.java	
+@@ -1,2 +1,27 @@
+-package com.esports.utils;public class MiniGameLauncher {
+-}
++package com.esports.utils;
++
++import javafx.scene.Scene;
++import javafx.scene.web.WebView;
++import javafx.stage.Stage;
++
++public class MiniGameLauncher {
++
++    public static void openMiniGame(String htmlContent) {
++
++        Stage stage = new Stage();
++
++        WebView webView = new WebView();
++
++        webView.getEngine().loadContent(htmlContent);
++
++        Scene scene = new Scene(webView, 420, 360);
++
++        stage.setTitle("Mini Game Challenge");
++
++        stage.setScene(scene);
++
++        stage.show();
++
++    }
++
++}
+\ No newline at end of file
+Index: src/main/java/com/esports/controllers/user/MiniGameWindowController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.esports.controllers.user;public class MiniGameWindowController {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/com/esports/controllers/user/MiniGameWindowController.java b/src/main/java/com/esports/controllers/user/MiniGameWindowController.java
+--- a/src/main/java/com/esports/controllers/user/MiniGameWindowController.java	
++++ b/src/main/java/com/esports/controllers/user/MiniGameWindowController.java	
+@@ -1,2 +1,16 @@
+-package com.esports.controllers.user;public class MiniGameWindowController {
+-}
++package com.esports.controllers.user;
++
++import javafx.fxml.FXML;
++import javafx.scene.web.WebEngine;
++import javafx.scene.web.WebView;
++
++public class MiniGameWindowController {
++
++    @FXML
++    private WebView webView;
++
++    public void loadGameHtml(String html) {
++        WebEngine engine = webView.getEngine();
++        engine.loadContent(html, "text/html");
++    }
++}
+\ No newline at end of file

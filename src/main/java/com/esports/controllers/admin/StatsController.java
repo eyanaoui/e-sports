@@ -5,7 +5,6 @@ import com.esports.dao.GuideDAO;
 import com.esports.dao.GuideRatingDAO;
 import com.esports.db.DatabaseConnection;
 import com.esports.models.Game;
-import com.esports.models.Guide;
 import com.esports.models.GuideRating;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -18,19 +17,20 @@ import javafx.scene.control.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
 
 public class StatsController {
 
     @FXML private Label totalGamesLabel, totalGuidesLabel, totalRatingsLabel, avgRatingLabel;
+    @FXML private Label happyLabel, neutralLabel, angryLabel;
     @FXML private BarChart<String, Number> guidesPerGameChart;
     @FXML private PieChart difficultyChart;
+    @FXML private PieChart moodChart;
     @FXML private TableView<GuideStats> leaderboardTable;
     @FXML private TableColumn<GuideStats, Number> colRank, colAvgRating, colTotal;
     @FXML private TableColumn<GuideStats, String> colTitle, colGame;
 
-    private GameDAO gameDAO     = new GameDAO();
-    private GuideDAO guideDAO   = new GuideDAO();
+    private GameDAO gameDAO          = new GameDAO();
+    private GuideDAO guideDAO        = new GuideDAO();
     private GuideRatingDAO ratingDAO = new GuideRatingDAO();
     private Connection con = DatabaseConnection.getInstance().getConnection();
 
@@ -40,18 +40,16 @@ public class StatsController {
         loadGuidesPerGameChart();
         loadDifficultyChart();
         loadLeaderboard();
+        loadMoodAnalysis();
     }
 
     private void loadMetricCards() {
         int totalGames   = gameDAO.getAll().size();
         int totalGuides  = guideDAO.getAll().size();
         int totalRatings = ratingDAO.getAll().size();
-
         double avgRating = ratingDAO.getAll().stream()
                 .mapToInt(GuideRating::getRatingValue)
-                .average()
-                .orElse(0.0);
-
+                .average().orElse(0.0);
         totalGamesLabel.setText(String.valueOf(totalGames));
         totalGuidesLabel.setText(String.valueOf(totalGuides));
         totalRatingsLabel.setText(String.valueOf(totalRatings));
@@ -73,7 +71,6 @@ public class StatsController {
         long easy   = guideDAO.getAll().stream().filter(g -> "Easy".equals(g.getDifficulty())).count();
         long medium = guideDAO.getAll().stream().filter(g -> "Medium".equals(g.getDifficulty())).count();
         long hard   = guideDAO.getAll().stream().filter(g -> "Hard".equals(g.getDifficulty())).count();
-
         difficultyChart.setData(FXCollections.observableArrayList(
                 new PieChart.Data("Easy",   easy),
                 new PieChart.Data("Medium", medium),
@@ -88,7 +85,6 @@ public class StatsController {
         colGame.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().game));
         colAvgRating.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().avgRating));
         colTotal.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().totalRatings));
-
         try {
             String sql = """
                 SELECT g.title, ga.name as game_name,
@@ -118,7 +114,54 @@ public class StatsController {
         }
     }
 
-    // inner class for leaderboard data
+    private void loadMoodAnalysis() {
+        new Thread(() -> {
+            try {
+                int happy = 0, neutral = 0, angry = 0;
+                okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
+
+                for (GuideRating rating : ratingDAO.getAll()) {
+                    if (rating.getComment() == null || rating.getComment().isEmpty()) continue;
+
+                    org.json.JSONObject jsonObj = new org.json.JSONObject();
+                    jsonObj.put("text", rating.getComment());
+
+                    okhttp3.RequestBody body = okhttp3.RequestBody.create(
+                            jsonObj.toString(), okhttp3.MediaType.parse("application/json"));
+                    okhttp3.Request request = new okhttp3.Request.Builder()
+                            .url("http://127.0.0.1:5001/api/predict")
+                            .post(body).build();
+                    okhttp3.Response response = client.newCall(request).execute();
+                    org.json.JSONObject result = new org.json.JSONObject(response.body().string());
+                    String sentiment = result.getString("sentiment");
+
+                    if (sentiment.equals("HAPPY")) happy++;
+                    else if (sentiment.equals("ANGRY")) angry++;
+                    else neutral++;
+                }
+
+                final int h = happy, n = neutral, a = angry;
+                javafx.application.Platform.runLater(() -> {
+                    happyLabel.setText(String.valueOf(h));
+                    neutralLabel.setText(String.valueOf(n));
+                    angryLabel.setText(String.valueOf(a));
+                    moodChart.setData(FXCollections.observableArrayList(
+                            new PieChart.Data("😊 Happy",   h),
+                            new PieChart.Data("😐 Neutral", n),
+                            new PieChart.Data("😠 Angry",   a)
+                    ));
+                });
+            } catch (Exception e) {
+                System.out.println("❌ TextBlob API error: " + e.getMessage());
+                javafx.application.Platform.runLater(() -> {
+                    happyLabel.setText("N/A");
+                    neutralLabel.setText("N/A");
+                    angryLabel.setText("N/A");
+                });
+            }
+        }).start();
+    }
+
     public static class GuideStats {
         String title, game;
         double avgRating;
