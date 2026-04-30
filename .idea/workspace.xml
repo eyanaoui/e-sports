@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a588b42-1d87-44c3-84bd-d264ebff83f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/esports/models/TournamentTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/services/DiscordWebhookService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/team-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/team-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +41,9 @@
     &quot;accountId&quot;: &quot;1ed99792-033f-4214-add3-adcddd464de0&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -52,13 +57,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.TeamTest.executor": "Debug",
     "JUnit.TournamentTest.executor": "Run",
-    "Maven.e-sports [javafx:run].executor": "Debug",
+    "Maven.e-sports [javafx:run].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "team/tournament",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
@@ -81,7 +87,22 @@
       <recent name="C:\Users\Mega-PC\Desktop\where i should be, again\exs\e-sports\src\main\resources\views\admin" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TournamentTest">
+  <component name="RunManager" selected="Maven.e-sports [javafx:run]">
+    <configuration name="TeamTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="e-sports" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.esports.models.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.esports.models" />
+      <option name="MAIN_CLASS_NAME" value="com.esports.models.TeamTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TournamentTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="e-sports" />
       <extension name="coverage">
@@ -129,8 +150,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TournamentTest" />
         <item itemvalue="Maven.e-sports [javafx:run]" />
+        <item itemvalue="JUnit.TeamTest" />
+        <item itemvalue="JUnit.TournamentTest" />
       </list>
     </recent_temporary>
   </component>
