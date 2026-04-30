@@ -1,0 +1,930 @@
+Index: src/main/resources/views/user/guide-detail.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<?import javafx.scene.control.*?>\r\n<?import javafx.scene.layout.*?>\r\n\r\n<VBox spacing=\"15\" style=\"-fx-padding: 20;\"\r\n      xmlns=\"http://javafx.com/javafx\"\r\n      xmlns:fx=\"http://javafx.com/fxml\"\r\n      fx:controller=\"com.esports.controllers.user.GuideDetailController\">\r\n\r\n    <!-- GUIDE HEADER -->\r\n    <Label fx:id=\"guideTitleLabel\"\r\n           style=\"-fx-font-size: 24; -fx-font-weight: bold;\"/>\r\n    <Label fx:id=\"guideDescLabel\"\r\n           style=\"-fx-font-size: 13; -fx-text-fill: #666;\"\r\n           wrapText=\"true\"/>\r\n    <HBox spacing=\"10\">\r\n        <Label fx:id=\"difficultyLabel\"\r\n               style=\"-fx-font-size: 12; -fx-padding: 2 8 2 8; -fx-background-radius: 99;\"/>\r\n    </HBox>\r\n\r\n    <Separator/>\r\n\r\n    <!-- STEPS -->\r\n    <Label text=\"Steps\" style=\"-fx-font-size: 16; -fx-font-weight: bold;\"/>\r\n    <ScrollPane fitToWidth=\"true\" prefHeight=\"200\">\r\n        <VBox fx:id=\"stepsContainer\" spacing=\"10\" style=\"-fx-padding: 5;\"/>\r\n    </ScrollPane>\r\n\r\n    <Separator/>\r\n\r\n    <!-- RATINGS -->\r\n    <Label text=\"Ratings\" style=\"-fx-font-size: 16; -fx-font-weight: bold;\"/>\r\n    <ScrollPane fitToWidth=\"true\" prefHeight=\"150\">\r\n        <VBox fx:id=\"ratingsContainer\" spacing=\"8\" style=\"-fx-padding: 5;\"/>\r\n    </ScrollPane>\r\n\r\n    <Separator/>\r\n\r\n    <!-- ADD RATING -->\r\n    <Label text=\"Leave a Rating\" style=\"-fx-font-size: 14; -fx-font-weight: bold;\"/>\r\n    <HBox spacing=\"10\" alignment=\"CENTER_LEFT\">\r\n        <Label text=\"Rating:\"/>\r\n        <ComboBox fx:id=\"ratingBox\" prefWidth=\"100\"/>\r\n        <Label text=\"Comment:\"/>\r\n        <TextField fx:id=\"commentField\" promptText=\"Write a comment...\" prefWidth=\"250\"/>\r\n        <Button text=\"Submit\" onAction=\"#handleSubmitRating\"\r\n                style=\"-fx-background-color: #2ecc71; -fx-text-fill: white;\"/>\r\n    </HBox>\r\n\r\n</VBox>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/views/user/guide-detail.fxml b/src/main/resources/views/user/guide-detail.fxml
+--- a/src/main/resources/views/user/guide-detail.fxml	
++++ b/src/main/resources/views/user/guide-detail.fxml	
+@@ -1,50 +1,88 @@
+ <?xml version="1.0" encoding="UTF-8"?>
++
+ <?import javafx.scene.control.*?>
+ <?import javafx.scene.layout.*?>
+ 
+-<VBox spacing="15" style="-fx-padding: 20;"
++<VBox spacing="15"
++      style="-fx-padding: 20;"
+       xmlns="http://javafx.com/javafx"
+       xmlns:fx="http://javafx.com/fxml"
+       fx:controller="com.esports.controllers.user.GuideDetailController">
+ 
+     <!-- GUIDE HEADER -->
++
+     <Label fx:id="guideTitleLabel"
+            style="-fx-font-size: 24; -fx-font-weight: bold;"/>
++
+     <Label fx:id="guideDescLabel"
+-           style="-fx-font-size: 13; -fx-text-fill: #666;"
+-           wrapText="true"/>
++           wrapText="true"
++           style="-fx-font-size: 13; -fx-text-fill: #666;"/>
++
+     <HBox spacing="10">
+         <Label fx:id="difficultyLabel"
+-               style="-fx-font-size: 12; -fx-padding: 2 8 2 8; -fx-background-radius: 99;"/>
++               style="-fx-font-size: 12;
++                      -fx-padding: 2 8 2 8;
++                      -fx-background-radius: 99;"/>
+     </HBox>
+ 
+     <Separator/>
+ 
+-    <!-- STEPS -->
+-    <Label text="Steps" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+-    <ScrollPane fitToWidth="true" prefHeight="200">
+-        <VBox fx:id="stepsContainer" spacing="10" style="-fx-padding: 5;"/>
++    <!-- STEPS SECTION -->
++
++    <Label text="Steps"
++           style="-fx-font-size: 16; -fx-font-weight: bold;"/>
++
++    <ScrollPane fitToWidth="true"
++                prefHeight="250">
++
++        <VBox fx:id="stepsContainer"
++              spacing="10"
++              style="-fx-padding: 5;"/>
++
+     </ScrollPane>
+ 
+     <Separator/>
+ 
+-    <!-- RATINGS -->
+-    <Label text="Ratings" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+-    <ScrollPane fitToWidth="true" prefHeight="150">
+-        <VBox fx:id="ratingsContainer" spacing="8" style="-fx-padding: 5;"/>
++    <!-- RATINGS SECTION -->
++
++    <Label text="Ratings"
++           style="-fx-font-size: 16; -fx-font-weight: bold;"/>
++
++    <ScrollPane fitToWidth="true"
++                prefHeight="150">
++
++        <VBox fx:id="ratingsContainer"
++              spacing="8"
++              style="-fx-padding: 5;"/>
++
+     </ScrollPane>
+ 
+     <Separator/>
+ 
+-    <!-- ADD RATING -->
+-    <Label text="Leave a Rating" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
+-    <HBox spacing="10" alignment="CENTER_LEFT">
++    <!-- ADD RATING SECTION -->
++
++    <Label text="Leave a Rating"
++           style="-fx-font-size: 14; -fx-font-weight: bold;"/>
++
++    <HBox spacing="10"
++          alignment="CENTER_LEFT">
++
+         <Label text="Rating:"/>
+-        <ComboBox fx:id="ratingBox" prefWidth="100"/>
++
++        <ComboBox fx:id="ratingBox"
++                  prefWidth="100"/>
++
+         <Label text="Comment:"/>
+-        <TextField fx:id="commentField" promptText="Write a comment..." prefWidth="250"/>
+-        <Button text="Submit" onAction="#handleSubmitRating"
+-                style="-fx-background-color: #2ecc71; -fx-text-fill: white;"/>
++
++        <TextField fx:id="commentField"
++                   promptText="Write a comment..."
++                   prefWidth="250"/>
++
++        <Button text="Submit"
++                onAction="#handleSubmitRating"
++                style="-fx-background-color: #2ecc71;
++                       -fx-text-fill: white;"/>
++
+     </HBox>
+ 
+ </VBox>
+\ No newline at end of file
+Index: src/main/java/com/esports/controllers/user/GuideDetailController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.esports.controllers.user;\r\n\r\nimport com.esports.dao.GuideRatingDAO;\r\nimport com.esports.dao.GuideStepDAO;\r\nimport com.esports.models.Guide;\r\nimport com.esports.models.GuideRating;\r\nimport com.esports.models.GuideStep;\r\nimport javafx.collections.FXCollections;\r\nimport javafx.fxml.FXML;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.layout.*;\r\nimport com.esports.AppState;\r\nimport java.io.FileInputStream;\r\nimport java.util.List;\r\n\r\npublic class GuideDetailController {\r\n\r\n    @FXML private Label guideTitleLabel, guideDescLabel, difficultyLabel;\r\n    @FXML private VBox stepsContainer, ratingsContainer;\r\n    @FXML private ComboBox<Integer> ratingBox;\r\n    @FXML private TextField commentField;\r\n\r\n    private GuideStepDAO stepDAO     = new GuideStepDAO();\r\n    private GuideRatingDAO ratingDAO = new GuideRatingDAO();\r\n    private Guide currentGuide;\r\n\r\n    @FXML\r\n    public void initialize() {\r\n        ratingBox.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5));\r\n    }\r\n\r\n    public void setGuide(Guide guide) {\r\n        this.currentGuide = guide;\r\n\r\n        guideTitleLabel.setText(guide.getTitle());\r\n        guideDescLabel.setText(guide.getDescription() != null ? guide.getDescription() : \"\");\r\n\r\n        String diffColor = switch (guide.getDifficulty()) {\r\n            case \"Easy\"   -> \"#2ecc71\";\r\n            case \"Medium\" -> \"#f39c12\";\r\n            case \"Hard\"   -> \"#e74c3c\";\r\n            default       -> \"#999\";\r\n        };\r\n        difficultyLabel.setText(guide.getDifficulty());\r\n        difficultyLabel.setStyle(\r\n                \"-fx-background-color: \" + diffColor + \";\" +\r\n                        \"-fx-text-fill: white;\" +\r\n                        \"-fx-padding: 2 8 2 8;\" +\r\n                        \"-fx-background-radius: 99;\" +\r\n                        \"-fx-font-size: 12;\"\r\n        );\r\n\r\n        loadSteps();\r\n        loadRatings();\r\n    }\r\n\r\n    private void loadSteps() {\r\n        stepsContainer.getChildren().clear();\r\n        List<GuideStep> steps = stepDAO.getByGuideId(currentGuide.getId());\r\n        boolean dark = AppState.isDarkMode();\r\n\r\n        for (GuideStep step : steps) {\r\n            VBox stepCard = new VBox(8);\r\n            stepCard.setStyle(\r\n                    \"-fx-background-color: \" + (dark ? \"#1a1a2e\" : \"#f8f9fa\") + \";\" +\r\n                            \"-fx-border-color: \"     + (dark ? \"#2a2a4a\" : \"#e0e0e0\") + \";\" +\r\n                            \"-fx-border-radius: 6;\" +\r\n                            \"-fx-background-radius: 6;\" +\r\n                            \"-fx-padding: 12;\"\r\n            );\r\n\r\n            String textColor = dark ? \"#e0e0e0\" : \"#333\";\r\n            String muteColor = dark ? \"#a0a0b0\" : \"#444\";\r\n\r\n            Label stepNum = new Label(\"Step \" + step.getStepOrder() + \" — \" + step.getTitle());\r\n            stepNum.setStyle(\"-fx-font-weight: bold; -fx-font-size: 13; -fx-text-fill: \" + textColor + \";\");\r\n\r\n            Label content = new Label(step.getContent());\r\n            content.setWrapText(true);\r\n            content.setStyle(\"-fx-font-size: 12; -fx-text-fill: \" + muteColor + \";\");\r\n\r\n            stepCard.getChildren().addAll(stepNum, content);\r\n\r\n            if (step.getImage() != null && !step.getImage().isEmpty()) {\r\n                try {\r\n                    String imagePath = \"target/classes/images/\" + step.getImage();\r\n                    Image img = new Image(new FileInputStream(imagePath));\r\n                    ImageView imageView = new ImageView(img);\r\n                    imageView.setFitWidth(300);\r\n                    imageView.setFitHeight(180);\r\n                    imageView.setPreserveRatio(true);\r\n                    stepCard.getChildren().add(imageView);\r\n                } catch (Exception e) {\r\n                    System.out.println(\"❌ Step image not found: \" + e.getMessage());\r\n                }\r\n            }\r\n\r\n            if (step.getVideoUrl() != null && !step.getVideoUrl().isEmpty()) {\r\n                Hyperlink video = new Hyperlink(\"▶ Watch Video\");\r\n                video.setStyle(\"-fx-text-fill: #3498db; -fx-font-size: 12;\");\r\n                video.setOnAction(e -> {\r\n                    try {\r\n                        java.awt.Desktop.getDesktop().browse(new java.net.URI(step.getVideoUrl()));\r\n                    } catch (Exception ex) {\r\n                        ex.printStackTrace();\r\n                    }\r\n                });\r\n                stepCard.getChildren().add(video);\r\n            }\r\n\r\n            stepsContainer.getChildren().add(stepCard);\r\n        }\r\n\r\n        if (steps.isEmpty()) {\r\n            stepsContainer.getChildren().add(new Label(\"No steps available for this guide.\"));\r\n        }\r\n    }\r\n\r\n    private void loadRatings() {\r\n        ratingsContainer.getChildren().clear();\r\n        List<GuideRating> ratings = ratingDAO.getByGuideId(currentGuide.getId());\r\n        boolean dark = AppState.isDarkMode();\r\n\r\n        for (GuideRating rating : ratings) {\r\n            HBox row = new HBox(10);\r\n            row.setStyle(\r\n                    \"-fx-background-color: \" + (dark ? \"#1a1a2e\" : \"#f8f9fa\") + \";\" +\r\n                            \"-fx-border-color: \"     + (dark ? \"#2a2a4a\" : \"#e0e0e0\") + \";\" +\r\n                            \"-fx-border-radius: 6;\" +\r\n                            \"-fx-background-radius: 6;\" +\r\n                            \"-fx-padding: 10;\"\r\n            );\r\n\r\n            String stars = \"⭐\".repeat(rating.getRatingValue());\r\n            Label starLabel = new Label(stars);\r\n            starLabel.setStyle(\"-fx-font-size: 13;\");\r\n\r\n            Label comment = new Label(rating.getComment() != null ?\r\n                    rating.getComment() : \"No comment\");\r\n            comment.setWrapText(true);\r\n            comment.setStyle(\"-fx-font-size: 12; -fx-text-fill: \" + (dark ? \"#a0a0b0\" : \"#555\") + \";\");\r\n\r\n            Label sentimentBadge = new Label(\"...\");\r\n            sentimentBadge.setStyle(\r\n                    \"-fx-background-color: #ccc;\" +\r\n                            \"-fx-text-fill: white;\" +\r\n                            \"-fx-padding: 2 8 2 8;\" +\r\n                            \"-fx-background-radius: 99;\" +\r\n                            \"-fx-font-size: 11;\"\r\n            );\r\n\r\n            if (rating.getComment() != null && !rating.getComment().isEmpty()) {\r\n                new Thread(() -> {\r\n                    try {\r\n                        String json = \"{\\\"comment\\\": \\\"\" +\r\n                                rating.getComment().replace(\"\\\"\", \"'\") + \"\\\"}\";\r\n                        okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();\r\n                        okhttp3.RequestBody body = okhttp3.RequestBody.create(\r\n                                json, okhttp3.MediaType.parse(\"application/json\"));\r\n                        okhttp3.Request request = new okhttp3.Request.Builder()\r\n                                .url(\"http://127.0.0.1:5000/predict/sentiment\")\r\n                                .post(body).build();\r\n                        okhttp3.Response response = client.newCall(request).execute();\r\n                        org.json.JSONObject result = new org.json.JSONObject(response.body().string());\r\n                        String sentiment  = result.getString(\"sentiment\");\r\n                        double confidence = result.getDouble(\"confidence\");\r\n\r\n                        javafx.application.Platform.runLater(() -> {\r\n                            if (sentiment.equals(\"positive\")) {\r\n                                sentimentBadge.setText(\"✅ Positive \" + (int)(confidence*100) + \"%\");\r\n                                sentimentBadge.setStyle(\r\n                                        \"-fx-background-color: #2ecc71;\" +\r\n                                                \"-fx-text-fill: white;\" +\r\n                                                \"-fx-padding: 2 8 2 8;\" +\r\n                                                \"-fx-background-radius: 99;\" +\r\n                                                \"-fx-font-size: 11;\"\r\n                                );\r\n                            } else {\r\n                                sentimentBadge.setText(\"❌ Negative \" + (int)(confidence*100) + \"%\");\r\n                                sentimentBadge.setStyle(\r\n                                        \"-fx-background-color: #e74c3c;\" +\r\n                                                \"-fx-text-fill: white;\" +\r\n                                                \"-fx-padding: 2 8 2 8;\" +\r\n                                                \"-fx-background-radius: 99;\" +\r\n                                                \"-fx-font-size: 11;\"\r\n                                );\r\n                            }\r\n                        });\r\n                    } catch (Exception e) {\r\n                        javafx.application.Platform.runLater(() -> sentimentBadge.setText(\"N/A\"));\r\n                    }\r\n                }).start();\r\n            }\r\n\r\n            row.getChildren().addAll(starLabel, comment, sentimentBadge);\r\n            ratingsContainer.getChildren().add(row);\r\n        }\r\n\r\n        if (ratings.isEmpty()) {\r\n            ratingsContainer.getChildren().add(new Label(\"No ratings yet. Be the first to rate!\"));\r\n        }\r\n    }\r\n    @FXML\r\n    private void handleSubmitRating() {\r\n        if (ratingBox.getValue() == null) {\r\n            showAlert(\"Please select a rating!\");\r\n            return;\r\n        }\r\n        GuideRating rating = new GuideRating(\r\n                currentGuide.getId(),\r\n                1,\r\n                ratingBox.getValue(),\r\n                commentField.getText().trim()\r\n        );\r\n        ratingDAO.add(rating);\r\n        commentField.clear();\r\n        ratingBox.setValue(null);\r\n        loadRatings();\r\n        showAlert(\"Rating submitted! ⭐\");\r\n    }\r\n\r\n    private void showAlert(String msg) {\r\n        Alert alert = new Alert(Alert.AlertType.INFORMATION);\r\n        alert.setTitle(\"Info\");\r\n        alert.setHeaderText(null);\r\n        alert.setContentText(msg);\r\n        alert.showAndWait();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/esports/controllers/user/GuideDetailController.java b/src/main/java/com/esports/controllers/user/GuideDetailController.java
+--- a/src/main/java/com/esports/controllers/user/GuideDetailController.java	
++++ b/src/main/java/com/esports/controllers/user/GuideDetailController.java	
+@@ -5,25 +5,43 @@
+ import com.esports.models.Guide;
+ import com.esports.models.GuideRating;
+ import com.esports.models.GuideStep;
++import com.esports.utils.MiniGameLauncher;
++import com.esports.utils.MiniGameService;
+ import javafx.collections.FXCollections;
+ import javafx.fxml.FXML;
+ import javafx.scene.control.*;
+-import javafx.scene.image.Image;
+-import javafx.scene.image.ImageView;
+-import javafx.scene.layout.*;
+-import com.esports.AppState;
+-import java.io.FileInputStream;
++import javafx.scene.layout.HBox;
++import javafx.scene.layout.VBox;
++
+ import java.util.List;
+ 
+ public class GuideDetailController {
+ 
+-    @FXML private Label guideTitleLabel, guideDescLabel, difficultyLabel;
+-    @FXML private VBox stepsContainer, ratingsContainer;
+-    @FXML private ComboBox<Integer> ratingBox;
+-    @FXML private TextField commentField;
++    @FXML
++    private Label guideTitleLabel;
++
++    @FXML
++    private Label guideDescLabel;
++
++    @FXML
++    private Label difficultyLabel;
++
++    @FXML
++    private VBox stepsContainer;
+ 
+-    private GuideStepDAO stepDAO     = new GuideStepDAO();
+-    private GuideRatingDAO ratingDAO = new GuideRatingDAO();
++    @FXML
++    private VBox ratingsContainer;
++
++    @FXML
++    private ComboBox<Integer> ratingBox;
++
++    @FXML
++    private TextField commentField;
++
++    private final GuideStepDAO stepDAO = new GuideStepDAO();
++    private final GuideRatingDAO ratingDAO = new GuideRatingDAO();
++    private final MiniGameService miniGameService = new MiniGameService();
++
+     private Guide currentGuide;
+ 
+     @FXML
+@@ -35,21 +53,11 @@
+         this.currentGuide = guide;
+ 
+         guideTitleLabel.setText(guide.getTitle());
+-        guideDescLabel.setText(guide.getDescription() != null ? guide.getDescription() : "");
+-
+-        String diffColor = switch (guide.getDifficulty()) {
+-            case "Easy"   -> "#2ecc71";
+-            case "Medium" -> "#f39c12";
+-            case "Hard"   -> "#e74c3c";
+-            default       -> "#999";
+-        };
+-        difficultyLabel.setText(guide.getDifficulty());
+-        difficultyLabel.setStyle(
+-                "-fx-background-color: " + diffColor + ";" +
+-                        "-fx-text-fill: white;" +
+-                        "-fx-padding: 2 8 2 8;" +
+-                        "-fx-background-radius: 99;" +
+-                        "-fx-font-size: 12;"
++        guideDescLabel.setText(
++                guide.getDescription() != null ? guide.getDescription() : ""
++        );
++        difficultyLabel.setText(
++                guide.getDifficulty() != null ? guide.getDifficulty() : "Unknown"
+         );
+ 
+         loadSteps();
+@@ -58,167 +66,246 @@
+ 
+     private void loadSteps() {
+         stepsContainer.getChildren().clear();
++
+         List<GuideStep> steps = stepDAO.getByGuideId(currentGuide.getId());
+-        boolean dark = AppState.isDarkMode();
+ 
+         for (GuideStep step : steps) {
+-            VBox stepCard = new VBox(8);
+-            stepCard.setStyle(
+-                    "-fx-background-color: " + (dark ? "#1a1a2e" : "#f8f9fa") + ";" +
+-                            "-fx-border-color: "     + (dark ? "#2a2a4a" : "#e0e0e0") + ";" +
++            VBox card = new VBox(8);
++            card.setStyle(
++                    "-fx-background-color: #f8f9fa;" +
++                            "-fx-border-color: #dddddd;" +
+                             "-fx-border-radius: 6;" +
+                             "-fx-background-radius: 6;" +
+                             "-fx-padding: 12;"
+             );
+ 
+-            String textColor = dark ? "#e0e0e0" : "#333";
+-            String muteColor = dark ? "#a0a0b0" : "#444";
++            Label title = new Label(
++                    "Step " + step.getStepOrder() + " — " + step.getTitle()
++            );
++            title.setStyle("-fx-font-size: 14; -fx-font-weight: bold;");
+ 
+-            Label stepNum = new Label("Step " + step.getStepOrder() + " — " + step.getTitle());
+-            stepNum.setStyle("-fx-font-weight: bold; -fx-font-size: 13; -fx-text-fill: " + textColor + ";");
+-
+-            Label content = new Label(step.getContent());
++            Label content = new Label(step.getContent() != null ? step.getContent() : "");
+             content.setWrapText(true);
+-            content.setStyle("-fx-font-size: 12; -fx-text-fill: " + muteColor + ";");
++            content.setStyle("-fx-font-size: 12;");
++
++            Button challengeBtn = new Button("🎯 Challenge");
++            challengeBtn.setStyle(
++                    "-fx-background-color: #e74c3c;" +
++                            "-fx-text-fill: white;" +
++                            "-fx-font-weight: bold;"
++            );
+ 
+-            stepCard.getChildren().addAll(stepNum, content);
++            challengeBtn.setOnAction(e -> launchMiniGame(step));
+ 
+-            if (step.getImage() != null && !step.getImage().isEmpty()) {
+-                try {
+-                    String imagePath = "target/classes/images/" + step.getImage();
+-                    Image img = new Image(new FileInputStream(imagePath));
+-                    ImageView imageView = new ImageView(img);
+-                    imageView.setFitWidth(300);
+-                    imageView.setFitHeight(180);
+-                    imageView.setPreserveRatio(true);
+-                    stepCard.getChildren().add(imageView);
+-                } catch (Exception e) {
+-                    System.out.println("❌ Step image not found: " + e.getMessage());
+-                }
+-            }
++            card.getChildren().addAll(title, content, challengeBtn);
++            stepsContainer.getChildren().add(card);
++        }
++
++        if (steps.isEmpty()) {
++            stepsContainer.getChildren().add(
++                    new Label("No steps available for this guide.")
++            );
++        }
++    }
++
++    private void launchMiniGame(GuideStep step) {
++        try {
++            String html = miniGameService.generateMiniGameFromStep(
++                    step.getTitle(),
++                    step.getContent()
++            );
++
++            MiniGameLauncher.openMiniGame(html);
++
++        } catch (Exception e) {
++            System.out.println("LLM generation failed, using fallback game: " + e.getMessage());
++
++            String fallbackHtml = buildFallbackMiniGame(
++                    step.getTitle(),
++                    step.getContent()
++            );
++
++            MiniGameLauncher.openMiniGame(fallbackHtml);
++
++            showAlert("LLM unavailable. Fallback mini-game loaded.");
++        }
++    }
++
++    private String buildFallbackMiniGame(String stepTitle, String stepContent) {
++        String safeTitle = jsSafe(stepTitle);
++        String safeContent = jsSafe(stepContent);
++
++        return """
++<!DOCTYPE html>
++<html>
++<head>
++<meta charset="UTF-8">
++<title>Mini Game</title>
++<style>
++body{
++    font-family:Arial,sans-serif;
++    text-align:center;
++    margin:10px;
++}
++canvas{
++    border:1px solid black;
++}
++#info{
++    margin-bottom:10px;
++}
++</style>
++</head>
++<body>
++
++<h3>Mini Challenge</h3>
++<div id="info">
++    <div><strong>Step:</strong> %s</div>
++    <div style="font-size:12px;color:#555;margin-top:4px;">%s</div>
++    <div style="margin-top:8px;">Score: <span id="score">0</span></div>
++    <div>Time: <span id="timer">15</span></div>
++</div>
++
++<canvas id="gameCanvas" width="400" height="300"></canvas>
++
++<script>
++const canvas = document.getElementById("gameCanvas");
++const ctx = canvas.getContext("2d");
++
++let score = 0;
++let timeLeft = 15;
++let radius = 20;
++
++let x = 100;
++let y = 100;
++let dx = 2.4;
++let dy = 2.0;
++let running = true;
++
++function drawTarget() {
++    ctx.clearRect(0, 0, canvas.width, canvas.height);
++
++    ctx.fillStyle = "red";
++    ctx.beginPath();
++    ctx.arc(x, y, radius, 0, Math.PI * 2);
++    ctx.fill();
++}
++
++function updateTarget() {
++    x += dx;
++    y += dy;
++
++    if (x + radius > canvas.width || x - radius < 0) {
++        dx *= -1;
++    }
++
++    if (y + radius > canvas.height || y - radius < 0) {
++        dy *= -1;
++    }
++}
++
++function gameLoop() {
++    if (!running) return;
++    updateTarget();
++    drawTarget();
++    requestAnimationFrame(gameLoop);
++}
+ 
+-            if (step.getVideoUrl() != null && !step.getVideoUrl().isEmpty()) {
+-                Hyperlink video = new Hyperlink("▶ Watch Video");
+-                video.setStyle("-fx-text-fill: #3498db; -fx-font-size: 12;");
+-                video.setOnAction(e -> {
+-                    try {
+-                        java.awt.Desktop.getDesktop().browse(new java.net.URI(step.getVideoUrl()));
+-                    } catch (Exception ex) {
+-                        ex.printStackTrace();
+-                    }
+-                });
+-                stepCard.getChildren().add(video);
+-            }
++canvas.addEventListener("click", function(event) {
++    if (!running) return;
++
++    const rect = canvas.getBoundingClientRect();
++    const mouseX = event.clientX - rect.left;
++    const mouseY = event.clientY - rect.top;
++
++    const dist = Math.sqrt((mouseX - x) * (mouseX - x) + (mouseY - y) * (mouseY - y));
++
++    if (dist <= radius) {
++        score++;
++        document.getElementById("score").innerText = score;
++
++        x = Math.random() * (canvas.width - 2 * radius) + radius;
++        y = Math.random() * (canvas.height - 2 * radius) + radius;
++    }
++});
++
++const timer = setInterval(function() {
++    timeLeft--;
++    document.getElementById("timer").innerText = timeLeft;
++
++    if (timeLeft <= 0) {
++        running = false;
++        clearInterval(timer);
++
++        setTimeout(function() {
++            alert("Game over! Score: " + score);
++        }, 100);
++    }
++}, 1000);
+ 
+-            stepsContainer.getChildren().add(stepCard);
+-        }
++drawTarget();
++gameLoop();
++</script>
++
++</body>
++</html>
++""".formatted(safeTitle, safeContent);
++    }
+ 
+-        if (steps.isEmpty()) {
+-            stepsContainer.getChildren().add(new Label("No steps available for this guide."));
++    private String jsSafe(String text) {
++        if (text == null) {
++            return "";
+         }
++        return text
++                .replace("&", "&amp;")
++                .replace("<", "&lt;")
++                .replace(">", "&gt;");
+     }
+ 
+     private void loadRatings() {
+         ratingsContainer.getChildren().clear();
++
+         List<GuideRating> ratings = ratingDAO.getByGuideId(currentGuide.getId());
+-        boolean dark = AppState.isDarkMode();
+ 
+         for (GuideRating rating : ratings) {
+             HBox row = new HBox(10);
+-            row.setStyle(
+-                    "-fx-background-color: " + (dark ? "#1a1a2e" : "#f8f9fa") + ";" +
+-                            "-fx-border-color: "     + (dark ? "#2a2a4a" : "#e0e0e0") + ";" +
+-                            "-fx-border-radius: 6;" +
+-                            "-fx-background-radius: 6;" +
+-                            "-fx-padding: 10;"
+-            );
+ 
+-            String stars = "⭐".repeat(rating.getRatingValue());
+-            Label starLabel = new Label(stars);
+-            starLabel.setStyle("-fx-font-size: 13;");
+-
+-            Label comment = new Label(rating.getComment() != null ?
+-                    rating.getComment() : "No comment");
+-            comment.setWrapText(true);
+-            comment.setStyle("-fx-font-size: 12; -fx-text-fill: " + (dark ? "#a0a0b0" : "#555") + ";");
+-
+-            Label sentimentBadge = new Label("...");
+-            sentimentBadge.setStyle(
+-                    "-fx-background-color: #ccc;" +
+-                            "-fx-text-fill: white;" +
+-                            "-fx-padding: 2 8 2 8;" +
+-                            "-fx-background-radius: 99;" +
+-                            "-fx-font-size: 11;"
++            Label stars = new Label(
++                    "⭐".repeat(rating.getRatingValue())
+             );
+ 
+-            if (rating.getComment() != null && !rating.getComment().isEmpty()) {
+-                new Thread(() -> {
+-                    try {
+-                        String json = "{\"comment\": \"" +
+-                                rating.getComment().replace("\"", "'") + "\"}";
+-                        okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
+-                        okhttp3.RequestBody body = okhttp3.RequestBody.create(
+-                                json, okhttp3.MediaType.parse("application/json"));
+-                        okhttp3.Request request = new okhttp3.Request.Builder()
+-                                .url("http://127.0.0.1:5000/predict/sentiment")
+-                                .post(body).build();
+-                        okhttp3.Response response = client.newCall(request).execute();
+-                        org.json.JSONObject result = new org.json.JSONObject(response.body().string());
+-                        String sentiment  = result.getString("sentiment");
+-                        double confidence = result.getDouble("confidence");
+-
+-                        javafx.application.Platform.runLater(() -> {
+-                            if (sentiment.equals("positive")) {
+-                                sentimentBadge.setText("✅ Positive " + (int)(confidence*100) + "%");
+-                                sentimentBadge.setStyle(
+-                                        "-fx-background-color: #2ecc71;" +
+-                                                "-fx-text-fill: white;" +
+-                                                "-fx-padding: 2 8 2 8;" +
+-                                                "-fx-background-radius: 99;" +
+-                                                "-fx-font-size: 11;"
+-                                );
+-                            } else {
+-                                sentimentBadge.setText("❌ Negative " + (int)(confidence*100) + "%");
+-                                sentimentBadge.setStyle(
+-                                        "-fx-background-color: #e74c3c;" +
+-                                                "-fx-text-fill: white;" +
+-                                                "-fx-padding: 2 8 2 8;" +
+-                                                "-fx-background-radius: 99;" +
+-                                                "-fx-font-size: 11;"
+-                                );
+-                            }
+-                        });
+-                    } catch (Exception e) {
+-                        javafx.application.Platform.runLater(() -> sentimentBadge.setText("N/A"));
+-                    }
+-                }).start();
+-            }
++            Label comment = new Label(
++                    rating.getComment() != null ? rating.getComment() : ""
++            );
+ 
+-            row.getChildren().addAll(starLabel, comment, sentimentBadge);
++            row.getChildren().addAll(stars, comment);
+             ratingsContainer.getChildren().add(row);
+         }
+ 
+         if (ratings.isEmpty()) {
+-            ratingsContainer.getChildren().add(new Label("No ratings yet. Be the first to rate!"));
++            ratingsContainer.getChildren().add(
++                    new Label("No ratings yet. Be the first to rate!")
++            );
+         }
+     }
++
+     @FXML
+     private void handleSubmitRating() {
+         if (ratingBox.getValue() == null) {
+-            showAlert("Please select a rating!");
++            showAlert("Select rating first");
+             return;
+         }
++
+         GuideRating rating = new GuideRating(
+                 currentGuide.getId(),
+                 1,
+                 ratingBox.getValue(),
+-                commentField.getText().trim()
++                commentField.getText()
+         );
++
+         ratingDAO.add(rating);
+         commentField.clear();
+         ratingBox.setValue(null);
+         loadRatings();
+-        showAlert("Rating submitted! ⭐");
+     }
+ 
+     private void showAlert(String msg) {
+Index: src/main/resources/views/admin/stats-view.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<?import javafx.scene.control.*?>\r\n<?import javafx.scene.layout.*?>\r\n<?import javafx.scene.chart.*?>\r\n\r\n<VBox spacing=\"15\" style=\"-fx-padding: 20;\"\r\n      xmlns=\"http://javafx.com/javafx\"\r\n      xmlns:fx=\"http://javafx.com/fxml\"\r\n      fx:controller=\"com.esports.controllers.admin.StatsController\">\r\n\r\n    <Label text=\"Stats Dashboard\" style=\"-fx-font-size: 24; -fx-font-weight: bold;\"/>\r\n\r\n    <!-- METRIC CARDS -->\r\n    <HBox spacing=\"15\">\r\n        <VBox style=\"-fx-background-color: #3498db; -fx-padding: 15; -fx-background-radius: 8;\" prefWidth=\"180\">\r\n            <Label text=\"Total Games\" style=\"-fx-text-fill: white; -fx-font-size: 12;\"/>\r\n            <Label fx:id=\"totalGamesLabel\" text=\"0\" style=\"-fx-text-fill: white; -fx-font-size: 28; -fx-font-weight: bold;\"/>\r\n        </VBox>\r\n        <VBox style=\"-fx-background-color: #2ecc71; -fx-padding: 15; -fx-background-radius: 8;\" prefWidth=\"180\">\r\n            <Label text=\"Total Guides\" style=\"-fx-text-fill: white; -fx-font-size: 12;\"/>\r\n            <Label fx:id=\"totalGuidesLabel\" text=\"0\" style=\"-fx-text-fill: white; -fx-font-size: 28; -fx-font-weight: bold;\"/>\r\n        </VBox>\r\n        <VBox style=\"-fx-background-color: #e74c3c; -fx-padding: 15; -fx-background-radius: 8;\" prefWidth=\"180\">\r\n            <Label text=\"Total Ratings\" style=\"-fx-text-fill: white; -fx-font-size: 12;\"/>\r\n            <Label fx:id=\"totalRatingsLabel\" text=\"0\" style=\"-fx-text-fill: white; -fx-font-size: 28; -fx-font-weight: bold;\"/>\r\n        </VBox>\r\n        <VBox style=\"-fx-background-color: #f39c12; -fx-padding: 15; -fx-background-radius: 8;\" prefWidth=\"180\">\r\n            <Label text=\"Avg Rating\" style=\"-fx-text-fill: white; -fx-font-size: 12;\"/>\r\n            <Label fx:id=\"avgRatingLabel\" text=\"0.0\" style=\"-fx-text-fill: white; -fx-font-size: 28; -fx-font-weight: bold;\"/>\r\n        </VBox>\r\n    </HBox>\r\n\r\n    <!-- CHARTS -->\r\n    <HBox spacing=\"15\">\r\n        <!-- Bar Chart -->\r\n        <BarChart fx:id=\"guidesPerGameChart\" prefWidth=\"450\" prefHeight=\"300\">\r\n            <xAxis><CategoryAxis label=\"Game\"/></xAxis>\r\n            <yAxis><NumberAxis label=\"Guides\"/></yAxis>\r\n        </BarChart>\r\n\r\n        <!-- Pie Chart -->\r\n        <PieChart fx:id=\"difficultyChart\" prefWidth=\"300\" prefHeight=\"300\"\r\n                  title=\"Difficulty Distribution\"/>\r\n    </HBox>\r\n\r\n    <!-- LEADERBOARD -->\r\n    <Label text=\"Top Rated Guides\" style=\"-fx-font-size: 16; -fx-font-weight: bold;\"/>\r\n    <TableView fx:id=\"leaderboardTable\" prefHeight=\"200\">\r\n        <columns>\r\n            <TableColumn fx:id=\"colRank\"    text=\"#\"           prefWidth=\"50\"/>\r\n            <TableColumn fx:id=\"colTitle\"   text=\"Guide\"       prefWidth=\"250\"/>\r\n            <TableColumn fx:id=\"colGame\"    text=\"Game\"        prefWidth=\"150\"/>\r\n            <TableColumn fx:id=\"colAvgRating\" text=\"Avg Rating\" prefWidth=\"100\"/>\r\n            <TableColumn fx:id=\"colTotal\"   text=\"Total Ratings\" prefWidth=\"100\"/>\r\n        </columns>\r\n    </TableView>\r\n\r\n</VBox>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/views/admin/stats-view.fxml b/src/main/resources/views/admin/stats-view.fxml
+--- a/src/main/resources/views/admin/stats-view.fxml	
++++ b/src/main/resources/views/admin/stats-view.fxml	
+@@ -32,13 +32,10 @@
+ 
+     <!-- CHARTS -->
+     <HBox spacing="15">
+-        <!-- Bar Chart -->
+         <BarChart fx:id="guidesPerGameChart" prefWidth="450" prefHeight="300">
+             <xAxis><CategoryAxis label="Game"/></xAxis>
+             <yAxis><NumberAxis label="Guides"/></yAxis>
+         </BarChart>
+-
+-        <!-- Pie Chart -->
+         <PieChart fx:id="difficultyChart" prefWidth="300" prefHeight="300"
+                   title="Difficulty Distribution"/>
+     </HBox>
+@@ -47,12 +44,32 @@
+     <Label text="Top Rated Guides" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+     <TableView fx:id="leaderboardTable" prefHeight="200">
+         <columns>
+-            <TableColumn fx:id="colRank"    text="#"           prefWidth="50"/>
+-            <TableColumn fx:id="colTitle"   text="Guide"       prefWidth="250"/>
+-            <TableColumn fx:id="colGame"    text="Game"        prefWidth="150"/>
+-            <TableColumn fx:id="colAvgRating" text="Avg Rating" prefWidth="100"/>
+-            <TableColumn fx:id="colTotal"   text="Total Ratings" prefWidth="100"/>
++            <TableColumn fx:id="colRank"      text="#"             prefWidth="50"/>
++            <TableColumn fx:id="colTitle"     text="Guide"         prefWidth="250"/>
++            <TableColumn fx:id="colGame"      text="Game"          prefWidth="150"/>
++            <TableColumn fx:id="colAvgRating" text="Avg Rating"    prefWidth="100"/>
++            <TableColumn fx:id="colTotal"     text="Total Ratings" prefWidth="100"/>
+         </columns>
+     </TableView>
+ 
++    <Separator/>
++
++    <!-- MOOD ANALYSIS -->
++    <Label text="📝 Content Mood Analysis" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
++    <HBox spacing="15">
++        <VBox style="-fx-background-color: #2ecc71; -fx-padding: 15; -fx-background-radius: 8;" prefWidth="180">
++            <Label text="😊 Happy Guides"   style="-fx-text-fill: white; -fx-font-size: 12;"/>
++            <Label fx:id="happyLabel"   text="..." style="-fx-text-fill: white; -fx-font-size: 28; -fx-font-weight: bold;"/>
++        </VBox>
++        <VBox style="-fx-background-color: #95a5a6; -fx-padding: 15; -fx-background-radius: 8;" prefWidth="180">
++            <Label text="😐 Neutral Guides" style="-fx-text-fill: white; -fx-font-size: 12;"/>
++            <Label fx:id="neutralLabel" text="..." style="-fx-text-fill: white; -fx-font-size: 28; -fx-font-weight: bold;"/>
++        </VBox>
++        <VBox style="-fx-background-color: #e74c3c; -fx-padding: 15; -fx-background-radius: 8;" prefWidth="180">
++            <Label text="😠 Angry Guides"   style="-fx-text-fill: white; -fx-font-size: 12;"/>
++            <Label fx:id="angryLabel"   text="..." style="-fx-text-fill: white; -fx-font-size: 28; -fx-font-weight: bold;"/>
++        </VBox>
++    </HBox>
++    <PieChart fx:id="moodChart" prefWidth="300" prefHeight="250" title="Guide Mood Distribution"/>
++
+ </VBox>
+\ No newline at end of file
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0\r\n         http://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n\r\n    <groupId>com.esports</groupId>\r\n    <artifactId>e-sports</artifactId>\r\n    <version>1.0-SNAPSHOT</version>\r\n\r\n    <properties>\r\n        <maven.compiler.source>17</maven.compiler.source>\r\n        <maven.compiler.target>17</maven.compiler.target>\r\n    </properties>\r\n\r\n    <dependencies>\r\n        <dependency>\r\n            <groupId>org.openjfx</groupId>\r\n            <artifactId>javafx-controls</artifactId>\r\n            <version>17.0.2</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.openjfx</groupId>\r\n            <artifactId>javafx-fxml</artifactId>\r\n            <version>17.0.2</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>mysql</groupId>\r\n            <artifactId>mysql-connector-java</artifactId>\r\n            <version>8.0.33</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>com.squareup.okhttp3</groupId>\r\n            <artifactId>okhttp</artifactId>\r\n            <version>4.12.0</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.json</groupId>\r\n            <artifactId>json</artifactId>\r\n            <version>20240303</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.junit.jupiter</groupId>\r\n            <artifactId>junit-jupiter-api</artifactId>\r\n            <version>5.10.0</version>\r\n            <scope>test</scope>\r\n        </dependency>\r\n    </dependencies>\r\n\r\n    <build>\r\n        <plugins>\r\n            <plugin>\r\n                <groupId>org.openjfx</groupId>\r\n                <artifactId>javafx-maven-plugin</artifactId>\r\n                <version>0.0.8</version>\r\n                <configuration>\r\n                    <mainClass>com.esports.Main</mainClass>\r\n                </configuration>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	
++++ b/pom.xml	
+@@ -36,6 +36,12 @@
+             <version>4.12.0</version>
+         </dependency>
+         <dependency>
++            <groupId>org.junit.jupiter</groupId>
++            <artifactId>junit-jupiter</artifactId>
++            <version>5.10.0</version>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
+             <groupId>org.json</groupId>
+             <artifactId>json</artifactId>
+             <version>20240303</version>
+@@ -45,6 +51,11 @@
+             <artifactId>junit-jupiter-api</artifactId>
+             <version>5.10.0</version>
+             <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.openjfx</groupId>
++            <artifactId>javafx-web</artifactId>
++            <version>21.0.1</version>
+         </dependency>
+     </dependencies>
+ 
+Index: src/main/java/com/esports/controllers/admin/StatsController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.esports.controllers.admin;\r\n\r\nimport com.esports.dao.GameDAO;\r\nimport com.esports.dao.GuideDAO;\r\nimport com.esports.dao.GuideRatingDAO;\r\nimport com.esports.db.DatabaseConnection;\r\nimport com.esports.models.Game;\r\nimport com.esports.models.Guide;\r\nimport com.esports.models.GuideRating;\r\nimport javafx.beans.property.SimpleDoubleProperty;\r\nimport javafx.beans.property.SimpleIntegerProperty;\r\nimport javafx.beans.property.SimpleStringProperty;\r\nimport javafx.collections.FXCollections;\r\nimport javafx.fxml.FXML;\r\nimport javafx.scene.chart.*;\r\nimport javafx.scene.control.*;\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.util.List;\r\n\r\npublic class StatsController {\r\n\r\n    @FXML private Label totalGamesLabel, totalGuidesLabel, totalRatingsLabel, avgRatingLabel;\r\n    @FXML private BarChart<String, Number> guidesPerGameChart;\r\n    @FXML private PieChart difficultyChart;\r\n    @FXML private TableView<GuideStats> leaderboardTable;\r\n    @FXML private TableColumn<GuideStats, Number> colRank, colAvgRating, colTotal;\r\n    @FXML private TableColumn<GuideStats, String> colTitle, colGame;\r\n\r\n    private GameDAO gameDAO     = new GameDAO();\r\n    private GuideDAO guideDAO   = new GuideDAO();\r\n    private GuideRatingDAO ratingDAO = new GuideRatingDAO();\r\n    private Connection con = DatabaseConnection.getInstance().getConnection();\r\n\r\n    @FXML\r\n    public void initialize() {\r\n        loadMetricCards();\r\n        loadGuidesPerGameChart();\r\n        loadDifficultyChart();\r\n        loadLeaderboard();\r\n    }\r\n\r\n    private void loadMetricCards() {\r\n        int totalGames   = gameDAO.getAll().size();\r\n        int totalGuides  = guideDAO.getAll().size();\r\n        int totalRatings = ratingDAO.getAll().size();\r\n\r\n        double avgRating = ratingDAO.getAll().stream()\r\n                .mapToInt(GuideRating::getRatingValue)\r\n                .average()\r\n                .orElse(0.0);\r\n\r\n        totalGamesLabel.setText(String.valueOf(totalGames));\r\n        totalGuidesLabel.setText(String.valueOf(totalGuides));\r\n        totalRatingsLabel.setText(String.valueOf(totalRatings));\r\n        avgRatingLabel.setText(String.format(\"%.1f\", avgRating));\r\n    }\r\n\r\n    private void loadGuidesPerGameChart() {\r\n        XYChart.Series<String, Number> series = new XYChart.Series<>();\r\n        series.setName(\"Guides\");\r\n        for (Game game : gameDAO.getAll()) {\r\n            int count = guideDAO.getByGameId(game.getId()).size();\r\n            series.getData().add(new XYChart.Data<>(game.getName(), count));\r\n        }\r\n        guidesPerGameChart.getData().clear();\r\n        guidesPerGameChart.getData().add(series);\r\n    }\r\n\r\n    private void loadDifficultyChart() {\r\n        long easy   = guideDAO.getAll().stream().filter(g -> \"Easy\".equals(g.getDifficulty())).count();\r\n        long medium = guideDAO.getAll().stream().filter(g -> \"Medium\".equals(g.getDifficulty())).count();\r\n        long hard   = guideDAO.getAll().stream().filter(g -> \"Hard\".equals(g.getDifficulty())).count();\r\n\r\n        difficultyChart.setData(FXCollections.observableArrayList(\r\n                new PieChart.Data(\"Easy\",   easy),\r\n                new PieChart.Data(\"Medium\", medium),\r\n                new PieChart.Data(\"Hard\",   hard)\r\n        ));\r\n    }\r\n\r\n    private void loadLeaderboard() {\r\n        colRank.setCellValueFactory(c -> new SimpleIntegerProperty(\r\n                leaderboardTable.getItems().indexOf(c.getValue()) + 1));\r\n        colTitle.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().title));\r\n        colGame.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().game));\r\n        colAvgRating.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().avgRating));\r\n        colTotal.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().totalRatings));\r\n\r\n        try {\r\n            String sql = \"\"\"\r\n                SELECT g.title, ga.name as game_name,\r\n                       ROUND(AVG(gr.rating_value), 2) as avg_rating,\r\n                       COUNT(gr.id) as total_ratings\r\n                FROM guide g\r\n                JOIN game ga ON g.game_id = ga.id\r\n                JOIN guide_rating gr ON gr.guide_id = g.id\r\n                GROUP BY g.id\r\n                ORDER BY avg_rating DESC\r\n                LIMIT 10\r\n                \"\"\";\r\n            PreparedStatement ps = con.prepareStatement(sql);\r\n            ResultSet rs = ps.executeQuery();\r\n            var list = FXCollections.<GuideStats>observableArrayList();\r\n            while (rs.next()) {\r\n                list.add(new GuideStats(\r\n                        rs.getString(\"title\"),\r\n                        rs.getString(\"game_name\"),\r\n                        rs.getDouble(\"avg_rating\"),\r\n                        rs.getInt(\"total_ratings\")\r\n                ));\r\n            }\r\n            leaderboardTable.setItems(list);\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n    // inner class for leaderboard data\r\n    public static class GuideStats {\r\n        String title, game;\r\n        double avgRating;\r\n        int totalRatings;\r\n\r\n        GuideStats(String title, String game, double avgRating, int totalRatings) {\r\n            this.title = title;\r\n            this.game = game;\r\n            this.avgRating = avgRating;\r\n            this.totalRatings = totalRatings;\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/esports/controllers/admin/StatsController.java b/src/main/java/com/esports/controllers/admin/StatsController.java
+--- a/src/main/java/com/esports/controllers/admin/StatsController.java	
++++ b/src/main/java/com/esports/controllers/admin/StatsController.java	
+@@ -28,7 +28,8 @@
+     @FXML private TableView<GuideStats> leaderboardTable;
+     @FXML private TableColumn<GuideStats, Number> colRank, colAvgRating, colTotal;
+     @FXML private TableColumn<GuideStats, String> colTitle, colGame;
+-
++    @FXML private Label happyLabel, neutralLabel, angryLabel;
++    @FXML private PieChart moodChart;
+     private GameDAO gameDAO     = new GameDAO();
+     private GuideDAO guideDAO   = new GuideDAO();
+     private GuideRatingDAO ratingDAO = new GuideRatingDAO();
+@@ -40,6 +41,7 @@
+         loadGuidesPerGameChart();
+         loadDifficultyChart();
+         loadLeaderboard();
++        loadMoodAnalysis();
+     }
+ 
+     private void loadMetricCards() {
+@@ -131,4 +133,50 @@
+             this.totalRatings = totalRatings;
+         }
+     }
++
++    private void loadMoodAnalysis() {
++        new Thread(() -> {
++            try {
++                int happy = 0, neutral = 0, angry = 0;
++                okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
++
++                for (Guide guide : guideDAO.getAll()) {
++                    if (guide.getDescription() == null || guide.getDescription().isEmpty()) continue;
++
++                    // TextBlob API expects {"text": "..."}
++                    org.json.JSONObject jsonObj = new org.json.JSONObject();
++                    jsonObj.put("text", guide.getDescription());
++                    String json = jsonObj.toString();
++
++                    okhttp3.RequestBody body = okhttp3.RequestBody.create(
++                            json, okhttp3.MediaType.parse("application/json"));
++                    okhttp3.Request request = new okhttp3.Request.Builder()
++                            .url("http://127.0.0.1:5001/api/predict")
++                            .post(body)
++                            .build();
++                    okhttp3.Response response = client.newCall(request).execute();
++                    org.json.JSONObject result = new org.json.JSONObject(response.body().string());
++                    String sentiment = result.getString("sentiment");
++
++                    if (sentiment.equals("HAPPY")) happy++;
++                    else if (sentiment.equals("ANGRY")) angry++;
++                    else neutral++;
++                }
++
++                final int h = happy, n = neutral, a = angry;
++                javafx.application.Platform.runLater(() -> {
++                    happyLabel.setText(String.valueOf(h));
++                    neutralLabel.setText(String.valueOf(n));
++                    angryLabel.setText(String.valueOf(a));
++                    moodChart.setData(FXCollections.observableArrayList(
++                            new PieChart.Data("😊 Happy",   h),
++                            new PieChart.Data("😐 Neutral", n),
++                            new PieChart.Data("😠 Angry",   a)
++                    ));
++                });
++            } catch (Exception e) {
++                System.out.println("❌ TextBlob API error: " + e.getMessage());
++            }
++        }).start();
++    }
+ }
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_23\" default=\"true\" project-jdk-name=\"openjdk-23\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	
++++ b/.idea/misc.xml	
+@@ -1,4 +1,3 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+   <component name="MavenProjectsManager">
+@@ -8,7 +7,7 @@
+       </list>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="openjdk-23" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"9a588b42-1d87-44c3-84bd-d264ebff83f7\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/test/java/com/esports/models/TournamentTest.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/pom.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/pom.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"package-info\" />\r\n        <option value=\"CSS File\" />\r\n        <option value=\"FxmlFile\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Oussama-Bhy&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/eyanaoui/e-sports/&quot;,\r\n    &quot;accountId&quot;: &quot;1ed99792-033f-4214-add3-adcddd464de0&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 0\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"3B28o2apYCjg6c7iHzwV2vTM9oC\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"JUnit.TournamentTest.executor\": \"Run\",\r\n    \"Maven.e-sports [javafx:run].executor\": \"Debug\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"git-widget-placeholder\": \"team/tournament\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"list.type.of.created.stylesheet\": \"CSS\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"onboarding.tips.debug.path\": \"C:/Users/Mega-PC/Desktop/where i should be, again/exs/e-sports/src/main/java/org/example/Main.java\",\r\n    \"project.structure.last.edited\": \"Modules\",\r\n    \"project.structure.proportion\": \"0.15\",\r\n    \"project.structure.side.proportion\": \"0.2\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Mega-PC\\Desktop\\where i should be, again\\exs\\e-sports\\src\\main\\resources\" />\r\n      <recent name=\"C:\\Users\\Mega-PC\\Desktop\\where i should be, again\\exs\\e-sports\" />\r\n      <recent name=\"C:\\Users\\Mega-PC\\Desktop\\where i should be, again\\exs\\e-sports\\src\\main\\resources\\views\\user\" />\r\n      <recent name=\"C:\\Users\\Mega-PC\\Desktop\\where i should be, again\\exs\\e-sports\\src\\main\\resources\\views\\admin\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"JUnit.TournamentTest\">\r\n    <configuration name=\"TournamentTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"e-sports\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.esports.models.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"com.esports.models\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.esports.models.TournamentTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"e-sports [javafx:run]\" type=\"MavenRunConfiguration\" factoryName=\"Maven\" temporary=\"true\">\r\n      <MavenSettings>\r\n        <option name=\"myGeneralSettings\" />\r\n        <option name=\"myRunnerSettings\" />\r\n        <option name=\"myRunnerParameters\">\r\n          <MavenRunnerParameters>\r\n            <option name=\"cmdOptions\" />\r\n            <option name=\"profiles\">\r\n              <set />\r\n            </option>\r\n            <option name=\"goals\">\r\n              <list>\r\n                <option value=\"javafx:run\" />\r\n              </list>\r\n            </option>\r\n            <option name=\"multimoduleDir\" />\r\n            <option name=\"pomFileName\" value=\"pom.xml\" />\r\n            <option name=\"profilesMap\">\r\n              <map />\r\n            </option>\r\n            <option name=\"projectsCmdOptionValues\">\r\n              <list />\r\n            </option>\r\n            <option name=\"resolveToWorkspace\" value=\"false\" />\r\n            <option name=\"workingDirPath\" value=\"$PROJECT_DIR$\" />\r\n          </MavenRunnerParameters>\r\n        </option>\r\n      </MavenSettings>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"JUnit.TournamentTest\" />\r\n        <item itemvalue=\"Maven.e-sports [javafx:run]\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"9a588b42-1d87-44c3-84bd-d264ebff83f7\" name=\"Changes\" comment=\"\" />\r\n      <created>1773675977925</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1773675977925</updated>\r\n      <workItem from=\"1773675979018\" duration=\"16954000\" />\r\n      <workItem from=\"1773770988394\" duration=\"9000\" />\r\n      <workItem from=\"1773771010474\" duration=\"819000\" />\r\n      <workItem from=\"1773778401905\" duration=\"3444000\" />\r\n      <workItem from=\"1773953820012\" duration=\"10716000\" />\r\n      <workItem from=\"1774214301211\" duration=\"3611000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -5,9 +5,17 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="9a588b42-1d87-44c3-84bd-d264ebff83f7" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/src/test/java/com/esports/models/TournamentTest.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/StatsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/StatsController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideDetailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/GuideDetailController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/MiniGameWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/user/MiniGameWindowController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/utils/MiniGameLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/utils/MiniGameLauncher.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/utils/MiniGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/utils/MiniGameService.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/stats-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/stats-view.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/views/user/guide-detail.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/user/guide-detail.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/views/user/minigame-window.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/user/minigame-window.fxml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -18,8 +26,8 @@
+     <option name="RECENT_TEMPLATES">
+       <list>
+         <option value="package-info" />
+-        <option value="CSS File" />
+         <option value="FxmlFile" />
++        <option value="CSS File" />
+         <option value="Class" />
+       </list>
+     </option>
+@@ -27,18 +35,6 @@
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="GitHubPullRequestSearchHistory">{
+-  &quot;lastFilter&quot;: {
+-    &quot;state&quot;: &quot;OPEN&quot;,
+-    &quot;assignee&quot;: &quot;Oussama-Bhy&quot;
+-  }
+-}</component>
+-  <component name="GithubPullRequestsUISettings">{
+-  &quot;selectedUrlAndAccountId&quot;: {
+-    &quot;url&quot;: &quot;https://github.com/eyanaoui/e-sports/&quot;,
+-    &quot;accountId&quot;: &quot;1ed99792-033f-4214-add3-adcddd464de0&quot;
+-  }
+-}</component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 0
+ }</component>
+@@ -50,29 +46,26 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "JUnit.TournamentTest.executor": "Run",
+-    "Maven.e-sports [javafx:run].executor": "Debug",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "WebServerToolWindowFactoryState": "false",
+-    "git-widget-placeholder": "team/tournament",
+-    "kotlin-language-version-configured": "true",
+-    "list.type.of.created.stylesheet": "CSS",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "onboarding.tips.debug.path": "C:/Users/Mega-PC/Desktop/where i should be, again/exs/e-sports/src/main/java/org/example/Main.java",
+-    "project.structure.last.edited": "Modules",
+-    "project.structure.proportion": "0.15",
+-    "project.structure.side.proportion": "0.2",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;feature/admin-crud&quot;,
++    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Mega-PC/Desktop/where i should be, again/exs/e-sports/src/main/java/org/example/Main.java&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="MoveFile.RECENT_KEYS">
+       <recent name="C:\Users\Mega-PC\Desktop\where i should be, again\exs\e-sports\src\main\resources" />
+@@ -81,22 +74,7 @@
+       <recent name="C:\Users\Mega-PC\Desktop\where i should be, again\exs\e-sports\src\main\resources\views\admin" />
+     </key>
+   </component>
+-  <component name="RunManager" selected="JUnit.TournamentTest">
+-    <configuration name="TournamentTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+-      <module name="e-sports" />
+-      <extension name="coverage">
+-        <pattern>
+-          <option name="PATTERN" value="com.esports.models.*" />
+-          <option name="ENABLED" value="true" />
+-        </pattern>
+-      </extension>
+-      <option name="PACKAGE_NAME" value="com.esports.models" />
+-      <option name="MAIN_CLASS_NAME" value="com.esports.models.TournamentTest" />
+-      <option name="TEST_OBJECT" value="class" />
+-      <method v="2">
+-        <option name="Make" enabled="true" />
+-      </method>
+-    </configuration>
++  <component name="RunManager">
+     <configuration name="e-sports [javafx:run]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
+       <MavenSettings>
+         <option name="myGeneralSettings" />
+@@ -112,7 +90,6 @@
+                 <option value="javafx:run" />
+               </list>
+             </option>
+-            <option name="multimoduleDir" />
+             <option name="pomFileName" value="pom.xml" />
+             <option name="profilesMap">
+               <map />
+@@ -129,7 +106,6 @@
+     </configuration>
+     <recent_temporary>
+       <list>
+-        <item itemvalue="JUnit.TournamentTest" />
+         <item itemvalue="Maven.e-sports [javafx:run]" />
+       </list>
+     </recent_temporary>
+@@ -148,6 +124,8 @@
+       <workItem from="1773778401905" duration="3444000" />
+       <workItem from="1773953820012" duration="10716000" />
+       <workItem from="1774214301211" duration="3611000" />
++      <workItem from="1777454603366" duration="502000" />
++      <workItem from="1777495205398" duration="1086000" />
+     </task>
+     <servers />
+   </component>
