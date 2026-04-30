@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a588b42-1d87-44c3-84bd-d264ebff83f7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/esports/services/DiscordWebhookService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/dao/TournamentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/dao/TournamentDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/services/AIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/services/AIService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/tournament-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/tournament-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esports/controllers/admin/TournamentFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin/team-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/admin/team-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

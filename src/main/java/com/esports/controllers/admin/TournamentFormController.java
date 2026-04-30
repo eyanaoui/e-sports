@@ -2,6 +2,7 @@ package com.esports.controllers.admin;
 
 import com.esports.dao.TournamentDAO;
 import com.esports.models.Tournament;
+import com.esports.services.DiscordWebhookService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -11,14 +12,15 @@ public class TournamentFormController {
     @FXML private Label formTitle;
     @FXML private TextField nameField, gameField, maxTeamsField, prizeField;
     @FXML private TextArea descArea;
-    @FXML private DatePicker startDatePicker, deadlinePicker; // Added deadlinePicker
+    @FXML private DatePicker startDatePicker, deadlinePicker;
     @FXML private ComboBox<String> formatCombo, statusCombo;
     @FXML private Button deleteBtn;
 
-    // These match your FXML Error Labels to handle "Contrôle de Saisie" visually
+    // Error Labels for "Contrôle de Saisie"
     @FXML private Label nameError, gameError, formatError, maxTeamsError, dateError, deadlineError, prizeError, statusError, descError;
 
     private final TournamentDAO tournamentDAO = new TournamentDAO();
+    private final DiscordWebhookService discordService = new DiscordWebhookService();
     private Tournament currentTournament;
     private Runnable onSuccess;
 
@@ -26,8 +28,6 @@ public class TournamentFormController {
     public void initialize() {
         formatCombo.getItems().addAll("single_elimination", "double_elimination", "round_robin");
         statusCombo.getItems().addAll("open", "in_progress", "completed", "cancelled");
-
-        // Hide error labels by default
         hideErrors();
     }
 
@@ -60,11 +60,10 @@ public class TournamentFormController {
 
     @FXML
     private void handleSave() {
-        // 1. Reset visual errors
         hideErrors();
         boolean isValid = true;
 
-        // 2. Contrôle de Saisie (Validation)
+        // --- Step 1: Validation (Contrôle de Saisie) ---
         if (nameField.getText().trim().isEmpty()) { showErr(nameError); isValid = false; }
         if (gameField.getText().trim().isEmpty()) { showErr(gameError); isValid = false; }
         if (formatCombo.getValue() == null) { showErr(formatError); isValid = false; }
@@ -82,15 +81,14 @@ public class TournamentFormController {
             isValid = false;
         }
 
-        // Stop execution if validation fails
         if (!isValid) return;
 
-        // 3. Initialize Model
-        if (currentTournament == null) {
+        // --- Step 2: Object Preparation ---
+        boolean isNew = (currentTournament == null);
+        if (isNew) {
             currentTournament = new Tournament();
         }
 
-        // 4. Map Data to Model
         currentTournament.setName(nameField.getText().trim());
         currentTournament.setGame(gameField.getText().trim());
         currentTournament.setDescription(descArea.getText().trim());
@@ -100,51 +98,54 @@ public class TournamentFormController {
         currentTournament.setMaxTeams(maxT);
         currentTournament.setStartDate(startDatePicker.getValue().toString());
         currentTournament.setRegistrationDeadline(deadlinePicker.getValue().toString());
-        // Logic: End date is set to 1 day after start date to satisfy the NOT NULL DB constraint
         currentTournament.setEndDate(startDatePicker.getValue().plusDays(1).toString());
 
-        // 5. Execute Database Operation
+        // --- Step 3: Persistence & AI API Trigger ---
         try {
-            if (currentTournament.getId() == 0) {
+            if (isNew) {
                 tournamentDAO.add(currentTournament);
+
+                // Fixed: Removed redundant '= 0' to clear IDE warning
+                double prizeValue;
+                try {
+                    prizeValue = Double.parseDouble(prizeField.getText().replaceAll("[^0-9.]", ""));
+                } catch (Exception e) {
+                    prizeValue = 0.0;
+                }
+
+                String hypeVerdict = (prizeValue >= 1000) ? "🔥 MAJOR: High Stakes!"
+                        : (maxT >= 16) ? "🏆 MASSIVE: Huge Bracket!"
+                        : "⚔️ ELITE: Skill-Based Clash!";
+
+                discordService.announceTournament(
+                        currentTournament.getName() + " (" + hypeVerdict + ")",
+                        currentTournament.getGame(),
+                        currentTournament.getStartDate(),
+                        currentTournament.getPrize()
+                );
             } else {
                 tournamentDAO.update(currentTournament);
             }
 
-            // 6. Refresh Table and Close
-            if (onSuccess != null) {
-                onSuccess.run();
-            }
+            if (onSuccess != null) { onSuccess.run(); }
             closeWindow();
 
         } catch (Exception e) {
-            // Fallback alert if Database still rejects the save
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Database Error");
-            alert.setHeaderText("Could not save to database");
-            alert.setContentText(e.getMessage());
+            // Fixed: Replaced printStackTrace with more robust logging
+            System.err.println("Save failed: " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Database Error: " + e.getMessage());
             alert.showAndWait();
         }
     }
 
-    // Helper method to make the error labels in your FXML visible
-    private void showErr(Label l) {
-        if (l != null) {
-            l.setVisible(true);
-            l.setManaged(true);
-        }
-    }
-
+    private void showErr(Label l) { if (l != null) { l.setVisible(true); l.setManaged(true); } }
     @FXML private void handleCancel() { closeWindow(); }
-
-    @FXML
-    private void handleDelete() {
+    @FXML private void handleDelete() {
         if (currentTournament != null && currentTournament.getId() != 0) {
             tournamentDAO.delete(currentTournament.getId());
             if (onSuccess != null) onSuccess.run();
             closeWindow();
         }
     }
-
     private void closeWindow() { ((Stage) nameField.getScene().getWindow()).close(); }
 }

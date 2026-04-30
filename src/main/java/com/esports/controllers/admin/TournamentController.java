@@ -20,8 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
 import java.util.Map;
 import java.util.List;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Label;
 
 public class TournamentController {
     @FXML private TableView<Tournament> tournamentTable;
@@ -117,8 +115,9 @@ public class TournamentController {
         }
 
         List<Map<String, Object>> sortedTeams = aiService.generateFairMatchmaking(t.getId());
-        if (sortedTeams.size() < 2) {
-            new Alert(Alert.AlertType.INFORMATION, "Not enough teams to generate a bracket.").show();
+
+        if (sortedTeams == null || sortedTeams.size() < 2) {
+            new Alert(Alert.AlertType.INFORMATION, "Not enough teams to generate a bracket (Min: 2).").show();
             return;
         }
 
@@ -146,7 +145,7 @@ public class TournamentController {
 
             double elo1 = ((Number) team1.get("elo")).doubleValue();
             double elo2 = ((Number) team2.get("elo")).doubleValue();
-            double diff = Math.abs(elo1 - elo2); // Using the variable here!
+            double diff = Math.abs(elo1 - elo2);
 
             HBox matchCard = new HBox(15);
             matchCard.setStyle("-fx-background-color: #313244; -fx-padding: 20; -fx-background-radius: 15; " +
@@ -154,14 +153,11 @@ public class TournamentController {
             matchCard.setAlignment(Pos.CENTER);
             matchCard.setMinWidth(500);
 
-            // Team 1
             VBox t1Box = createTeamBox(team1.get("name").toString(), elo1);
             Label vsLabel = new Label("VS");
             vsLabel.setStyle("-fx-text-fill: #f38ba8; -fx-font-weight: bold; -fx-font-size: 16;");
-            // Team 2
             VBox t2Box = createTeamBox(team2.get("name").toString(), elo2);
 
-            // Fairness Badge (This uses the 'diff' variable)
             VBox fairBox = new VBox(2);
             fairBox.setAlignment(Pos.CENTER);
             fairBox.setStyle("-fx-padding: 0 0 0 20;");
@@ -175,16 +171,22 @@ public class TournamentController {
             bracketContainer.getChildren().add(matchCard);
         }
 
+        // ADDED: Handle odd team out
+        if (teams.size() % 2 != 0) {
+            Label byeLabel = new Label("BYE: " + teams.get(teams.size()-1).get("name") + " (Advances automatically)");
+            byeLabel.setStyle("-fx-text-fill: #fab387; -fx-font-style: italic; -fx-padding: 10;");
+            bracketContainer.getChildren().add(byeLabel);
+        }
+
         ScrollPane scroll = new ScrollPane(bracketContainer);
         scroll.setFitToWidth(true);
-        scroll.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+        scroll.setStyle("-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;");
 
         root.getChildren().add(scroll);
         stage.setScene(new Scene(root, 620.0, 600.0));
         stage.show();
     }
 
-    // Small helper to clean up the code
     private VBox createTeamBox(String name, double elo) {
         VBox box = new VBox(5);
         box.setAlignment(Pos.CENTER);
